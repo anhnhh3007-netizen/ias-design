@@ -1,0 +1,64 @@
+<!-- @dsCard group="Components" viewport="700x240" name="FilterCard" subtitle="Fixed 4-column filter grid — Reset, Search, panel-toggle, then trailing utility actions" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<style>
+body{margin:0;padding:12px;background:#F4F6FA;font-family:var(--font-family-body)}
+.msym{font-family:'Material Symbols Outlined';font-style:normal;user-select:none;line-height:1;display:inline-block;flex-shrink:0}
+.fc{background:#fff;border:1px solid #D9DBE9;border-radius:12px;padding:16px 20px;box-shadow:0 2px 8px rgba(75,99,226,.08)}
+.frow{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:14px}
+.fg{display:flex;flex-direction:column;gap:6px;min-width:0}
+.fg label{font-size:12px;font-weight:600;color:#4E4B66}
+.fg .req{color:#EB2D4B}
+.fg input,.fg select{height:40px;border-radius:8px;border:1px solid #D9DBE9;padding:0 12px;font-size:13px;font-family:inherit;color:#4E4B66;outline:none;box-sizing:border-box;width:100%}
+.fg select{appearance:none;padding-right:30px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23A0A3BD'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 10px center;cursor:pointer}
+.fg input::placeholder{color:#A0A3BD}
+.actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;border:none;white-space:nowrap}
+.btn-outline{background:transparent;color:var(--color-text-primary,#14142A);border:1px solid var(--color-primary-200,#C4C6F7)}
+.btn-outline:hover{border-color:var(--color-border-focus,#141ED2)}
+.btn-primary{background:var(--color-bg-brand,#141ED2);color:var(--color-text-inverse,#fff);padding:0 24px}
+.btn-primary:hover{background:var(--color-primary-700,#0E15A8)}
+.btn-icon{width:36px;height:36px;padding:0;border-radius:8px;border:1px solid var(--color-primary-200,#C4C6F7);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-primary,#14142A)}
+.btn-icon:hover{border-color:var(--color-border-focus,#141ED2)}
+</style></head><body>
+
+<div class="fc">
+  <!-- Row 1 — 4 columns, always -->
+  <div class="frow">
+    <div class="fg"><label>Năm <span class="req">*</span></label><select><option>2026</option></select></div>
+    <div class="fg"><label>Đơn vị</label><input placeholder="Nhập đơn vị" /></div>
+    <div class="fg"><label>Phòng ban</label><input placeholder="Nhập phòng ban" /></div>
+    <div class="fg"><label>Trạng thái</label><select><option>Tất cả</option></select></div>
+  </div>
+  <!-- Row 2 — wraps into the same fixed 4-column grid, partially filled -->
+  <div class="frow" style="margin-bottom:16px">
+    <div class="fg"><label>Từ ngày</label><input placeholder="dd/mm/yyyy" /></div>
+    <div class="fg"><label>Đến ngày</label><input placeholder="dd/mm/yyyy" /></div>
+    <div class="fg"><label>Loại báo cáo</label><select><option>Chọn loại báo cáo</option></select></div>
+  </div>
+  <!-- Action row — always present, right-aligned, one continuous cluster (no divider):
+       Reset → Search → panel-toggle ("Ẩn tìm kiếm nâng cao") → settings (column/display config).
+       Updated 2026-08-14: Export removed — FilterCard's action row is deliberately narrower than
+       ToolbarSimple's own trailing cluster (Export/Import/Xóa/Hủy/Gửi duyệt only ever appear
+       there, never here). Synced with the reference usage in
+       templates/ias-danh-sach-chuong-trinh/DanhSachChuongTrinh.dc.html. -->
+  <div class="actions">
+    <button class="btn btn-outline">
+      <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">delete_sweep</span>
+      Xóa bộ lọc
+    </button>
+    <button class="btn btn-primary">
+      <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+      Tìm kiếm
+    </button>
+    <button class="btn btn-outline">
+      <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">expand_less</span>
+      Ẩn tìm kiếm nâng cao
+    </button>
+    <button class="btn-icon" title="Cài đặt hiển thị">
+      <span class="msym" style="font-size:19px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">settings</span>
+    </button>
+  </div>
+</div>
+
+</body></html>

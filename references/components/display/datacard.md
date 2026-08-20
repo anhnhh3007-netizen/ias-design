@@ -1,0 +1,2 @@
+# DataCard (KPI tile)
+- Fixed anatomy, all four parts always present: icon (36px rounded-9 square, tinted background matching the value's color family) → label (11px, `--color-text-secondary`) → value (24px bold) → change line (11px, colored by trend: brand for a neutral count, success-green for positive, warning/error for a negative movement). Don't ship a DataCard missing the label or the change line — an icon+number pair alone is not this component.

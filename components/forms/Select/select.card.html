@@ -1,0 +1,11 @@
+<!-- @dsCard group="Components" viewport="700x100" name="Select" subtitle="Dropdown select with label and states" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>body{margin:0;padding:16px 20px;background:#fff;font-family:var(--font-family-body);display:flex;gap:16px;flex-wrap:wrap}
+.fg{display:flex;flex-direction:column;gap:6px;min-width:170px;flex:1}
+label{font-size:12px;font-weight:600;color:#4E4B66}
+.sel{height:40px;border-radius:8px;padding:0 30px 0 12px;font-size:13px;font-family:inherit;color:#4E4B66;appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%23A0A3BD'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 10px center;outline:none;box-sizing:border-box;width:100%;cursor:pointer}
+</style></head><body>
+<div class="fg"><label>Phòng ban</label><select class="sel" style="border:1px solid #D9DBE9"><option>-- Chọn phòng ban --</option><option>Phòng Kế toán</option><option selected>Phòng Nhân sự</option><option>Phòng CNTT</option></select></div>
+<div class="fg"><label>Chức danh</label><select class="sel" style="border:2px solid #141ED2;box-shadow:0 0 0 3px rgba(20,30,210,.08)"><option>Chuyên viên NS</option></select></div>
+<div class="fg"><label>Vô hiệu</label><select class="sel" style="border:1px solid #D9DBE9;background:#F4F6FA;color:#A0A3BD;cursor:not-allowed" disabled><option>Không thể chọn</option></select></div>
+</body></html>

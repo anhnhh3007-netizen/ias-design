@@ -1,0 +1,67 @@
+/* HCM Design System — Spacing & Sizing Tokens */
+
+:root {
+  /* ── Base spacing scale (4px grid) ─────────────── */
+  --space-0:   0px;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-7:   28px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+
+  /* ── Component-specific spacing ────────────────── */
+  --space-input-px:         8px;
+  --space-input-py:         4px;
+  --space-input-gap:        8px;
+  --space-button-px:        16px;
+  --space-button-py:        10px;
+  --space-card-padding:     24px;
+  --space-section-gap:      80px;
+
+  /* ── Border radius ──────────────────────────────── */
+  --radius-sm:    4px;
+  --radius-md:    8px;
+  --radius-lg:    12px;
+  --radius-xl:    16px;
+  --radius-2xl:   20px;
+  --radius-full:  9999px;
+
+  /* ── Component heights ──────────────────────────── */
+  --height-input:   40px;
+  --height-button:  40px;
+  --height-header:  64px;
+  --height-sidebar: 100vh;
+
+  /* ── Sidebar widths ─────────────────────────────── */
+  --width-sidebar-max:  240px;
+  --width-sidebar-mini: 64px;
+
+  /* ── Shadows ────────────────────────────────────── */
+  --shadow-xs:  0px 1px 2px 0px rgba(75,99,226,0.05);
+  --shadow-sm:  0px 2px 4px 0px rgba(75,99,226,0.08);
+  --shadow-md:  0px 4px 12px 0px rgba(75,99,226,0.12);
+  --shadow-lg:  0px 8px 24px 0px rgba(75,99,226,0.15);
+  --shadow-xl:  0px 16px 40px 0px rgba(20,20,42,0.18);
+  --shadow-card: 0px 4px 4px 0px rgba(0,0,0,0.13);
+  --shadow-input-border: inset 0 0 0 1px rgb(217,219,233);
+  --shadow-input-focus:  inset 0 0 0 2px rgb(20,30,210);
+  --shadow-input-error:  inset 0 0 0 2px rgb(235,45,75);
+
+  /* ── Z-index stack ──────────────────────────────── */
+  --z-base:     0; /* @kind other */
+  --z-raised:   10; /* @kind other */
+  --z-dropdown: 100; /* @kind other */
+  --z-sticky:   200; /* @kind other */
+  --z-overlay:  300; /* @kind other */
+  --z-modal:    400; /* @kind other */
+  --z-toast:    500; /* @kind other */
+  --z-tooltip:  600; /* @kind other */
+}

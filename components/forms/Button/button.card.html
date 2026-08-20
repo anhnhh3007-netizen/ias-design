@@ -1,0 +1,72 @@
+<!-- @dsCard group="Components" viewport="900x520" name="Button" subtitle="primary · secondary · outline · pill · ghost · text link" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+  body { margin:0; padding:16px 20px; background:#fff; font-family:var(--font-family-body); }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+  .lbl { width:110px; flex-shrink:0; font-size:11px; font-weight:600; color:#6E7191; text-transform:uppercase; letter-spacing:.4px; }
+  .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; height:40px; padding:0 var(--space-button-px,16px); font-size:14px; line-height:21px; letter-spacing:.28px; font-weight:var(--font-weight-semibold,600); cursor:pointer; border:none; font-family:inherit; white-space:nowrap; box-sizing:border-box; }
+  .btn-sm { height:32px; }
+  .btn-lg { height:48px; font-size:16px; line-height:24px; letter-spacing:.32px; }
+  .r8 { border-radius:8px; }
+  .pill { border-radius:9999px; }
+  .icon-only { width:40px; height:40px; padding:0; }
+  .icon-only.btn-sm { width:32px; height:32px; }
+  .icon-only.btn-lg { width:48px; height:48px; }
+  .spin { width:14px; height:14px; border-radius:50%; border:2px solid currentColor; border-top-color:transparent; opacity:.55; animation:s .7s linear infinite; display:inline-block; }
+  @keyframes s { to { transform:rotate(360deg); } }
+</style></head><body>
+
+<!-- Colors below are var(--color-*) from tokens/colors.css per color-rules.md's
+     "new/updated components must use tokens/colors.css" rule (2026-07-23) —
+     see Button.jsx's own comment header for the exact hex → token mapping. -->
+
+<div class="row"><span class="lbl">Primary</span>
+  <button class="btn r8" style="background:var(--color-bg-brand);color:var(--color-text-inverse)">Xác nhận</button>
+  <button class="btn r8" style="background:var(--color-primary-700);color:var(--color-text-inverse)">Hover</button>
+  <button class="btn r8" style="background:var(--color-neutral-200);color:var(--color-text-secondary);cursor:not-allowed">Vô hiệu</button>
+  <button class="btn r8" style="background:var(--color-primary-200);color:var(--color-text-primary)"><span class="spin"></span>Đang lưu</button>
+  <button class="btn r8 icon-only" style="background:var(--color-bg-brand);color:var(--color-text-inverse)">+</button>
+</div>
+
+<div class="row"><span class="lbl">Secondary</span>
+  <button class="btn r8" style="background:var(--color-bg-hover);color:var(--color-text-primary)">Xác nhận</button>
+  <button class="btn r8" style="background:var(--color-primary-200);color:var(--color-text-primary)">Hover</button>
+  <button class="btn r8" style="background:var(--color-neutral-200);color:var(--color-text-secondary);cursor:not-allowed">Vô hiệu</button>
+  <button class="btn r8" style="background:var(--color-primary-100);color:var(--color-primary-300)"><span class="spin"></span>Đang lưu</button>
+</div>
+
+<div class="row"><span class="lbl">Outline</span>
+  <button class="btn r8" style="background:transparent;color:var(--color-text-primary);border:1px solid var(--color-primary-200)">Hủy bỏ</button>
+  <button class="btn r8" style="background:transparent;color:var(--color-text-primary);border:1px solid var(--color-border-focus)">Hover</button>
+  <button class="btn r8" style="background:transparent;color:var(--color-text-secondary);border:1px solid var(--color-neutral-500);cursor:not-allowed">Vô hiệu</button>
+  <button class="btn r8" style="background:var(--color-primary-100);color:var(--color-primary-300);border:1px solid var(--color-primary-200)"><span class="spin"></span>Đang lưu</button>
+</div>
+
+<div class="row"><span class="lbl">Pill</span>
+  <button class="btn pill" style="background:transparent;color:var(--color-text-primary);border:1px solid var(--color-primary-200)">Xem thêm</button>
+  <button class="btn pill" style="background:transparent;color:var(--color-text-primary);border:1px solid var(--color-border-focus)">Hover</button>
+  <button class="btn pill" style="background:transparent;color:var(--color-text-secondary);border:1px solid var(--color-neutral-500);cursor:not-allowed">Vô hiệu</button>
+  <button class="btn pill icon-only" style="background:transparent;color:var(--color-text-primary);border:1px solid var(--color-primary-200)">+</button>
+</div>
+
+<div class="row"><span class="lbl">Ghost</span>
+  <button class="btn pill" style="background:transparent;color:var(--color-text-primary)">Xem thêm</button>
+  <button class="btn pill" style="background:var(--color-bg-hover);color:var(--color-text-primary)">Hover</button>
+  <button class="btn pill" style="background:transparent;color:var(--color-text-secondary);cursor:not-allowed">Vô hiệu</button>
+  <button class="btn pill icon-only" style="background:transparent;color:var(--color-icon-brand)" title="Cài đặt">⚙</button>
+</div>
+
+<div class="row"><span class="lbl">Text link</span>
+  <button class="btn pill" style="background:transparent;color:var(--color-text-primary);font-weight:var(--font-weight-regular,400);gap:2px;padding:0;height:auto">Xem chi tiết</button>
+  <button class="btn pill" style="background:transparent;color:var(--color-text-primary);font-weight:var(--font-weight-regular,400);gap:2px;padding:0;height:auto;text-decoration:underline">Hover</button>
+  <button class="btn pill" style="background:transparent;color:var(--color-text-secondary);font-weight:var(--font-weight-regular,400);gap:2px;padding:0;height:auto;cursor:not-allowed">Vô hiệu</button>
+</div>
+
+
+<div class="row"><span class="lbl">Sizes</span>
+  <button class="btn r8 btn-sm" style="background:var(--color-bg-brand);color:var(--color-text-inverse)">Nhỏ 32</button>
+  <button class="btn r8" style="background:var(--color-bg-brand);color:var(--color-text-inverse)">Vừa 40</button>
+  <button class="btn r8 btn-lg" style="background:var(--color-bg-brand);color:var(--color-text-inverse)">Lớn 48</button>
+</div>
+
+</body></html>

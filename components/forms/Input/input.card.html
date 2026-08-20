@@ -1,0 +1,21 @@
+<!-- @dsCard group="Components" viewport="700x200" name="Input" subtitle="default · focused · error · success · disabled" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+  body { margin:0; padding:16px 20px; background:#fff; font-family:var(--font-family-body); }
+  .row { display:flex; gap:16px; flex-wrap:wrap; }
+  .fg { display:flex; flex-direction:column; gap:6px; min-width:180px; flex:1; }
+  label { font-size:12px; font-weight:600; color:#4E4B66; }
+  input { height:40px; border-radius:8px; padding:0 12px; font-size:13px; font-family:inherit; color:#4E4B66; outline:none; box-sizing:border-box; width:100%; }
+  .hint { font-size:11px; }
+</style></head><body>
+<div class="row">
+  <div class="fg"><label>Mặc định</label><input style="border:1px solid #D9DBE9;background:#fff" placeholder="Nhập văn bản..." /></div>
+  <div class="fg"><label>Đang focus</label><input style="border:2px solid #141ED2;background:#fff;box-shadow:0 0 0 3px rgba(20,30,210,.08)" placeholder="Họ và tên" /></div>
+  <div class="fg"><label>Có giá trị</label><input style="border:1px solid #D9DBE9;background:#fff" value="Nguyễn Văn An" /></div>
+</div>
+<div class="row" style="margin-top:12px">
+  <div class="fg"><label>Lỗi</label><input style="border:2px solid #EB2D4B;background:#fff" placeholder="Email" /><span class="hint" style="color:#EB2D4B">Email không hợp lệ</span></div>
+  <div class="fg"><label>Thành công</label><input style="border:2px solid #00BA88;background:#fff" value="nhanvien@mb.com.vn" /><span class="hint" style="color:#00BA88">Email hợp lệ</span></div>
+  <div class="fg"><label>Vô hiệu</label><input style="border:1px solid #D9DBE9;background:#F4F6FA;color:#A0A3BD;cursor:not-allowed" placeholder="Chỉ xem" disabled /></div>
+</div>
+</body></html>

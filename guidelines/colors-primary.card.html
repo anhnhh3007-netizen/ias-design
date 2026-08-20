@@ -1,0 +1,29 @@
+<!-- @dsCard group="Colors" viewport="700x160" name="Primary Blue" subtitle="Core brand blue scale" -->
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 16px; background: var(--color-bg-surface); font-family: var(--font-family-body); }
+  .row { display: flex; gap: 6px; }
+  .swatch { flex: 1; height: 72px; border-radius: 8px; display: flex; flex-direction: column; justify-content: flex-end; padding: 6px 8px; }
+  .swatch span { font-size: 10px; font-weight: 600; line-height: 1.3; }
+  .swatch .name { color: rgba(255,255,255,0.75); }
+  .swatch .hex  { color: rgba(255,255,255,0.95); }
+  .swatch.light .name, .swatch.light .hex { color: rgba(20,20,42,0.55); }
+  .label { font-size: 11px; font-weight: 600; color: var(--color-neutral-500); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
+</style>
+</head><body>
+<div class="label">Primary</div>
+<div class="row">
+  <div class="swatch" data-token="--color-primary-900" style="background:var(--color-primary-900)"><span class="name">900</span><span class="hex"></span></div>
+  <div class="swatch" data-token="--color-primary-700" style="background:var(--color-primary-700)"><span class="name">700</span><span class="hex"></span></div>
+  <div class="swatch" data-token="--color-primary-500" style="background:var(--color-primary-500)"><span class="name">500 ★</span><span class="hex"></span></div>
+  <div class="swatch" data-token="--color-primary-400" style="background:var(--color-primary-400)"><span class="name">400</span><span class="hex"></span></div>
+  <div class="swatch" data-token="--color-primary-300" style="background:var(--color-primary-300)"><span class="name">300</span><span class="hex"></span></div>
+  <div class="swatch" data-token="--color-primary-200" style="background:var(--color-primary-200)"><span class="name">200</span><span class="hex"></span></div>
+  <div class="swatch light" data-token="--color-primary-100" style="background:var(--color-primary-100); border:1px solid var(--color-border-default)"><span class="name">100</span><span class="hex"></span></div>
+  <div class="swatch light" data-token="--color-primary-50" style="background:var(--color-primary-50); border:1px solid var(--color-border-default)"><span class="name">50</span><span class="hex"></span></div>
+</div>
+<script src="resolve-token.js"></script>
+</body></html>

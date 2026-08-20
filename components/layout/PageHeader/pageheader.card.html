@@ -1,0 +1,43 @@
+<!-- @dsCard group="Components" viewport="700x200" name="PageHeader" subtitle="Page title with breadcrumb and actions — plain, and with the onBack + badge combo" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>body{margin:0;padding:16px 20px;background:#F4F6FA;font-family:var(--font-family-body)}
+.bc{display:flex;align-items:center;gap:6px;font-size:12px;color:#A0A3BD;margin-bottom:12px}
+.bc a{color:#141ED2;text-decoration:none;font-weight:500}.bc span{color:#D9DBE9}
+.row{display:flex;align-items:center;justify-content:space-between}
+.title-block{display:flex;align-items:center;gap:10px}
+.back-btn{width:36px;height:36px;border-radius:8px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;color:#14142A;cursor:pointer}
+.title{font-size:20px;font-weight:700;color:#14142A}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:600;background:#F2FFFB;color:#00966D;white-space:nowrap}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;border:none;cursor:pointer;background:#141ED2;font-family:inherit}
+.sep{height:1px;background:#D9DBE9;margin:16px 0}
+</style></head><body>
+
+<!-- Default — no onBack/badge, top-level list/module screen -->
+<div class="bc">
+  <a>Trang chủ</a><span>›</span>
+  <a>Mô hình và kế hoạch</a><span>›</span>
+  <a>Đề xuất kế hoạch nhân sự</a><span>›</span>
+  <span style="color:#4E4B66;font-weight:500">Đề xuất hiệu chỉnh kế hoạch nhân sự</span>
+</div>
+<div class="row">
+  <div class="title">Đề xuất hiệu chỉnh kế hoạch nhân sự</div>
+  <button class="btn">+ Thêm mới</button>
+</div>
+
+<div class="sep"></div>
+
+<!-- onBack + badge — detail/drill-in page (e.g. "Xem chi tiết" reached from a Drawer's expand action) -->
+<div class="bc">
+  <a>Trang chủ</a><span>›</span>
+  <a>Kế hoạch kiểm toán</a><span>›</span>
+  <span style="color:#4E4B66;font-weight:500">Kế hoạch kiểm toán năm</span>
+</div>
+<div class="row">
+  <div class="title-block">
+    <button class="back-btn" title="Quay lại">‹</button>
+    <div class="title">Xem chi tiết KHKT-2026-A01 - Kế hoạch kiểm toán năm 2026</div>
+    <span class="badge">Đã phê duyệt</span>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="IAS Layout" description="Layout chuẩn cho các màn hình hệ thống IAS – Kiểm toán nội bộ: Sidebar + PageHeader + Swap zone. Tự động điều chỉnh Breadcrumb và Sidebar theo activeNav." -->
+<helmet>
+<script src="./ds-base.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; background: #F4F6FA; margin: 0; padding: 0; }
+.msym { font-family: 'Material Symbols Outlined'; font-style: normal; user-select: none; line-height: 1; display: inline-block; flex-shrink: 0; }
+/* Sidebar expand on hover */
+#ias-sb:hover { width: 248px !important; }
+#ias-sb:hover .sb-lbl { opacity: 1 !important; }
+/* Nav item hover */
+.nav-item:hover { background: rgba(255,255,255,0.07) !important; color: #fff !important; }
+.tree-row:hover { background: rgba(255,255,255,0.06) !important; }
+/* Breadcrumb link */
+.bc-link:hover { text-decoration: underline !important; }
+/* Active / ancestor states */
+.nav-active { color: #fff !important; background: rgba(255,255,255,0.12) !important; }
+.nav-ancestor { color: #fff !important; }
+</style>
+<script>
+function iasToggle(id) {
+  var tree = document.getElementById('tree-' + id);
+  if (!tree) return;
+  var isOpen = tree.dataset.open === '1';
+  tree.dataset.open = isOpen ? '0' : '1';
+  tree.style.maxHeight = isOpen ? '0px' : '2000px';
+  /* top-level group header */
+  var grp = document.querySelector('[data-grp="' + id + '"]');
+  if (grp) {
+    var arrow = grp.querySelector('.nav-arrow');
+    if (arrow) arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    grp.style.color = isOpen ? '' : '#fff';
+  }
+  /* sub-level expandable node */
+  var node = document.querySelector('[data-node="' + id + '"]');
+  if (node) {
+    var icon = node.querySelector('.tree-icon');
+    if (icon) icon.textContent = isOpen ? 'add' : 'remove';
+    node.style.color = isOpen ? '' : '#fff';
+  }
+}
+</script>
+</helmet>
+
+<div style="display:flex;height:100vh;font-family:'Plus Jakarta Sans',sans-serif;overflow:hidden">
+
+  <!-- ══════════════════════════════════════════
+       SIDEBAR NAVIGATION
+  ══════════════════════════════════════════════ -->
+  <nav id="ias-sb" style="width:64px;min-height:100vh;background:#0D0D2B;display:flex;flex-direction:column;transition:width 280ms cubic-bezier(.4,0,.2,1);overflow:hidden;flex-shrink:0;position:relative;z-index:20">
+
+    <!-- Brand logo -->
+    <div style="display:flex;align-items:center;gap:8px;padding:17px 17px;min-height:64px;flex-shrink:0;white-space:nowrap">
+      <svg width="30" height="30" viewBox="0 0 30 30" fill="none" style="flex-shrink:0;min-width:30px">
+        <path d="M15 1.5l2.9 7.4L25.9 7l-3.8 7.2 6.4 4.3-6.4 4.3 3.8 7.2-8-1.9L15 28.5l-2.9-7.4L4.1 23l3.8-7.2L1.5 15l6.4-4.3L4.1 7l8 1.9L15 1.5z" fill="#E5052A"></path>
+      </svg>
+      <span class="sb-lbl" style="color:#fff;font-size:15px;font-weight:700;white-space:nowrap;opacity:0;transition:opacity 200ms 60ms">MB <span style="color:#8B8FBD;font-weight:400">| IAS</span></span>
+    </div>
+
+    <!-- Search -->
+    <div style="padding:0 10px 10px;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:8px;background:#1C1C42;border-radius:8px;padding:8px 10px;cursor:text">
+        <span class="msym" style="font-size:18px;color:#8B8FBD;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+        <span class="sb-lbl" style="color:#8B8FBD;font-size:13px;white-space:nowrap;opacity:0;transition:opacity 200ms 60ms">Tìm kiếm....</span>
+      </div>
+    </div>
+
+    <!-- Nav list -->
+    <div style="flex:1;overflow-y:auto;overflow-x:hidden;padding:0 6px 16px;scrollbar-width:thin;scrollbar-color:#2a2a5a transparent">
+
+      <!-- Trang chủ -->
+      <div data-nav-key="trang-chu" data-dc="#CBD0E8" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;margin-bottom:2px;transition:background 150ms,color 150ms">
+        <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">home</span>
+        <span class="sb-lbl" style="font-size:13px;font-weight:500;opacity:0;transition:opacity 200ms 60ms">Trang chủ</span>
+      </div>
+
+      <!-- Đồng bộ dữ liệu văn bản -->
+      <div data-nav-key="dong-bo-du-lieu" data-dc="#CBD0E8" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;margin-bottom:2px;transition:background 150ms,color 150ms">
+        <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">sync</span>
+        <span class="sb-lbl" style="font-size:13px;font-weight:500;opacity:0;transition:opacity 200ms 60ms">Đồng bộ dữ liệu văn bản</span>
+      </div>
+
+      <!-- GROUP: Pháp luật -->
+      <div style="margin-bottom:2px">
+        <div data-grp="phap-luat" data-nav-key="phap-luat" data-dc="#CBD0E8" onclick="iasToggle('phap-luat')" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;transition:background 150ms,color 150ms">
+          <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">gavel</span>
+          <span class="sb-lbl" style="font-size:13px;font-weight:500;flex:1;opacity:0;transition:opacity 200ms 60ms">Pháp luật</span>
+          <span class="msym nav-arrow sb-lbl" style="font-size:18px;opacity:0;transition:opacity 200ms 60ms,transform 200ms;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;transform:rotate(0deg)">arrow_drop_down</span>
+        </div>
+        <div id="tree-phap-luat" data-open="0" style="padding-left:8px;overflow:hidden;max-height:0;transition:max-height 300ms ease">
+          <div data-nav-key="vb-phap-luat" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Văn bản pháp luật</span>
+          </div>
+          <div style="margin-top:2px">
+            <div data-node="nvtt-phap-luat" data-nav-key="nvtt-phap-luat" data-dc="#CBD0E8" onclick="iasToggle('nvtt-phap-luat')" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px 9px 6px;border-radius:6px;cursor:pointer;color:#CBD0E8;font-size:13px;font-weight:600;transition:background 150ms,color 150ms">
+              <span class="msym tree-icon" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 20">add</span>
+              <span>NVTT Pháp luật</span>
+            </div>
+            <div id="tree-nvtt-phap-luat" data-open="0" style="padding-left:14px;overflow:hidden;max-height:0;transition:max-height 250ms ease">
+              <div data-nav-key="nvtt-phap-luat-tab" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>NVTT Pháp luật</span>
+              </div>
+              <div data-nav-key="can-cu-xu-phat" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>Căn cứ xử phạt</span>
+              </div>
+              <div data-nav-key="nvtt-cqbn" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>NVTT chỉ đạo từ CQBN</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP: Nội bộ -->
+      <div style="margin-bottom:2px">
+        <div data-grp="noi-bo" data-nav-key="noi-bo" data-dc="#CBD0E8" onclick="iasToggle('noi-bo')" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;transition:background 150ms,color 150ms">
+          <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">corporate_fare</span>
+          <span class="sb-lbl" style="font-size:13px;font-weight:500;flex:1;opacity:0;transition:opacity 200ms 60ms">Nội bộ</span>
+          <span class="msym nav-arrow sb-lbl" style="font-size:18px;opacity:0;transition:opacity 200ms 60ms,transform 200ms;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;transform:rotate(0deg)">arrow_drop_down</span>
+        </div>
+        <div id="tree-noi-bo" data-open="0" style="padding-left:8px;overflow:hidden;max-height:0;transition:max-height 300ms ease">
+          <div data-nav-key="vb-noi-bo" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Văn bản nội bộ</span>
+          </div>
+          <div data-nav-key="nvtt-noi-bo" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>NVTT Nội bộ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUP: Mapping NVTT -->
+      <div style="margin-bottom:2px">
+        <div data-grp="mapping-nvtt" data-nav-key="mapping-nvtt" data-dc="#CBD0E8" onclick="iasToggle('mapping-nvtt')" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;transition:background 150ms,color 150ms">
+          <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">compare_arrows</span>
+          <span class="sb-lbl" style="font-size:13px;font-weight:500;flex:1;opacity:0;transition:opacity 200ms 60ms">Mapping NVTT</span>
+          <span class="msym nav-arrow sb-lbl" style="font-size:18px;opacity:0;transition:opacity 200ms 60ms,transform 200ms;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;transform:rotate(0deg)">arrow_drop_down</span>
+        </div>
+        <div id="tree-mapping-nvtt" data-open="0" style="padding-left:8px;overflow:hidden;max-height:0;transition:max-height 300ms ease">
+          <div data-nav-key="mapping-nvtt-pl" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Mapping NVTT Pháp luật</span>
+          </div>
+          <div data-nav-key="mapping-nvtt-nb" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Mapping NVTT Nội bộ</span>
+          </div>
+          <div data-nav-key="mapping-ccxp" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Mapping Căn cứ xử phạt</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hồ sơ phê duyệt -->
+      <div data-nav-key="ho-so-phe-duyet" data-dc="#CBD0E8" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;margin-bottom:2px;transition:background 150ms,color 150ms">
+        <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">task_alt</span>
+        <span class="sb-lbl" style="font-size:13px;font-weight:500;opacity:0;transition:opacity 200ms 60ms">Hồ sơ phê duyệt</span>
+      </div>
+
+      <!-- GROUP: Thư viện -->
+      <div style="margin-bottom:2px">
+        <div data-grp="thu-vien" data-nav-key="thu-vien" data-dc="#CBD0E8" onclick="iasToggle('thu-vien')" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;transition:background 150ms,color 150ms">
+          <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">library_books</span>
+          <span class="sb-lbl" style="font-size:13px;font-weight:500;flex:1;opacity:0;transition:opacity 200ms 60ms">Thư viện</span>
+          <span class="msym nav-arrow sb-lbl" style="font-size:18px;opacity:0;transition:opacity 200ms 60ms,transform 200ms;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;transform:rotate(0deg)">arrow_drop_down</span>
+        </div>
+        <div id="tree-thu-vien" data-open="0" style="padding-left:8px;overflow:hidden;max-height:0;transition:max-height 300ms ease">
+          <div data-nav-key="tong-hop-nvtt" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Tổng hợp NVTT</span>
+          </div>
+          <div style="margin-top:2px">
+            <div data-node="thu-vien-nvtt" data-nav-key="thu-vien-nvtt" data-dc="#CBD0E8" onclick="iasToggle('thu-vien-nvtt')" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px 9px 6px;border-radius:6px;cursor:pointer;color:#CBD0E8;font-size:13px;font-weight:600;transition:background 150ms,color 150ms">
+              <span class="msym tree-icon" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 20">add</span>
+              <span>Thư viện NVTT</span>
+            </div>
+            <div id="tree-thu-vien-nvtt" data-open="0" style="padding-left:14px;overflow:hidden;max-height:0;transition:max-height 250ms ease">
+              <div data-nav-key="tv-nvtt-pl" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>Thư viện NVTT Pháp luật</span>
+              </div>
+              <div data-nav-key="tv-nvtt-nb" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>Thư viện NVTT Nội bộ</span>
+              </div>
+              <div data-nav-key="tv-ccxp" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>Thư viện Căn cứ xử phạt</span>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:2px">
+            <div data-node="thu-vien-mapping" data-nav-key="thu-vien-mapping" data-dc="#CBD0E8" onclick="iasToggle('thu-vien-mapping')" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px 9px 6px;border-radius:6px;cursor:pointer;color:#CBD0E8;font-size:13px;font-weight:600;transition:background 150ms,color 150ms">
+              <span class="msym tree-icon" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 20">add</span>
+              <span>Thư viện mapping</span>
+            </div>
+            <div id="tree-thu-vien-mapping" data-open="0" style="padding-left:14px;overflow:hidden;max-height:0;transition:max-height 250ms ease">
+              <div data-nav-key="tvm-phap-luat" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>Mapping Pháp luật</span>
+              </div>
+              <div data-nav-key="tvm-noi-bo" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>Mapping Nội bộ</span>
+              </div>
+              <div data-nav-key="tvm-ccxp" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms">
+                <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+                <span>Mapping Căn cứ xử phạt</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cẩm nang NVTT -->
+      <div data-nav-key="cam-nang-nvtt" data-dc="#CBD0E8" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;margin-bottom:2px;transition:background 150ms,color 150ms">
+        <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">menu_book</span>
+        <span class="sb-lbl" style="font-size:13px;font-weight:500;opacity:0;transition:opacity 200ms 60ms">Cẩm nang NVTT</span>
+      </div>
+
+      <!-- Bóc tách văn bản -->
+      <div data-nav-key="boc-tach-vb" data-dc="#CBD0E8" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;margin-bottom:2px;transition:background 150ms,color 150ms">
+        <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">document_scanner</span>
+        <span class="sb-lbl" style="font-size:13px;font-weight:500;opacity:0;transition:opacity 200ms 60ms">Bóc tách văn bản</span>
+      </div>
+
+      <!-- Kho tài liệu -->
+      <div data-nav-key="kho-tai-lieu" data-dc="#CBD0E8" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;margin-bottom:2px;transition:background 150ms,color 150ms">
+        <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">inventory_2</span>
+        <span class="sb-lbl" style="font-size:13px;font-weight:500;opacity:0;transition:opacity 200ms 60ms">Kho tài liệu</span>
+      </div>
+
+      <!-- GROUP: Danh mục NVTT -->
+      <div style="margin-bottom:2px">
+        <div data-grp="danh-muc-nvtt" data-nav-key="danh-muc-nvtt" data-dc="#CBD0E8" onclick="iasToggle('danh-muc-nvtt')" class="nav-item" style="display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;transition:background 150ms,color 150ms">
+          <span class="msym" style="font-size:22px;min-width:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">category</span>
+          <span class="sb-lbl" style="font-size:13px;font-weight:500;flex:1;opacity:0;transition:opacity 200ms 60ms">Danh mục NVTT</span>
+          <span class="msym nav-arrow sb-lbl" style="font-size:18px;opacity:0;transition:opacity 200ms 60ms,transform 200ms;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;transform:rotate(0deg)">arrow_drop_down</span>
+        </div>
+        <div id="tree-danh-muc-nvtt" data-open="0" style="padding-left:8px;overflow:hidden;max-height:0;transition:max-height 300ms ease">
+          <div data-nav-key="co-quan-ban-hanh" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Cơ quan ban hành</span>
+          </div>
+          <div data-nav-key="loai-vb-phap-luat" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Loại văn bản pháp luật</span>
+          </div>
+          <div data-nav-key="loai-vb-noi-bo" data-dc="#8B8FBD" class="tree-row" style="display:flex;align-items:center;gap:8px;padding:9px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;transition:background 150ms;margin-top:2px">
+            <span class="msym" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Loại văn bản nội bộ</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       MAIN PANEL
+  ══════════════════════════════════════════════ -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0">
+
+    <!-- ── PAGE HEADER ─────────────────────────── -->
+    <div style="background:#fff;border-bottom:1px solid #D9DBE9;padding:12px 24px 14px;flex-shrink:0">
+      <!-- Breadcrumb — auto-generated from activeNav + extraBreadcrumb -->
+      <nav style="display:flex;align-items:center;gap:2px;font-size:12px;flex-wrap:wrap;margin-bottom:10px">
+        <sc-for list="{{ breadcrumbItems }}" as="crumb" hint-placeholder-count="4">
+          <sc-if value="{{ crumb.notFirst }}" hint-placeholder-val="{{ false }}">
+            <span style="color:#D9DBE9;margin:0 3px;user-select:none">›</span>
+          </sc-if>
+          <sc-if value="{{ crumb.showAsLink }}" hint-placeholder-val="{{ true }}">
+            <a href="{{ crumb.href }}" class="bc-link" style="color:#141ED2;font-weight:500;text-decoration:none;font-size:12px">{{ crumb.label }}</a>
+          </sc-if>
+          <sc-if value="{{ crumb.showAsText }}" hint-placeholder-val="{{ false }}">
+            <span style="color:#4E4B66;font-weight:500;font-size:12px">{{ crumb.label }}</span>
+          </sc-if>
+        </sc-for>
+      </nav>
+      <!-- Title row + actions slot -->
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+        <div>
+          <h1 style="font-size:20px;font-weight:700;color:#14142A;line-height:1.3;margin:0">{{ pageTitle }}</h1>
+          <sc-if value="{{ hasSubtitle }}" hint-placeholder-val="{{ false }}">
+            <p style="font-size:13px;color:#6E7191;margin:4px 0 0;line-height:1.5">{{ pageSubtitle }}</p>
+          </sc-if>
+        </div>
+        <!-- ACTIONS SLOT — thay thế bằng các nút thao tác thực tế -->
+        <div id="page-header-actions" style="display:flex;gap:8px;align-items:center">
+        </div>
+      </div>
+    </div>
+
+    <!-- ████████████████████████████████████████
+         SWAP ZONE — Thay thế bằng nội dung màn hình
+    █████████████████████████████████████████ -->
+    <div style="flex:1;overflow:auto;padding:24px;background:#F4F6FA">
+      <div style="border:2px dashed #D9DBE9;border-radius:12px;background:#F4F5FF;min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:48px 32px">
+        <div style="width:52px;height:52px;border-radius:14px;background:#141ED2;display:flex;align-items:center;justify-content:center">
+          <span class="msym" style="font-size:26px;color:#fff;font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 24">swap_horiz</span>
+        </div>
+        <div style="text-align:center;max-width:360px">
+          <p class="hcm-subtitle1" style="color:#141ED2;margin:0 0 8px">Swap Zone</p>
+          <p class="hcm-body2" style="color:#6E7191;margin:0">Vùng nội dung thay đổi theo từng màn hình.<br>Thay thế vùng này bằng nội dung thực tế của màn hình.</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:4px">
+          <span class="hcm-caption" style="padding:5px 12px;border-radius:20px;background:#FFFFFF;color:#141ED2">Danh sách</span>
+          <span class="hcm-caption" style="padding:5px 12px;border-radius:20px;background:#FFFFFF;color:#141ED2">Form nhập liệu</span>
+          <span class="hcm-caption" style="padding:5px 12px;border-radius:20px;background:#FFFFFF;color:#141ED2">Dashboard</span>
+          <span class="hcm-caption" style="padding:5px 12px;border-radius:20px;background:#FFFFFF;color:#141ED2">Chi tiết</span>
+          <span class="hcm-caption" style="padding:5px 12px;border-radius:20px;background:#FFFFFF;color:#141ED2">Thêm / Sửa</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 },
+  &quot;activeNav&quot;: {
+    &quot;editor&quot;: &quot;enum&quot;,
+    &quot;options&quot;: [&quot;trang-chu&quot;,&quot;dong-bo-du-lieu&quot;,&quot;phap-luat&quot;,&quot;vb-phap-luat&quot;,&quot;nvtt-phap-luat&quot;,&quot;nvtt-phap-luat-tab&quot;,&quot;can-cu-xu-phat&quot;,&quot;nvtt-cqbn&quot;,&quot;noi-bo&quot;,&quot;vb-noi-bo&quot;,&quot;nvtt-noi-bo&quot;,&quot;mapping-nvtt&quot;,&quot;mapping-nvtt-pl&quot;,&quot;mapping-nvtt-nb&quot;,&quot;mapping-ccxp&quot;,&quot;ho-so-phe-duyet&quot;,&quot;thu-vien&quot;,&quot;tong-hop-nvtt&quot;,&quot;thu-vien-nvtt&quot;,&quot;tv-nvtt-pl&quot;,&quot;tv-nvtt-nb&quot;,&quot;tv-ccxp&quot;,&quot;thu-vien-mapping&quot;,&quot;tvm-phap-luat&quot;,&quot;tvm-noi-bo&quot;,&quot;tvm-ccxp&quot;,&quot;cam-nang-nvtt&quot;,&quot;boc-tach-vb&quot;,&quot;kho-tai-lieu&quot;,&quot;danh-muc-nvtt&quot;,&quot;co-quan-ban-hanh&quot;,&quot;loai-vb-phap-luat&quot;,&quot;loai-vb-noi-bo&quot;],
+    &quot;default&quot;: &quot;trang-chu&quot;,
+    &quot;section&quot;: &quot;Navigation&quot;
+  },
+  &quot;extraBreadcrumb&quot;: {
+    &quot;editor&quot;: &quot;text&quot;,
+    &quot;default&quot;: &quot;&quot;,
+    &quot;section&quot;: &quot;Navigation&quot;
+  },
+  &quot;pageTitle&quot;: {
+    &quot;editor&quot;: &quot;text&quot;,
+    &quot;default&quot;: &quot;Trang chủ&quot;,
+    &quot;section&quot;: &quot;Page Header&quot;
+  },
+  &quot;pageSubtitle&quot;: {
+    &quot;editor&quot;: &quot;text&quot;,
+    &quot;default&quot;: &quot;&quot;,
+    &quot;section&quot;: &quot;Page Header&quot;
+  }
+}">
+class Component extends DCLogic {
+
+  NAV_TREE = [
+    { key: 'trang-chu', label: 'Trang chủ' },
+    { key: 'dong-bo-du-lieu', label: 'Đồng bộ dữ liệu văn bản' },
+    { key: 'phap-luat', label: 'Pháp luật', children: [
+      { key: 'vb-phap-luat', label: 'Văn bản pháp luật' },
+      { key: 'nvtt-phap-luat', label: 'NVTT Pháp luật', children: [
+        { key: 'nvtt-phap-luat-tab', label: 'NVTT Pháp luật' },
+        { key: 'can-cu-xu-phat', label: 'Căn cứ xử phạt' },
+        { key: 'nvtt-cqbn', label: 'NVTT chỉ đạo từ CQBN' },
+      ]},
+    ]},
+    { key: 'noi-bo', label: 'Nội bộ', children: [
+      { key: 'vb-noi-bo', label: 'Văn bản nội bộ' },
+      { key: 'nvtt-noi-bo', label: 'NVTT Nội bộ' },
+    ]},
+    { key: 'mapping-nvtt', label: 'Mapping NVTT', children: [
+      { key: 'mapping-nvtt-pl', label: 'Mapping NVTT Pháp luật' },
+      { key: 'mapping-nvtt-nb', label: 'Mapping NVTT Nội bộ' },
+      { key: 'mapping-ccxp', label: 'Mapping Căn cứ xử phạt' },
+    ]},
+    { key: 'ho-so-phe-duyet', label: 'Hồ sơ phê duyệt' },
+    { key: 'thu-vien', label: 'Thư viện', children: [
+      { key: 'tong-hop-nvtt', label: 'Tổng hợp NVTT' },
+      { key: 'thu-vien-nvtt', label: 'Thư viện NVTT', children: [
+        { key: 'tv-nvtt-pl', label: 'Thư viện NVTT Pháp luật' },
+        { key: 'tv-nvtt-nb', label: 'Thư viện NVTT Nội bộ' },
+        { key: 'tv-ccxp', label: 'Thư viện Căn cứ xử phạt' },
+      ]},
+      { key: 'thu-vien-mapping', label: 'Thư viện mapping', children: [
+        { key: 'tvm-phap-luat', label: 'Mapping Pháp luật' },
+        { key: 'tvm-noi-bo', label: 'Mapping Nội bộ' },
+        { key: 'tvm-ccxp', label: 'Mapping Căn cứ xử phạt' },
+      ]},
+    ]},
+    { key: 'cam-nang-nvtt', label: 'Cẩm nang NVTT' },
+    { key: 'boc-tach-vb', label: 'Bóc tách văn bản' },
+    { key: 'kho-tai-lieu', label: 'Kho tài liệu' },
+    { key: 'danh-muc-nvtt', label: 'Danh mục NVTT', children: [
+      { key: 'co-quan-ban-hanh', label: 'Cơ quan ban hành' },
+      { key: 'loai-vb-phap-luat', label: 'Loại văn bản pháp luật' },
+      { key: 'loai-vb-noi-bo', label: 'Loại văn bản nội bộ' },
+    ]},
+  ];
+
+  // Returns array of nodes from root to the target key (inclusive)
+  _findPath(key, nodes, ancestors) {
+    ancestors = ancestors || [];
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      var path = ancestors.concat([node]);
+      if (node.key === key) return path;
+      if (node.children) {
+        var result = this._findPath(key, node.children, path);
+        if (result) return result;
+      }
+    }
+    return null;
+  }
+
+  renderVals() {
+    var p = this.props || {};
+    var activeNav         = p.activeNav         || 'trang-chu';
+    var pageTitle         = p.pageTitle         || 'Trang chủ';
+    var pageSubtitle      = p.pageSubtitle      || '';
+    var extraBreadcrumb   = p.extraBreadcrumb   != null ? p.extraBreadcrumb : '';
+
+    // ── Build breadcrumb ─────────────────────────────
+    var navPath = this._findPath(activeNav, this.NAV_TREE, []);
+    var crumbs = [];
+
+    if (!navPath || (navPath.length === 1 && navPath[0].key === 'trang-chu')) {
+      crumbs = [{ label: 'Trang chủ' }];
+    } else {
+      // Always start from Trang chủ; skip if navPath[0] is trang-chu
+      if (navPath[0].key === 'trang-chu') {
+        crumbs = navPath.map(function(n) { return { label: n.label }; });
+      } else {
+        crumbs = [{ label: 'Trang chủ' }].concat(
+          navPath.map(function(n) { return { label: n.label }; })
+        );
+      }
+    }
+
+    // Append extra breadcrumb segments (separated by ">")
+    if (extraBreadcrumb && String(extraBreadcrumb).trim()) {
+      String(extraBreadcrumb).split('>').forEach(function(s) {
+        var t = s.trim();
+        if (t) crumbs.push({ label: t });
+      });
+    }
+
+    // Compute per-crumb display flags
+    var total = crumbs.length;
+    var breadcrumbItems = crumbs.map(function(c, i) {
+      var isLast = i === total - 1;
+      return {
+        label:      c.label,
+        href:       '#',
+        notFirst:   i > 0,
+        showAsLink: !isLast,
+        showAsText: isLast,
+      };
+    });
+
+    return {
+      breadcrumbItems:   breadcrumbItems,
+      pageTitle:         pageTitle,
+      pageSubtitle:      pageSubtitle,
+      hasSubtitle:       !!(pageSubtitle && String(pageSubtitle).trim()),
+    };
+  }
+
+  componentDidMount() {
+    this._applyActiveNav();
+  }
+
+  componentDidUpdate() {
+    this._applyActiveNav();
+  }
+
+  _applyActiveNav() {
+    var activeNav = (this.props || {}).activeNav || 'trang-chu';
+    var navPath   = this._findPath(activeNav, this.NAV_TREE, []);
+
+    // ── 1. Reset all nav items to default colors ─────
+    document.querySelectorAll('[data-nav-key]').forEach(function(el) {
+      el.style.color      = el.dataset.dc || '#CBD0E8';
+      el.style.background = 'transparent';
+      el.classList.remove('nav-active', 'nav-ancestor');
+    });
+
+    // ── 2. Close all open trees & reset icons/arrows ─
+    document.querySelectorAll('[id^="tree-"]').forEach(function(tree) {
+      if (tree.dataset.open !== '1') return;
+      tree.dataset.open     = '0';
+      tree.style.maxHeight  = '0px';
+      var key = tree.id.replace('tree-', '');
+      var grp = document.querySelector('[data-grp="' + key + '"]');
+      if (grp) {
+        var arrow = grp.querySelector('.nav-arrow');
+        if (arrow) arrow.style.transform = 'rotate(0deg)';
+      }
+      var node = document.querySelector('[data-node="' + key + '"]');
+      if (node) {
+        var icon = node.querySelector('.tree-icon');
+        if (icon) icon.textContent = 'add';
+      }
+    });
+
+    if (!navPath) return;
+
+    // ── 3. Open ancestor groups / nodes ──────────────
+    var self = this;
+    navPath.slice(0, -1).forEach(function(ancestor) {
+      var key  = ancestor.key;
+      var tree = document.getElementById('tree-' + key);
+      if (!tree) return;
+      tree.dataset.open    = '1';
+      tree.style.maxHeight = '2000px';
+      // Top-level group header
+      var grp = document.querySelector('[data-grp="' + key + '"]');
+      if (grp) {
+        grp.style.color = '#fff';
+        var arrow = grp.querySelector('.nav-arrow');
+        if (arrow) arrow.style.transform = 'rotate(180deg)';
+      }
+      // Sub-level expandable node
+      var node = document.querySelector('[data-node="' + key + '"]');
+      if (node) {
+        node.style.color = '#fff';
+        var icon = node.querySelector('.tree-icon');
+        if (icon) icon.textContent = 'remove';
+      }
+    });
+
+    // ── 4. Highlight the active item ─────────────────
+    var activeEl = document.querySelector('[data-nav-key="' + activeNav + '"]');
+    if (activeEl) {
+      activeEl.style.color      = '#fff';
+      activeEl.style.background = 'rgba(255,255,255,0.12)';
+    }
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!-- @dsCard group="Components" viewport="700x220" name="Table" subtitle="Data table with row selection, status, actions and pagination" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+  body { margin:0; padding:12px; background:var(--color-bg-page); font-family:var(--font-family-body); }
+  /* Card surface: white bg, no border, no shadow, no radius — square-cornered, borderless (updated 2026-08-18) */
+  .wrap { background:var(--color-bg-surface); border:none; border-radius:0; overflow:hidden; }
+  table { width:100%; border-collapse:collapse; }
+  thead tr { background:var(--color-bg-page); }
+  /* Header row is Table's own documented exception: uppercase + letter-spacing, not mapped to the generic type scale (component-rules.md cross-cutting rule + table.md). No border (updated 2026-08-18) */
+  th { padding:10px 14px; text-align:left; font-size:11px; font-weight:700; color:var(--color-text-secondary); letter-spacing:.4px; text-transform:uppercase; border:none; }
+  /* Full grid: every cell bordered on all 4 sides at 0.5px (border-collapse merges shared edges into single lines) */
+  td { padding:11px 14px; color:var(--color-text-body); border:0.5px solid var(--color-border-default); vertical-align:middle; }
+  /* .av background/text mirrors Avatar.jsx's own internal COLORS palette — component-internal, exempt from token mapping (same exemption as Badge below) */
+  .av { width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; margin-right:8px; vertical-align:middle; }
+  /* .st pill bg/text mirrors Badge.jsx's variant palette exactly — component-internal, exempt. Dot uses the -solid/icon-muted tokens per the two-tone dot+pill convention already established in shipped screens (e.g. can-cu-xu-phat-ias-redesign.html) */
+  .st { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; border-radius:9999px; font-size:11px; font-weight:600; }
+  .st::before { content:''; width:6px; height:6px; border-radius:50%; }
+  .td-link { color:var(--color-text-link); cursor:pointer; }
+  /* Row-selection checkbox — same 18px visual as components/forms/Checkbox */
+  .cb { position:relative; width:18px; height:18px; display:inline-flex; }
+  .cb input { position:absolute; opacity:0; width:0; height:0; }
+  .cb .box { display:flex; align-items:center; justify-content:center; width:18px; height:18px; border-radius:4px; border:2px solid var(--color-border-strong); background:var(--color-bg-surface); }
+  .cb input:checked + .box, .cb.indeterminate .box { border-color:var(--color-border-focus); background:var(--color-bg-brand); }
+  .cb .chk { stroke:var(--color-icon-inverse); }
+</style></head><body>
+<div class="wrap">
+<table>
+  <thead><tr>
+    <th style="width:40px"><label class="cb indeterminate"><input type="checkbox" /><span class="box"><span style="width:8px;height:2px;background:var(--color-icon-inverse);border-radius:1px"></span></span></label></th>
+    <th>Nhân viên</th><th>Phòng ban</th><th>Chức danh</th><th>Trạng thái</th><th>Thao tác</th>
+  </tr></thead>
+  <tbody class="hcm-body2">
+    <tr><td><label class="cb"><input type="checkbox" checked /><span class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path class="chk" d="M1 4L3.5 6.5L9 1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></td><td><span class="av" style="background:#141ED2">NA</span>Nguyễn Văn An</td><td>Phòng Kế toán</td><td>Kế toán trưởng</td><td><span class="st" style="background:var(--color-bg-success);color:var(--color-text-success)"><span style="background:var(--color-bg-success-solid);width:6px;height:6px;border-radius:50%"></span>Đang làm việc</span></td><td class="td-link">Xem ›</td></tr>
+    <tr><td><label class="cb"><input type="checkbox" /><span class="box"></span></label></td><td><span class="av" style="background:#7B61FF">TB</span>Trần Thị Bích</td><td>Phòng Nhân sự</td><td>Chuyên viên NS</td><td><span class="st" style="background:var(--color-bg-warning);color:var(--color-text-warning)"><span style="background:var(--color-bg-warning-solid);width:6px;height:6px;border-radius:50%"></span>Chờ duyệt</span></td><td class="td-link">Xem ›</td></tr>
+    <tr><td><label class="cb"><input type="checkbox" checked /><span class="box"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path class="chk" d="M1 4L3.5 6.5L9 1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></label></td><td><span class="av" style="background:#EB2D4B">HE</span>Hoàng Văn Em</td><td>Phòng Pháp chế</td><td>Chuyên viên</td><td><span class="st" style="background:var(--color-bg-page);color:var(--color-text-secondary)"><span style="background:var(--color-icon-muted);width:6px;height:6px;border-radius:50%"></span>Đã nghỉ</span></td><td class="td-link">Xem ›</td></tr>
+  </tbody>
+</table>
+</div>
+</body></html>
+
+<!--
+## 📊 Component Coverage Report — Table
+
+| # | Element | DS Component used | Status |
+|---|---|---|---|
+| 1 | Data table | Table | ✅ DS (this file is its reference implementation) |
+| 2 | Row-selection checkbox | Checkbox pattern (components/forms/Checkbox) | ✅ DS |
+| 3 | Status cell | Badge (dot+pill) pattern | ✅ DS |
+| 4 | Row identity avatar | Avatar pattern | ✅ DS |
+| 5 | Row action | Text-link ("Xem ›") — one of Table's 3 sanctioned row-action patterns | ✅ DS |
+
+**DS component coverage: 5 / 5 = 100%**
+
+## 🎨 Color Token Coverage — Table
+
+| # | Element (property) | Location | Original hex | Category | Matched Semantic Alias | Match |
+|---|---|---|---|---|---|---|
+| 1 | Page background | `body` | `#F4F6FA` | background | `--color-bg-page` | ✅ Exact |
+| 2 | Card surface background | `.wrap` | `#FFFFFF` | background | `--color-bg-surface` | ✅ Exact |
+| 3 | Card surface border — **removed** (updated 2026-08-18: `.wrap` now borderless) | `.wrap` | *(none)* | border | *(n/a — no border)* | N/A |
+| 4 | Table header row background | `thead tr` | `#F4F6FA` | background | `--color-bg-page` | ✅ Exact |
+| 5 | Header text | `th` | `#6E7191` | text | `--color-text-secondary` | ✅ Exact |
+| 6 | Header cell border — **removed** (updated 2026-08-18: `th` now borderless, was full 1px grid) | `th` | *(none)* | border | *(n/a — no border)* | N/A |
+| 7 | Body cell text | `td` | `#4E4B66` | text | `--color-text-body` | ✅ Exact |
+| 8 | **Body cell border, all 4 sides at 0.5px (updated 2026-08-18, was 1px)** | `td` | `#EDF2F7` | border | `--color-border-default` | ⚠️ Nearest (≈92%) — width changed to 0.5px for a lighter grid; the header/body boundary line now comes from `td`'s own top border since `th` has none |
+| 9 | Row action link | `.td-link` | `#141ED2` | text | `--color-text-link` | ✅ Exact |
+| 10 | Checkbox unchecked border | `.cb .box` | `#A0A3BD` | border | `--color-border-strong` `#C4C4D4` | ⚠️ Nearest (≈88%) — no border alias at the original muted-gray value |
+| 11 | Checkbox checked/indeterminate border + fill | `.cb input:checked + .box` | `#141ED2` | border / background | `--color-border-focus` / `--color-bg-brand` | ✅ Exact |
+| 12 | Checkbox check glyph + indeterminate dash | `.chk`, inline dash span | `#fff` | icon | `--color-icon-inverse` | ✅ Exact |
+| 13 | Avatar background (×3 swatches) | `.av` | `#141ED2` / `#7B61FF` / `#EB2D4B` | background | *(exempt)* | N/A — mirrors `Avatar.jsx`'s own internal `COLORS` palette, a component-internal identity-color rotation (same exemption class as Badge, row 14) |
+| 14 | Status pill background + text (×3 variants) | `.st` | success `#F2FFFB`/`#00966D`, warning `#FFF9EF`/`#946200`, neutral `#F4F6FA`/`#6E7191` | background/text | *(exempt)* | N/A — mirrors `Badge.jsx`'s `variantStyles` exactly (component-internal); values also happen to equal `--color-bg-success`/`--color-text-success` etc. exactly |
+| 15 | Status dot (×3 variants) | `.st::before` equivalent (inline span) | `#00BA88` / `#F4B740` / `#A0A3BD` | background | `--color-bg-success-solid` / `--color-bg-warning-solid` / `--color-icon-muted` | ✅ Exact (neutral dot crosses into the icon category, following the same precedent set in `can-cu-xu-phat-ias-redesign.html`) |
+
+**Color token coverage: 12 / 12 scored elements mapped to a declared Semantic Alias (10 ✅ Exact, 2 ⚠️ Nearest ≥88%) = 100% · 0 severe gaps · 2 rows exempt as component-internal (mirror Avatar.jsx / Badge.jsx)**
+
+## 🔤 Typography Scale Coverage — Table
+
+| # | Text element | Rendered size / weight | Matched scale | Match | Class used? |
+|---|---|---|---|---|---|
+| 1 | Body cell text (name, department, title, action link) | 13px / 400 (inherited) | Body 2 (14px/400) | ⚠️ Nearest (size doesn't land exactly, weight matches) | ✅ `className="hcm-body2"` on `tbody` (inherits to every `td`) |
+| 2 | Table header text | 11px / 700, uppercase | *(excluded — documented exception)* | N/A | N/A — Table's own header style is a standing DS exception (component-rules.md cross-cutting rule: "the one exception is Table column headers"), not mapped to the generic scale |
+| 3 | Status pill text | 11px / 600 | *(excluded — component-internal)* | N/A | N/A — mirrors `Badge.jsx`'s hardcoded `fontSize:11, fontWeight:600` |
+| 4 | Avatar initials | 11px / 700 | *(excluded — component-internal)* | N/A | N/A — mirrors `Avatar.jsx`'s hardcoded `fontWeight:700` sizing formula |
+
+**Typography scale coverage: 1 / 1 scored element matched to a declared scale (⚠️ Nearest) = 100% · Utility-class adoption: 1 / 1 = 100% · 3 rows exempt as component-internal**
+-->

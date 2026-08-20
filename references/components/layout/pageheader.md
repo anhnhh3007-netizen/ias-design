@@ -1,0 +1,25 @@
+# PageHeader
+- Fixed vertical order: breadcrumb row → title row (title left, `actions` slot right). Never put actions above the breadcrumb or the title below actions.
+- **`onBack` (added 2026-07-31)**: an optional prop that renders a back-arrow button immediately left of the title, inside the same title-row group (back-arrow + title share one flex block, `actions` stays a separate group on the right). Use it on **detail/drill-in pages** — a full-page "Xem chi tiết" reached from a list row or a `Drawer`'s expand action (see `references/components/overlay/drawer.md`) — never on a top-level list/module screen, which has nowhere to "go back" to in that sense (its breadcrumb's own links already cover backward navigation). Reference implementation: `templates/ias-xem-chi-tiet/XemChiTiet.dc.html`, which used to hand-rewrite this as a bespoke, undeclared addition before `onBack` existed — that gap is now closed.
+- **`badge` (added 2026-07-31)**: an optional prop, same title-row group, rendered immediately right of the title (e.g. a `Badge` — "Đã phê duyệt"). Pairs with `onBack` on detail/drill-in pages showing one record's workflow status; omit on list/module screens, which don't carry a single record's status. Same reference implementation as `onBack`.
+
+#### Actions slot — declared action set, flexible order (updated 2026-07-23)
+The `actions` slot is not a free-form button row, but the table below only declares **which actions are allowed to appear** — it does **not** fix a required left-to-right sequence for them (supersedes the earlier "closed table, in this exact order" version of this rule):
+
+| Label | `Button` variant | `iconLeft` | Notes |
+|---|---|---|---|
+| Tạo mới | `primary` | `add` | the one CTA — see the gap-handling substitution rule below for "Duyệt"/"Gửi duyệt"-flavored screens |
+| Lịch sử | `outline` | `history` | |
+| Ý kiến | `outline` | `chat` | |
+
+- **Maximum 4 actions visible at once.** If a screen's action set exceeds 4, the excess automatically collapses into a trailing icon-only `more_vert` overflow button that opens a `Dropdown` — this is the standard escape valve for *count*, not just for undeclared actions; don't stop and ask just because a screen needs a 5th+ action, only for genuinely undeclared ones (see gap handling below).
+- **Order — exactly two hard constraints, everything else is free:**
+  1. The `primary` button is always the **rightmost** of the visible action buttons — `PageHeader` now follows the same primary-rightmost convention as `Card`/`Modal`/`Popconfirm` footers; this removes the previous special-cased "primary leftmost" exception. (`ToolbarSimple`/`FilterCard` are a separate, deliberately-customized case — their `primary` "Tìm kiếm" sits right after the search input/Reset, not rightmost — don't generalize this footer/PageHeader convention onto them.)
+  2. If the icon-only `more_vert` overflow trigger is present, **it** takes the absolute rightmost position instead, and `primary` sits immediately to its left (second-from-right).
+  Every other visible action (Lịch sử, Ý kiến, any gap-handling substitute) can be arranged among themselves in whatever order best fits the screen — there is no fixed sequence for them beyond the two constraints above.
+- Every visible action button always carries its `iconLeft` (Material Symbols Outlined) alongside its label — never render an icon-less text button. Pick icons via closest Material Symbols match to the action's verb (e.g. an export-flavored action → `file_download`).
+- **Auto-promotion (mandatory)**: any button anywhere on a screen whose label matches one of Tạo mới / Lịch sử / Ý kiến — no matter where the source wireframe placed it (a card header, a toolbar, a per-tab action row, etc.) — must be moved up into `PageHeader`'s `actions` slot instead of left in place. Same instinct as the `AppHeader`-exclusion precedent and the list-screen layout convention's "reposition, don't preserve the upload's placement" rule.
+- **Gap handling when a screen needs an action not declared above**: never add it silently.
+  1. **Warn** that the requested action isn't in the declared set.
+  2. **Suggest the nearest existing entry as a substitute** — e.g. a requested "Xuất dữ liệu"/"Cài đặt" belongs in `ToolbarSimple`/`FilterCard` instead of `PageHeader` at all (see the list-screen convention) — point at the correct existing slot rather than inventing an ad-hoc header action. Updated 2026-08-14: "Gửi duyệt"/"Hủy"/"Import" are **no longer** substituted into the `primary` (Tạo mới) slot here — `ToolbarSimple`'s own trailing action cluster (see `references/components/data/toolbarsimple.md`) now has a declared home for exactly these three, so route them there instead of hijacking `PageHeader`'s primary slot.
+  3. **If no existing entry or slot genuinely fits**, stop and ask the user to choose: (a) drop the action, (b) send it to the `more_vert` overflow, or (c) extend the declared set with a new name + `Button` variant (icon auto-picked as above).

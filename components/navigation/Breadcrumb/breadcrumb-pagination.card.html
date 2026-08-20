@@ -1,0 +1,27 @@
+<!-- @dsCard group="Components" viewport="700x100" name="Breadcrumb & Pagination" subtitle="Navigation breadcrumb and page controls" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+  body { margin:0; padding:16px 20px; background:#fff; font-family:var(--font-family-body); }
+  .bc { display:flex; align-items:center; gap:6px; font-size:12px; margin-bottom:16px; }
+  .bc a { color:#141ED2; text-decoration:none; font-weight:500; cursor:pointer; }
+  .bc span { color:#D9DBE9; }
+  .bc .cur { color:#6E7191; font-weight:500; }
+  .pag { display:flex; gap:4px; align-items:center; }
+  .pb { width:32px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:13px; cursor:pointer; }
+</style></head><body>
+<div class="bc">
+  <a>Trang chủ</a><span>›</span>
+  <a>Quản lý nhân sự</a><span>›</span>
+  <a>Danh sách nhân viên</a><span>›</span>
+  <span class="cur">Chi tiết nhân viên</span>
+</div>
+<div class="pag">
+  <div class="pb" style="border:1px solid #D9DBE9;color:#6E7191">‹</div>
+  <div class="pb" style="border:1px solid #141ED2;background:#141ED2;color:#fff;font-weight:700">1</div>
+  <div class="pb" style="border:1px solid #D9DBE9;color:#4E4B66">2</div>
+  <div class="pb" style="border:1px solid #D9DBE9;color:#4E4B66">3</div>
+  <div class="pb" style="border:none;color:#A0A3BD">…</div>
+  <div class="pb" style="border:1px solid #D9DBE9;color:#4E4B66">12</div>
+  <div class="pb" style="border:1px solid #D9DBE9;color:#4E4B66">›</div>
+</div>
+</body></html>

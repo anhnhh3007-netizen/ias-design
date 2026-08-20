@@ -1,0 +1,43 @@
+<!-- @dsCard group="Brand" viewport="700x160" name="Icon Set" subtitle="63 Material-style icons — currentColor SVG" -->
+<!-- also serves as the icon directory card -->
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="../assets/icons/icon-data.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  body { margin: 0; padding: 14px 16px; background: var(--color-bg-surface); font-family: var(--font-family-body); }
+  .grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ic { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: var(--color-icon-default); }
+  .ic:hover { background: var(--color-bg-hover); color: var(--color-icon-brand); }
+</style>
+</head><body>
+<div id="root"></div>
+<script type="text/babel">
+const iconData = window.iconData || {};
+const names = Object.keys(iconData).slice(0, 56);
+function Icon({ name, size = 20 }) {
+  const d = iconData[name];
+  if (!d) return null;
+  return (
+    <svg viewBox={d.viewBox} width={size} height={size} fill="currentColor"
+      dangerouslySetInnerHTML={{ __html: d.body }} />
+  );
+}
+function Card() {
+  return (
+    <div className="grid">
+      {names.map(n => (
+        <div key={n} className="ic" title={n}>
+          <Icon name={n} size={20} />
+        </div>
+      ))}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Card />);
+</script>
+</body></html>

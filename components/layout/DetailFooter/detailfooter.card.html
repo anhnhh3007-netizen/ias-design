@@ -1,0 +1,27 @@
+<!-- @dsCard group="Components" viewport="700x160" name="DetailFooter" subtitle="Closing action bar below a detail page's content cards — centered (read-only) or right-aligned (with a real action set)" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+body{margin:0;padding:16px 20px;background:#F4F6FA;font-family:var(--font-family-body)}
+.footer{display:flex;align-items:center;gap:8px;border-top:1px solid #EDF2F7;padding:16px 0 4px}
+.footer.center{justify-content:center}
+.footer.right{justify-content:flex-end}
+.btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 16px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;border:none;white-space:nowrap}
+.btn-outline{background:transparent;color:#14142A;border:1px solid #C4C6F7}
+.btn-primary{background:#141ED2;color:#fff}
+.sep{height:1px;background:transparent;margin:16px 0}
+</style></head><body>
+
+<!-- align="center" (default) — read-only detail page, nothing to save -->
+<div class="footer center">
+  <button class="btn btn-outline">Đóng</button>
+</div>
+
+<div class="sep"></div>
+
+<!-- align="right" — detail page with a real save action, standard secondary-left/primary-right order -->
+<div class="footer right">
+  <button class="btn btn-outline">Hủy</button>
+  <button class="btn btn-primary">Lưu</button>
+</div>
+
+</body></html>

@@ -1,0 +1,19 @@
+<!-- @dsCard group="Components" viewport="640x160" name="Field" subtitle="Read-only label/value pair for a record-detail grid (Drawer, Xem chi tiết pages)" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+body{margin:0;padding:16px;background:#F4F6FA;font-family:var(--font-family-body)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 24px;background:#fff;border-radius:12px;border:1px solid #D9DBE9;padding:20px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label{font-size:12px;font-weight:500;color:var(--color-text-secondary,#6E7191)}
+.field .val{font-size:14px;font-weight:400;color:var(--color-text-primary,#14142A);padding-bottom:10px;border-bottom:1px solid var(--color-neutral-200,#EDF2F7);min-height:20px}
+</style></head><body>
+
+<div class="grid">
+  <div class="field"><label>Mã kế hoạch năm</label><div class="val">KHKT-2026-A01</div></div>
+  <div class="field"><label>Tên kế hoạch</label><div class="val">Kế hoạch kiểm toán năm 2026</div></div>
+  <div class="field"><label>Năm kế hoạch</label><div class="val">2026</div></div>
+  <div class="field full"><label>Mô tả</label><div class="val">Kế hoạch kiểm toán năm 2026 của Kiểm toán nội bộ.</div></div>
+</div>
+
+</body></html>

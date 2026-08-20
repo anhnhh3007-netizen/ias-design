@@ -1,0 +1,94 @@
+<!-- @dsCard group="Components" viewport="760x430" name="ListPanel" subtitle="Structural container for a danh-sách screen: toolbar/filter slot → table → pagination, 16px gap" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<style>
+body{margin:0;padding:16px;background:#F4F6FA;font-family:var(--font-family-body)}
+.msym{font-family:'Material Symbols Outlined';font-style:normal;user-select:none;line-height:1;display:inline-block;flex-shrink:0}
+
+/* ListPanel's own card surface — white bg + border + 12px radius + 16px
+   padding, matching DanhSachChuongTrinh.dc.html. Table renders its own
+   shadowed card inside this one — a deliberate card-in-card look. */
+.list-panel{display:flex;flex-direction:column;gap:16px;background:var(--color-bg-surface,#fff);border:1px solid var(--color-border-default,#D9DBE9);border-radius:12px;padding:16px}
+
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.tb-search{position:relative;display:flex;align-items:center;width:220px;flex-shrink:0}
+.tb-search .msym{position:absolute;left:10px;color:var(--color-icon-muted,#A0A3BD);font-size:16px;pointer-events:none}
+.tb-search input{width:100%;height:40px;border:1px solid var(--color-border-default,#D9DBE9);border-radius:8px;background:#fff;padding:0 12px 0 34px;font-size:13px;font-family:inherit;color:var(--color-text-body,#4E4B66);outline:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:8px;font-size:14px;font-weight:var(--font-weight-semibold,600);cursor:pointer;font-family:inherit;border:none;white-space:nowrap}
+.btn-primary{background:var(--color-bg-brand,#141ED2);color:#fff}
+.btn-outline{background:transparent;color:var(--color-text-primary,#14142A);border:1px solid var(--color-primary-200,#C4C6F7)}
+.btn-icon{width:40px;height:40px;padding:0;border-radius:8px;border:1px solid var(--color-primary-200,#C4C6F7);background:transparent;display:flex;align-items:center;justify-content:center;color:var(--color-text-primary,#14142A)}
+
+.table-wrap{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(75,99,226,.08);overflow:hidden}
+table{width:100%;border-collapse:collapse}
+th{padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--color-text-secondary,#6E7191);letter-spacing:.4px;text-transform:uppercase;background:var(--color-bg-page,#F4F6FA);border-bottom:1px solid var(--color-border-default,#D9DBE9)}
+td{padding:10px 14px;font-size:13px;color:var(--color-text-body,#4E4B66);border-bottom:1px solid var(--color-neutral-200,#EDF2F7)}
+tbody tr:last-child td{border-bottom:none}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:9999px;background:var(--color-bg-success,#F2FFFB);color:var(--color-text-success,#00966D)}
+.status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--color-bg-success-solid,#00BA88)}
+
+.pagination-bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:0 4px}
+.pg-count{font-size:12px;color:var(--color-text-secondary,#6E7191)}
+.pg-pages{display:flex;align-items:center;gap:4px;margin-left:auto}
+.pg-btn{min-width:32px;height:32px;padding:0 6px;border-radius:6px;border:1px solid var(--color-border-default,#D9DBE9);background:#fff;color:var(--color-text-body,#4E4B66);font-size:13px;display:flex;align-items:center;justify-content:center}
+.pg-btn.active{background:var(--color-bg-brand,#141ED2);border-color:var(--color-bg-brand,#141ED2);color:#fff;font-weight:700}
+.pg-size select,.pg-jump input{height:32px;border:1px solid var(--color-border-default,#D9DBE9);border-radius:6px;font-size:13px;font-family:inherit;color:var(--color-text-body,#4E4B66);outline:none}
+.pg-size select{padding:0 8px}
+.pg-jump{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary,#6E7191)}
+.pg-jump input{width:56px;padding:0 8px}
+</style></head><body>
+
+<!-- id="ias-{domain}-list-panel", e.g. id="ias-nvttpl-list-panel" -->
+<div class="list-panel" id="ias-example-list-panel">
+
+  <!-- toolbar slot: ToolbarSimple ⇄ FilterCard, caller renders exactly one -->
+  <div class="toolbar">
+    <div class="tb-search">
+      <span class="msym" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+      <input placeholder="Tìm kiếm">
+    </div>
+    <button class="btn btn-primary">
+      <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+      Tìm kiếm
+    </button>
+    <button class="btn btn-outline">
+      <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">tune</span>
+      Tìm kiếm nâng cao
+    </button>
+    <div style="margin-left:auto;display:flex;gap:10px">
+      <button class="btn btn-outline">
+        <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">file_download</span>
+        Export
+      </button>
+      <button class="btn-icon" title="Cài đặt hiển thị">
+        <span class="msym" style="font-size:19px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">settings</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- table slot: Table (renders its own shadowed card inside ListPanel's card) -->
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mã</th><th>Tên</th><th>Trạng thái</th></tr></thead>
+      <tbody>
+        <tr><td>NVTT-001</td><td>Thông tư 80/2024/TT-BTC</td><td><span class="status">Đã duyệt</span></td></tr>
+        <tr><td>NVTT-002</td><td>Nghị định 45/2026/NĐ-CP</td><td><span class="status">Đã duyệt</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- pagination slot: full pagination-bar row (count + Pagination + page-size + page-jump) -->
+  <div class="pagination-bar">
+    <span class="pg-count">Đã hiển thị 1 - 2 trên 27 kết quả</span>
+    <div class="pg-pages">
+      <button class="pg-btn active">1</button>
+      <button class="pg-btn">2</button>
+      <button class="pg-btn">3</button>
+    </div>
+    <div class="pg-size"><select><option>20</option></select></div>
+    <div class="pg-jump"><span>Chuyển đến</span><input placeholder="Nhập"></div>
+  </div>
+
+</div>
+
+</body></html>

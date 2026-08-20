@@ -1,0 +1,3 @@
+# MenuItem
+- Three variants, visually distinct, don't blend them: `nav` (dark full-row background, icon 22-24px + label, active = translucent white fill — same active treatment as `AppSidebar`), `tree` (compact 13px row, indentation by `depth`, `add`/`remove` glyph for expandable nodes, small bullet `fiber_manual_record` for leaves), `action` (white row for menus/dropdowns, active = 8%-brand-tint background **plus** a 3px brand accent bar on the left edge — this left bar is unique to `action` and shouldn't appear on `nav` or `tree`).
+- `danger` (only meaningful on `action`) = red text, white row background — don't also tint the row background red.

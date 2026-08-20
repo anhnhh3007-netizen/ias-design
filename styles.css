@@ -1,0 +1,31 @@
+/* HCM Design System — Root Stylesheet
+   Import this single file in any consumer to get all tokens + fonts.
+   Source: HCM System Web.fig (Figma) — MB Bank / HCM-Hris internal system
+*/
+
+@import './tokens/colors.css';
+@import './tokens/typography.css';
+@import './tokens/spacing.css';
+/* fig-tokens.css intentionally NOT imported here: it's a raw Figma Variables
+   export kept only for reference/reverse-lookup against the source .fig file.
+   It redeclares --color-neutral-100/-500/-900 and --color-primary-500 with
+   different values than colors.css (the canonical source); importing it here
+   silently overrode those tokens system-wide (e.g. page bg rendered #FFFFFF
+   instead of #F4F6FA). Load fig-tokens.css directly and standalone if you
+   need to inspect the raw Figma export. */
+
+/* Body baseline */
+body {
+  font-family: var(--font-family-body);
+  font-size: var(--type-body2-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--type-body2-line-height);
+  color: var(--color-text-body);
+  background-color: var(--color-bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}

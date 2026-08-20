@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!-- @template name="IAS Xem chi tiết" description="Màn hình xem chi tiết 1 bản ghi (full-page, drill-in từ Drawer): Sidebar + header có nút back/status/actions + section-switcher + card thông tin chung + card bảng lịch sử + footer Đóng. Minh hoạ bằng màn hình thật Pháp luật › NVTT Pháp luật › Căn cứ xử phạt (cùng bản ghi XP.QĐ1234.1 mở từ DanhSachChuongTrinh.dc.html's Drawer)." -->
+<!-- Note: đây là template THAM KHẢO (structure/pattern) cho các màn "Xem chi tiết" nói chung —
+     không phải màn hình cố định. Các trường trong "Thông tin chung" (Mã phạt, Mã văn bản, ...),
+     bảng "Lịch sử thay đổi", và section-switcher đều là VÍ DỤ minh hoạ cho domain "Căn cứ xử phạt"
+     — khi áp dụng cho màn hình khác, thay toàn bộ field label/data theo đúng input đầu vào
+     (wireframe, mô tả nghiệp vụ, hoặc dữ liệu thực) của màn đó, giữ lại CẤU TRÚC (header
+     back+title+badge+actions, section-switcher, card gập, field-grid 3 cột, bảng, footer Đóng)
+     chứ không copy nguyên tên trường/nội dung mẫu. -->
+<helmet>
+<script src="./ds-base.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--color-bg-page,#F4F6FA);margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif}
+.msym{font-family:'Material Symbols Outlined';font-style:normal;user-select:none;line-height:1;display:inline-block;flex-shrink:0}
+.app{display:flex;height:100vh;overflow:hidden}
+
+/* ── Sidebar (same as DanhSachChuongTrinh.dc.html, + nav-tree for the active group).
+     The dark-navy sidebar palette (#0D0D2B/#1C1C42/#8B8FBD/#CBD0E8/#2a2a5a) has no
+     declared Semantic Alias in tokens/colors.css — pre-existing across every IAS
+     template, not a gap introduced here; left as literal hex like its siblings. ── */
+.sidebar{width:64px;min-height:100vh;background:#0D0D2B;display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;transition:width 280ms cubic-bezier(.4,0,.2,1);position:relative;z-index:20}
+.sidebar:hover{width:248px}
+.sidebar:hover .sb-lbl{opacity:1}
+.sidebar:hover .sb-sub{opacity:1}
+.sb-lbl{opacity:0;transition:opacity 200ms 60ms;white-space:nowrap}
+.sb-sub{opacity:0;transition:opacity 200ms 60ms;white-space:nowrap}
+.sb-brand{display:flex;align-items:center;gap:10px;padding:16px;min-height:64px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-brand-text{display:flex;flex-direction:column;flex:1;min-width:0}
+.sb-brand-text .top{color:#fff;font-size:15px;font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.sb-brand-text .sub{color:#8B8FBD;font-size:11px;white-space:nowrap;margin-top:1px}
+.sb-search{margin:0 10px 10px;flex-shrink:0}
+.sb-search-inner{display:flex;align-items:center;gap:8px;background:#1C1C42;border-radius:8px;padding:8px 10px}
+.sb-nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:2px 6px 16px;scrollbar-width:thin;scrollbar-color:#2a2a5a transparent}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;color:#CBD0E8;white-space:nowrap;margin-bottom:2px;transition:background 150ms,color 150ms}
+.nav-item:hover{background:rgba(255,255,255,.07);color:#fff}
+.nav-item.active{color:#fff;background:rgba(255,255,255,.12)}
+.nav-item .grp-arrow{margin-left:auto;color:#8B8FBD;font-size:18px;transition:transform 200ms}
+.nav-tree{padding-left:8px}
+.nav-leaf{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:6px;cursor:pointer;color:#8B8FBD;font-size:12px;white-space:nowrap;margin-top:2px;transition:background 150ms,color 150ms}
+.nav-leaf:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav-leaf.active{color:#fff;background:rgba(255,255,255,.12);font-weight:600}
+.nav-leaf .bullet{font-size:9px}
+
+/* ── Main ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.page-header{background:var(--color-bg-surface,#fff);border-bottom:1px solid var(--color-border-default,#D9DBE9);padding:14px 24px 16px;flex-shrink:0}
+.breadcrumb{display:flex;align-items:center;gap:2px;margin-bottom:8px}
+.bc-link{color:var(--color-text-link,#141ED2);text-decoration:none}
+.bc-link:hover{text-decoration:underline}
+.bc-sep{color:var(--color-border-default,#D9DBE9);margin:0 3px;user-select:none}
+.bc-current{color:var(--color-text-body,#4E4B66)}
+.detail-title-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.detail-title-left{display:flex;align-items:center;gap:10px;min-width:0}
+.back-btn{width:36px;height:36px;flex-shrink:0;border-radius:8px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--color-text-primary,#14142A);cursor:pointer}
+.back-btn:hover{background:var(--color-bg-hover,#F4F5FF);color:var(--color-text-brand,#141ED2)}
+/* .detail-title is 20px/700 to match PageHeader's own actual title style (PageHeader.jsx's
+   hardcoded h1: fontSize 20, fontWeight 700 — same as DanhSachChuongTrinh.dc.html's .page-title).
+   Earlier this used .hcm-h4 (22px/500) as the "nearest declared scale" per Step 2b, but that
+   created a real mismatch against the very component this template mirrors — PageHeader-internal
+   title text follows PageHeader's own convention (like Table headers follow Table's own uppercase
+   convention instead of Caption), it isn't re-mapped to a generic scale. The back-arrow (.back-btn)
+   and the status Badge right after the title mirror PageHeader's declared `onBack`/`badge` slots
+   (added 2026-07-31, see component-rules.md) — this template is their reference implementation. */
+.detail-title{font-size:20px;font-weight:700;margin:0;color:var(--color-text-primary,#14142A);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.detail-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+
+/* ── Buttons (same closed set as DanhSachChuongTrinh.dc.html) ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:8px;font-size:14px;font-weight:var(--font-weight-semibold,600);cursor:pointer;font-family:inherit;border:none;white-space:nowrap}
+.btn-outline{background:transparent;color:var(--color-text-primary,#14142A);border:1px solid var(--color-primary-200,#C4C6F7)}
+.btn-outline:hover{border-color:var(--color-border-focus,#141ED2)}
+.btn-icon{width:40px;height:40px;padding:0;border-radius:8px;border:1px solid var(--color-primary-200,#C4C6F7);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-primary,#14142A)}
+.btn-icon:hover{border-color:var(--color-border-focus,#141ED2)}
+
+/* ── Overflow menu (Dropdown / DropdownMenuItem — behind the header's more_vert trigger) ── */
+.of-menu-wrap{position:relative;display:inline-block}
+.of-menu{position:absolute;right:0;top:44px;background:var(--color-bg-surface,#fff);border-radius:8px;box-shadow:0 8px 24px rgba(75,99,226,.12);min-width:170px;z-index:30;display:none;padding:4px;overflow:hidden}
+.of-menu.open{display:block}
+.of-menu .mi{display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:13px;font-weight:500;color:var(--color-text-body,#4E4B66);cursor:pointer;border-radius:6px;white-space:nowrap}
+.of-menu .mi:hover{background:var(--color-bg-hover,#F4F5FF)}
+
+/* ── Status pill (dot + pill, reused for "Đã phê duyệt" and risk-level cells —
+     Table/Badge-internal convention, matches DanhSachChuongTrinh.dc.html's own .status exactly) ── */
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;white-space:nowrap;padding:3px 10px;border-radius:9999px}
+.status::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.status.st-success{background:var(--color-bg-success,#F2FFFB);color:var(--color-text-success,#00966D)}
+.status.st-success::before{background:var(--color-bg-success-solid,#00BA88)}
+.status.st-warning{background:var(--color-bg-warning,#FFF9EF);color:var(--color-text-warning,#946200)}
+.status.st-warning::before{background:var(--color-bg-warning-solid,#F4B740)}
+.status.st-error{background:var(--color-bg-error,#FFF3F8);color:var(--color-text-error,#C30052)}
+.status.st-error::before{background:var(--color-bg-error-solid,#EB2D4B)}
+.status.st-neutral{background:var(--color-bg-page,#F4F6FA);color:var(--color-text-secondary,#6E7191)}
+.status.st-neutral::before{background:var(--color-text-muted,#A0A3BD)}
+
+.content{flex:1;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
+
+/* ── Section switcher — bespoke: no DS component covers "radio dot + label + per-segment
+     underline" (nearest existing component is Tabs, which is underline-only with no radio) —
+     built with tokens per Step 2's "no equivalent → DS tokens only" rule. Labels use .hcm-subtitle2
+     for size/line-height/letter-spacing; active vs inactive differs only by color, not weight,
+     to avoid layering a second ad-hoc weight on top of the scale. ── */
+.section-switcher{display:flex;gap:36px;border-bottom:1px solid var(--color-border-default,#D9DBE9)}
+.sw-item{display:flex;align-items:center;gap:8px;padding:0 0 14px;cursor:pointer;position:relative;color:var(--color-text-secondary,#6E7191);white-space:nowrap}
+.sw-radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--color-border-strong,#C4C4D4);flex-shrink:0;position:relative;transition:border-color .15s}
+.sw-item.active{color:var(--color-text-primary,#14142A)}
+.sw-item.active .sw-radio{border-color:var(--color-border-focus,#141ED2)}
+.sw-item.active .sw-radio::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--color-bg-brand,#141ED2)}
+.sw-item::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:transparent}
+.sw-item.active::after{background:var(--color-bg-brand,#141ED2)}
+
+/* ── Collapsible card — matches Card's own declared spec: 12px radius + 1px border
+     (updated 2026-07-31, was a brand-tinted shadow with no border — component-rules.md
+     Card section); the collapse/chevron behavior on top is a bespoke extension, Card
+     itself has no collapse prop. ── */
+.d-card{background:var(--color-bg-surface,#fff);border-radius:12px;border:1px solid var(--color-border-default,#D9DBE9);overflow:hidden;flex-shrink:0}
+.d-card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer}
+.d-card-toggle{width:28px;height:28px;border-radius:6px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;color:var(--color-icon-default,#6E7191)}
+.d-card-toggle:hover{background:var(--color-bg-hover,#F4F5FF);color:var(--color-icon-brand,#141ED2)}
+.d-card-body{padding:0 20px 20px}
+
+/* ── Field grid (3 columns) — .field is the reference implementation of Field
+     (components/display/Field/, added 2026-07-31: 12px/500 label, 14px/400 value + bottom
+     divider). The grid itself (column count/gap) is bespoke per screen — Field doesn't own it;
+     Drawer reuses the same Field spec in its own 2-column grid. ── */
+.field-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 24px}
+.field-grid .full{grid-column:1/-1}
+.field label{display:block;color:var(--color-text-secondary,#6E7191);margin-bottom:6px}
+.field .val{color:var(--color-text-primary,#14142A);padding-bottom:10px;border-bottom:1px solid var(--color-neutral-200,#EDF2F7);min-height:20px}
+
+/* ── Detail table (Lịch sử thay đổi — flat, Table's own header convention: uppercase,
+     11px/700, letter-spacing, --color-bg-page background) ── */
+.table-wrap{background:var(--color-bg-surface,#fff);border-radius:0;overflow:hidden}
+.table-inner{overflow:auto;max-height:420px}
+table{width:100%;border-collapse:collapse;min-width:900px}
+thead th{background:var(--color-bg-page,#F4F6FA);padding:11px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--color-text-secondary,#6E7191);letter-spacing:.4px;text-transform:uppercase;border:none;white-space:nowrap}
+td{padding:12px 14px;font-size:13px;color:var(--color-text-body,#4E4B66);border:0.5px solid var(--color-border-default,#D9DBE9);vertical-align:middle;white-space:nowrap}
+tbody tr:hover{background:var(--color-bg-hover,#F4F5FF)}
+
+/* ── Footer action bar — DetailFooter (components/layout/DetailFooter/), align="center" ── */
+.detail-footer{display:flex;align-items:center;gap:8px;justify-content:center;border-top:1px solid var(--color-neutral-200,#EDF2F7);padding:16px 0 4px}
+</style>
+</helmet>
+
+<div class="app">
+
+  <!-- ══════════════════════════════════════════
+       SIDEBAR — MB | IAS (Kiểm toán nội bộ) — same brand/nav as other IAS templates,
+       "Pháp luật" expanded with "Văn bản pháp luật" active (stand-in leaf; swap to
+       whichever real item matches this screen's own module when adapting the template).
+  ══════════════════════════════════════════════ -->
+  <nav class="sidebar">
+    <div class="sb-brand">
+      <svg width="26" height="26" viewBox="0 0 30 30" fill="none" style="flex-shrink:0">
+        <path d="M15 1.5l2.9 7.4L25.9 7l-3.8 7.2 6.4 4.3-6.4 4.3 3.8 7.2-8-1.9L15 28.5l-2.9-7.4L4.1 23l3.8-7.2L1.5 15l6.4-4.3L4.1 7l8 1.9L15 1.5z" fill="#E5052A"/>
+      </svg>
+      <div class="sb-brand-text">
+        <span class="top sb-lbl">MB <span style="color:#8B8FBD;font-weight:400">| IAS</span></span>
+        <span class="sub sb-sub">Kiểm toán nội bộ</span>
+      </div>
+    </div>
+
+    <div class="sb-search">
+      <div class="sb-search-inner">
+        <span class="msym" style="font-size:17px;color:#8B8FBD;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+        <span class="sb-lbl" style="color:#8B8FBD;font-size:13px;white-space:nowrap">Tìm kiếm</span>
+      </div>
+    </div>
+
+    <div class="sb-nav">
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">home</span>
+        <span class="sb-lbl">Trang chủ</span>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">sync</span>
+        <span class="sb-lbl">Đồng bộ dữ liệu văn bản</span>
+      </div>
+      <div style="margin-bottom:2px">
+        <div class="nav-item active">
+          <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24">gavel</span>
+          <span class="sb-lbl" style="flex:1">Pháp luật</span>
+          <span class="msym grp-arrow sb-lbl" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20;transform:rotate(180deg)">arrow_drop_down</span>
+        </div>
+        <div class="nav-tree sb-lbl">
+          <div class="nav-leaf active">
+            <span class="msym bullet" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>Văn bản pháp luật</span>
+          </div>
+          <div class="nav-leaf">
+            <span class="msym bullet" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+            <span>NVTT Pháp luật</span>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">corporate_fare</span>
+        <span class="sb-lbl" style="flex:1">Nội bộ</span>
+        <span class="msym grp-arrow sb-lbl" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">arrow_drop_down</span>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">compare_arrows</span>
+        <span class="sb-lbl" style="flex:1">Mapping NVTT</span>
+        <span class="msym grp-arrow sb-lbl" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">arrow_drop_down</span>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">task_alt</span>
+        <span class="sb-lbl">Hồ sơ phê duyệt</span>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">library_books</span>
+        <span class="sb-lbl" style="flex:1">Thư viện</span>
+        <span class="msym grp-arrow sb-lbl" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">arrow_drop_down</span>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">menu_book</span>
+        <span class="sb-lbl">Cẩm nang NVTT</span>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">document_scanner</span>
+        <span class="sb-lbl">Bóc tách văn bản</span>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">inventory_2</span>
+        <span class="sb-lbl">Kho tài liệu</span>
+      </div>
+      <div class="nav-item">
+        <span class="msym" style="font-size:21px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">category</span>
+        <span class="sb-lbl" style="flex:1">Danh mục NVTT</span>
+        <span class="msym grp-arrow sb-lbl" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">arrow_drop_down</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════════════════
+       MAIN PANEL
+  ══════════════════════════════════════════════ -->
+  <div class="main">
+
+    <!-- PageHeader (components/layout/PageHeader/) — breadcrumb + (onBack + title + badge) left,
+         actions right. Renamed from the old ad-hoc "detail-header" class: this IS PageHeader's
+         reference implementation now, not a separate bespoke header block sitting next to it.
+         Actions: Ý kiến / Lịch sử are PageHeader's declared entries; the trailing more_vert
+         opens a real Dropdown (Xuất PDF / In) — the standard overflow escape valve per
+         PageHeader rules, now actually wired instead of a decorative icon. -->
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="#" class="bc-link hcm-caption">Trang chủ</a>
+        <span class="bc-sep">›</span>
+        <a href="#" class="bc-link hcm-caption">Pháp luật</a>
+        <span class="bc-sep">›</span>
+        <a href="#" class="bc-link hcm-caption">NVTT Pháp luật</a>
+        <span class="bc-sep">›</span>
+        <a href="#" class="bc-link hcm-caption" onclick="{{ goBack }}">Căn cứ xử Phạt</a>
+        <span class="bc-sep">›</span>
+        <span class="bc-current hcm-caption">{{ ccxp.maP }}</span>
+      </div>
+      <div class="detail-title-row">
+        <div class="detail-title-left">
+          <button class="back-btn" title="Quay lại" onclick="{{ goBack }}">
+            <span class="msym" style="font-size:22px">arrow_back</span>
+          </button>
+          <h1 class="detail-title">Xem chi tiết {{ ccxp.maP }}</h1>
+          <span class="status st-success" style="flex-shrink:0">Đã duyệt</span>
+        </div>
+        <div class="detail-actions">
+          <div class="of-menu-wrap">
+            <button class="btn-icon" title="Thêm" onclick="{{ toggleOverflowMenu }}">
+              <span class="msym" style="font-size:19px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">more_vert</span>
+            </button>
+            <div class="of-menu {{ overflowMenuOpenCls }}">
+              <div class="mi"><span class="msym" style="font-size:17px">picture_as_pdf</span>Xuất PDF</div>
+              <div class="mi"><span class="msym" style="font-size:17px">print</span>In</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- Section switcher — 2 segments, one visible panel at a time -->
+      <div class="section-switcher">
+        <div class="sw-item hcm-subtitle2 {{ section1ActiveCls }}" onclick="{{ selectSectionContent }}">
+          <span class="sw-radio"></span>Thông tin chung
+        </div>
+        <div class="sw-item hcm-subtitle2 {{ section2ActiveCls }}" onclick="{{ selectSectionHistory }}">
+          <span class="sw-radio"></span>Lịch sử thay đổi
+        </div>
+      </div>
+
+      <!-- PANEL: Thông tin chung -->
+      <sc-if value="{{ sectionIsContent }}" hint-placeholder-val="{{ true }}">
+      <div class="d-card">
+        <div class="d-card-header" onclick="{{ toggleGeneralCard }}">
+          <span class="hcm-subtitle2" style="color:var(--color-text-primary,#14142A)">Thông tin căn cứ xử phạt</span>
+          <button class="d-card-toggle"><span class="msym" style="font-size:20px">{{ generalToggleIcon }}</span></button>
+        </div>
+        <sc-if value="{{ generalOpen }}" hint-placeholder-val="{{ true }}">
+        <div class="d-card-body">
+          <div class="field-grid">
+            <div class="field"><label class="hcm-caption">Mã phạt</label><div class="val hcm-body2">{{ ccxp.maP }}</div></div>
+            <div class="field"><label class="hcm-caption">Mã văn bản</label><div class="val hcm-body2">{{ ccxp.maVB }}</div></div>
+            <div class="field"><label class="hcm-caption">Tên văn bản</label><div class="val hcm-body2">{{ ccxp.tenVB }}</div></div>
+            <div class="field"><label class="hcm-caption">Mức phạt Min</label><div class="val hcm-body2">{{ ccxp.mucMin }}</div></div>
+            <div class="field"><label class="hcm-caption">Mức phạt Max</label><div class="val hcm-body2">{{ ccxp.mucMax }}</div></div>
+            <div class="field"><label class="hcm-caption">Hình thức XPBS</label><div class="val hcm-body2">{{ ccxp.htXPBS }}</div></div>
+            <div class="field"><label class="hcm-caption">Tình trạng hiệu lực</label><div class="val hcm-body2">{{ ccxp.ttHL }}</div></div>
+            <div class="field"><label class="hcm-caption">Ngày hiệu lực</label><div class="val hcm-body2">{{ ccxp.ngayHL }}</div></div>
+            <div class="field"><label class="hcm-caption">Ngày hết hiệu lực</label><div class="val hcm-body2">{{ ccxp.ngayHHL }}</div></div>
+            <div class="field full"><label class="hcm-caption">Căn cứ QĐXP</label><div class="val hcm-body2">{{ ccxp.canCu }}</div></div>
+            <div class="field full"><label class="hcm-caption">Nội dung QĐXP</label><div class="val hcm-body2">{{ ccxp.noiDung }}</div></div>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- PANEL: Lịch sử thay đổi — flat table (no grouped header needed here), reuses this
+           screen's own approval-trail modal content (Hành động/Người cập nhật/.../Trạng thái). -->
+      <sc-if value="{{ sectionIsHistory }}" hint-placeholder-val="{{ false }}">
+      <div class="d-card">
+        <div class="d-card-header" onclick="{{ toggleHistoryCard }}">
+          <span class="hcm-subtitle2" style="color:var(--color-text-primary,#14142A)">Lịch sử thay đổi</span>
+          <button class="d-card-toggle"><span class="msym" style="font-size:20px">{{ historyToggleIcon }}</span></button>
+        </div>
+        <sc-if value="{{ historyOpen }}" hint-placeholder-val="{{ true }}">
+        <div class="table-wrap">
+          <div class="table-inner">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hành động</th><th>Người cập nhật</th><th>Thời gian</th>
+                  <th>Người duyệt</th><th>TG duyệt</th><th>Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="status st-success">Phê duyệt</span></td><td>Nguyễn Văn A</td><td>02/08/2026 14:15</td>
+                  <td>Trần Thị B</td><td>02/08/2026 14:15</td><td><span class="status st-success">Đã duyệt</span></td>
+                </tr>
+                <tr>
+                  <td><span class="status st-warning">Gửi duyệt</span></td><td>Nguyễn Văn A</td><td>01/08/2026 09:30</td>
+                  <td>—</td><td>—</td><td><span class="status st-warning">Chờ duyệt</span></td>
+                </tr>
+                <tr>
+                  <td><span class="status st-neutral">Tạo mới</span></td><td>Nguyễn Văn A</td><td>30/07/2026 10:00</td>
+                  <td>—</td><td>—</td><td><span class="status st-neutral">Khởi tạo</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <div class="detail-footer">
+        <button class="btn btn-outline" onclick="{{ goBack }}">Đóng</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 }
+}">
+var CCXP_DETAIL = {
+  maP: 'XP.QĐ1234.1',
+  maVB: 'QĐ 1234',
+  tenVB: 'Quy định xử phạt VPHC trong lĩnh vực tiền tệ và ngân hàng',
+  canCu: 'Điều 9, Khoản 2, Điểm a',
+  noiDung: 'Hành vi vi phạm quy định về an toàn hệ thống công nghệ thông tin',
+  mucMin: '50.000.000',
+  mucMax: '100.000.000',
+  htXPBS: 'Đình chỉ hoạt động 3 tháng',
+  ttHL: 'Còn hiệu lực',
+  ngayHL: '01/01/2024',
+  ngayHHL: '—',
+};
+
+class Component extends DCLogic {
+  state = {
+    section: 'content',
+    generalOpen: true,
+    historyOpen: true,
+    overflowMenuOpen: false,
+  };
+
+  renderVals() {
+    var st = this.state;
+    return {
+      ccxp: CCXP_DETAIL,
+      goBack: () => { window.location.href = '../ias-danh-sach-chuong-trinh/DanhSachChuongTrinh.dc.html'; },
+      sectionIsContent: st.section === 'content',
+      sectionIsHistory: st.section === 'history',
+      section1ActiveCls: st.section === 'content' ? 'active' : '',
+      section2ActiveCls: st.section === 'history' ? 'active' : '',
+      selectSectionContent: () => this.setState({ section: 'content' }),
+      selectSectionHistory: () => this.setState({ section: 'history' }),
+      generalOpen: st.generalOpen,
+      generalToggleIcon: st.generalOpen ? 'expand_less' : 'expand_more',
+      toggleGeneralCard: () => this.setState({ generalOpen: !st.generalOpen }),
+      historyOpen: st.historyOpen,
+      historyToggleIcon: st.historyOpen ? 'expand_less' : 'expand_more',
+      toggleHistoryCard: () => this.setState({ historyOpen: !st.historyOpen }),
+      overflowMenuOpenCls: st.overflowMenuOpen ? 'open' : '',
+      toggleOverflowMenu: () => this.setState({ overflowMenuOpen: !st.overflowMenuOpen }),
+    };
+  }
+}
+</script>
+</body>
+</html>

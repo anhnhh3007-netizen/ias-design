@@ -1,0 +1,30 @@
+<!-- @dsCard group="Colors" viewport="700x140" name="Neutral / Grayscale" subtitle="10-step neutral scale" -->
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 16px; background: var(--color-bg-surface); font-family: var(--font-family-body); }
+  .row { display: flex; gap: 5px; }
+  .swatch { flex: 1; height: 60px; border-radius: 6px; display: flex; flex-direction: column; justify-content: flex-end; padding: 4px 6px; }
+  .swatch span { font-size: 9px; font-weight: 600; line-height: 1.4; }
+  .dark span { color: rgba(255,255,255,0.8); }
+  .light span { color: rgba(20,20,42,0.5); }
+  .label { font-size: 11px; font-weight: 600; color: var(--color-neutral-500); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
+</style>
+</head><body>
+<div class="label">Neutral</div>
+<div class="row">
+  <div class="swatch dark" data-token="--color-neutral-900" style="background:var(--color-neutral-900)"><span>900</span><span class="hex"></span></div>
+  <div class="swatch dark" data-token="--color-neutral-800" style="background:var(--color-neutral-800)"><span>800</span><span class="hex"></span></div>
+  <div class="swatch dark" data-token="--color-neutral-700" style="background:var(--color-neutral-700)"><span>700</span><span class="hex"></span></div>
+  <div class="swatch dark" data-token="--color-neutral-600" style="background:var(--color-neutral-600)"><span>600</span><span class="hex"></span></div>
+  <div class="swatch dark" data-token="--color-neutral-500" style="background:var(--color-neutral-500)"><span>500</span><span class="hex"></span></div>
+  <div class="swatch light" data-token="--color-neutral-400" style="background:var(--color-neutral-400); border:1px solid var(--color-border-default)"><span>400</span><span class="hex"></span></div>
+  <div class="swatch light" data-token="--color-neutral-300" style="background:var(--color-neutral-300); border:1px solid var(--color-border-default)"><span>300</span><span class="hex"></span></div>
+  <div class="swatch light" data-token="--color-neutral-200" style="background:var(--color-neutral-200); border:1px solid var(--color-border-default)"><span>200</span><span class="hex"></span></div>
+  <div class="swatch light" data-token="--color-neutral-100" style="background:var(--color-neutral-100); border:1px solid var(--color-border-default)"><span>100</span><span class="hex"></span></div>
+  <div class="swatch light" data-token="--color-neutral-0" style="background:var(--color-neutral-0); border:1px solid var(--color-border-default)"><span>0</span><span class="hex"></span></div>
+</div>
+<script src="resolve-token.js"></script>
+</body></html>

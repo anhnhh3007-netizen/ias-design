@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="UTF-8">
+<title>HCM Design System — Style Guide</title>
+<link rel="stylesheet" href="../styles.css">
+<!-- Direct link (in addition to the one nested inside tokens/typography.css)
+     so the font request starts immediately instead of waiting on the
+     styles.css → typography.css @import chain to resolve first. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block">
+<style>
+  body { margin: 0; background: var(--color-bg-page); font-family: var(--font-family-body); }
+  .sg-page { max-width: 980px; margin: 0 auto; padding: 32px 24px 96px; }
+  .sg-hero { margin-bottom: 32px; }
+  .sg-hero h1 { font-size: 28px; font-weight: 700; color: var(--color-text-primary); margin: 0 0 4px; }
+  .sg-hero p { font-size: 13px; color: var(--color-text-secondary); margin: 0; }
+
+  .sg-section { background: var(--color-bg-surface); border: 1px solid var(--color-border-default); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px; }
+  .sg-section-title { font-size: 11px; font-weight: 700; color: var(--color-text-muted); letter-spacing: 1px; text-transform: uppercase; margin: 0 0 16px; }
+  .sg-subsection + .sg-subsection { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--color-border-default); }
+
+  /* -- Brand -- */
+  .sg-brand-row { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+  .sg-logo-block { display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-radius: 12px; border: 1px solid var(--color-border-default); }
+  .sg-logo-icon { width: 44px; height: 44px; background: var(--color-bg-brand); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .sg-logo-icon span { color: var(--color-text-inverse); font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+  .sg-logo-text { display: flex; flex-direction: column; }
+  .sg-logo-text .top { font-size: 18px; font-weight: 700; color: var(--color-text-brand); letter-spacing: 0.5px; line-height: 1; }
+  .sg-logo-text .sub { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 1.2px; text-transform: uppercase; margin-top: 3px; }
+  .sg-logo-block.dark { background: var(--color-neutral-900); border-color: var(--color-neutral-900); }
+  .sg-logo-block.dark .sg-logo-text .top { color: var(--color-text-inverse); }
+  .sg-logo-block.dark .sg-logo-text .sub { color: var(--color-text-muted); }
+  .sg-palette { display: flex; gap: 8px; align-items: flex-start; }
+  .sg-dot { width: 32px; height: 32px; border-radius: 50%; }
+  .sg-dot-label { font-size: 9px; color: var(--color-text-muted); text-align: center; margin-top: 4px; font-weight: 600; }
+  .sg-dot-wrap { display: flex; flex-direction: column; align-items: center; }
+
+  /* -- Icons -- */
+  .sg-icon-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sg-ic { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 6px; color: var(--color-icon-default); }
+  .sg-ic:hover { background: var(--color-bg-hover); color: var(--color-icon-brand); }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; font-size: 20px; line-height: 1; user-select: none; }
+
+  /* -- Colors -- */
+  .sg-color-label { font-size: 11px; font-weight: 600; color: var(--color-neutral-500); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
+  .sg-swatch-row { display: flex; gap: 6px; }
+  .sg-swatch { flex: 1; height: 64px; border-radius: 8px; display: flex; flex-direction: column; justify-content: flex-end; padding: 6px 8px; }
+  .sg-swatch span { font-size: 10px; font-weight: 600; line-height: 1.3; }
+  .sg-swatch .name { color: rgba(255,255,255,0.75); }
+  .sg-swatch .hex  { color: rgba(255,255,255,0.95); }
+  .sg-swatch.light .name, .sg-swatch.light .hex { color: rgba(20,20,42,0.55); }
+
+  .sg-semantic-row { display: flex; gap: 8px; }
+  .sg-semantic-group { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+  .sg-semantic-group .sg-group-label { font-size: 10px; font-weight: 700; color: var(--color-neutral-500); letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 4px; }
+  .sg-semantic-swatch { height: 36px; border-radius: 6px; display: flex; align-items: center; padding: 0 8px; font-size: 10px; font-weight: 600; }
+  .sg-semantic-swatch.dark { color: rgba(255,255,255,0.9); }
+  .sg-semantic-swatch.light { border: 1px solid rgba(0,0,0,0.08); color: rgba(20,20,42,0.55); }
+
+  /* -- Typography -- */
+  .sg-type-row { display: flex; align-items: baseline; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--color-border-default); }
+  .sg-type-row:last-child { border-bottom: none; }
+  .sg-type-row.body-row { align-items: center; padding: 9px 0; }
+  .sg-type-meta { min-width: 140px; font-size: 10px; color: var(--color-text-muted); line-height: 1.5; flex-shrink: 0; }
+  .sg-type-meta strong { display: block; font-size: 11px; color: var(--color-text-secondary); font-weight: 700; }
+  .sg-type-sample.heading { color: var(--color-text-primary); }
+  .sg-type-sample.body { color: var(--color-text-body); }
+
+  /* -- Spacing -- */
+  .sg-spacing-row { display: flex; gap: 0; align-items: flex-end; flex-wrap: wrap; }
+  .sg-spacing-item { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-right: 12px; margin-bottom: 8px; }
+  .sg-spacing-bar { background: var(--color-bg-brand); border-radius: 3px; width: 28px; opacity: 0.85; }
+  .sg-spacing-label { font-size: 9px; font-weight: 600; color: var(--color-text-muted); text-align: center; line-height: 1.3; }
+  .sg-spacing-label span { display: block; color: var(--color-text-secondary); font-size: 10px; }
+
+  .sg-shadow-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .sg-shadow-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .sg-shadow-box { width: 60px; height: 48px; background: var(--color-bg-surface); }
+  .sg-shadow-label { font-size: 9px; font-weight: 600; color: var(--color-text-secondary); text-align: center; line-height: 1.4; }
+  .sg-shadow-label span { display: block; color: var(--color-text-muted); }
+  .sg-shadow-divider { width: 1px; background: var(--color-border-default); height: 80px; margin: 0 4px; }
+</style>
+</head><body>
+
+<div class="sg-page">
+
+  <div class="sg-hero">
+    <h1>HCM Design System</h1>
+    <p>Style guide tổng hợp — mọi giá trị bên dưới đọc trực tiếp từ <code>tokens/colors.css</code> &amp; <code>tokens/typography.css</code>, tự đồng bộ khi token thay đổi.</p>
+  </div>
+
+  <!-- ===== Brand ===== -->
+  <section class="sg-section">
+    <div class="sg-section-title">Brand</div>
+    <div class="sg-brand-row">
+      <div class="sg-logo-block">
+        <div class="sg-logo-icon"><span>MB</span></div>
+        <div class="sg-logo-text">
+          <span class="top">HCM · HRIS</span>
+          <span class="sub">Quản lý nhân sự</span>
+        </div>
+      </div>
+      <div class="sg-logo-block dark">
+        <div class="sg-logo-icon" style="background:var(--color-bg-surface)"><span style="color:var(--color-text-brand)">MB</span></div>
+        <div class="sg-logo-text">
+          <span class="top">HCM · HRIS</span>
+          <span class="sub">Quản lý nhân sự</span>
+        </div>
+      </div>
+      <div class="sg-palette">
+        <div class="sg-dot-wrap" data-token="--color-primary-500"><div class="sg-dot" style="background:var(--color-primary-500)"></div><div class="sg-dot-label hex"></div></div>
+        <div class="sg-dot-wrap" data-token="--color-primary-900"><div class="sg-dot" style="background:var(--color-primary-900)"></div><div class="sg-dot-label hex"></div></div>
+        <div class="sg-dot-wrap" data-token="--color-accent-500"><div class="sg-dot" style="background:var(--color-accent-500)"></div><div class="sg-dot-label hex"></div></div>
+        <div class="sg-dot-wrap" data-token="--color-error-500"><div class="sg-dot" style="background:var(--color-error-500)"></div><div class="sg-dot-label hex"></div></div>
+        <div class="sg-dot-wrap" data-token="--color-success-500"><div class="sg-dot" style="background:var(--color-success-500)"></div><div class="sg-dot-label hex"></div></div>
+        <div class="sg-dot-wrap" data-token="--color-warning-500"><div class="sg-dot" style="background:var(--color-warning-500)"></div><div class="sg-dot-label hex"></div></div>
+        <div class="sg-dot-wrap" data-token="--color-neutral-900"><div class="sg-dot" style="background:var(--color-neutral-900)"></div><div class="sg-dot-label hex"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Colors ===== -->
+  <section class="sg-section">
+    <div class="sg-section-title">Colors</div>
+
+    <div class="sg-subsection">
+      <div class="sg-color-label">Primary</div>
+      <div class="sg-swatch-row">
+        <div class="sg-swatch" data-token="--color-primary-900" style="background:var(--color-primary-900)"><span class="name">900</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-primary-700" style="background:var(--color-primary-700)"><span class="name">700</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-primary-500" style="background:var(--color-primary-500)"><span class="name">500 ★</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-primary-400" style="background:var(--color-primary-400)"><span class="name">400</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-primary-300" style="background:var(--color-primary-300)"><span class="name">300</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-primary-200" style="background:var(--color-primary-200)"><span class="name">200</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-primary-100" style="background:var(--color-primary-100); border:1px solid var(--color-border-default)"><span class="name">100</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-primary-50" style="background:var(--color-primary-50); border:1px solid var(--color-border-default)"><span class="name">50</span><span class="hex"></span></div>
+      </div>
+    </div>
+
+    <div class="sg-subsection">
+      <div class="sg-color-label">Accent / Secondary</div>
+      <div class="sg-swatch-row">
+        <div class="sg-swatch" data-token="--color-accent-700" style="background:var(--color-accent-700)"><span class="name">700</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-accent-500" style="background:var(--color-accent-500)"><span class="name">500 ★</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-accent-300" style="background:var(--color-accent-300)"><span class="name">300</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-accent-200" style="background:var(--color-accent-200)"><span class="name">200</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-accent-100" style="background:var(--color-accent-100); border:1px solid var(--color-border-default)"><span class="name">100</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-info-500" style="background:var(--color-info-500)"><span class="name">Info 500</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-info-100" style="background:var(--color-info-100); border:1px solid var(--color-border-default)"><span class="name">Info 100</span><span class="hex"></span></div>
+      </div>
+    </div>
+
+    <div class="sg-subsection">
+      <div class="sg-color-label">Neutral</div>
+      <div class="sg-swatch-row">
+        <div class="sg-swatch" data-token="--color-neutral-900" style="background:var(--color-neutral-900)"><span class="name">900</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-neutral-800" style="background:var(--color-neutral-800)"><span class="name">800</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-neutral-700" style="background:var(--color-neutral-700)"><span class="name">700</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-neutral-600" style="background:var(--color-neutral-600)"><span class="name">600</span><span class="hex"></span></div>
+        <div class="sg-swatch" data-token="--color-neutral-500" style="background:var(--color-neutral-500)"><span class="name">500</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-neutral-400" style="background:var(--color-neutral-400); border:1px solid var(--color-border-default)"><span class="name">400</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-neutral-300" style="background:var(--color-neutral-300); border:1px solid var(--color-border-default)"><span class="name">300</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-neutral-200" style="background:var(--color-neutral-200); border:1px solid var(--color-border-default)"><span class="name">200</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-neutral-100" style="background:var(--color-neutral-100); border:1px solid var(--color-border-default)"><span class="name">100</span><span class="hex"></span></div>
+        <div class="sg-swatch light" data-token="--color-neutral-0" style="background:var(--color-neutral-0); border:1px solid var(--color-border-default)"><span class="name">0</span><span class="hex"></span></div>
+      </div>
+    </div>
+
+    <div class="sg-subsection">
+      <div class="sg-color-label">Semantic — Success · Error · Warning · Alert</div>
+      <div class="sg-semantic-row">
+        <div class="sg-semantic-group">
+          <div class="sg-group-label">Success</div>
+          <div class="sg-semantic-swatch dark" data-token="--color-success-700" style="background:var(--color-success-700)"><span class="hex"></span></div>
+          <div class="sg-semantic-swatch dark" data-token="--color-success-500" style="background:var(--color-success-500)"><span class="hex"></span>&nbsp;★</div>
+          <div class="sg-semantic-swatch light" data-token="--color-success-100" style="background:var(--color-success-100)"><span class="hex"></span></div>
+        </div>
+        <div class="sg-semantic-group">
+          <div class="sg-group-label">Error</div>
+          <div class="sg-semantic-swatch dark" data-token="--color-error-700" style="background:var(--color-error-700)"><span class="hex"></span></div>
+          <div class="sg-semantic-swatch dark" data-token="--color-error-500" style="background:var(--color-error-500)"><span class="hex"></span>&nbsp;★</div>
+          <div class="sg-semantic-swatch light" data-token="--color-error-100" style="background:var(--color-error-100)"><span class="hex"></span></div>
+        </div>
+        <div class="sg-semantic-group">
+          <div class="sg-group-label">Warning</div>
+          <div class="sg-semantic-swatch dark" data-token="--color-warning-700" style="background:var(--color-warning-700)"><span class="hex"></span></div>
+          <div class="sg-semantic-swatch dark" data-token="--color-warning-500" style="background:var(--color-warning-500)"><span class="hex"></span>&nbsp;★</div>
+          <div class="sg-semantic-swatch light" data-token="--color-warning-100" style="background:var(--color-warning-100)"><span class="hex"></span></div>
+        </div>
+        <div class="sg-semantic-group">
+          <div class="sg-group-label">Alert</div>
+          <div class="sg-semantic-swatch dark" data-token="--color-alert-500" style="background:var(--color-alert-500)"><span class="hex"></span>&nbsp;★</div>
+          <div class="sg-semantic-swatch dark" data-token="--color-alert-400" style="background:var(--color-alert-400)"><span class="hex"></span></div>
+          <div class="sg-semantic-swatch light" data-token="--color-alert-100" style="background:var(--color-alert-100)"><span class="hex"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Typography ===== -->
+  <section class="sg-section">
+    <div class="sg-section-title">Typography — Averta Std CY (self-hosted)</div>
+
+    <div class="sg-subsection">
+      <div class="sg-type-row">
+        <div class="sg-type-meta"><strong>H1</strong>88px · Light · −1.25px</div>
+        <div class="sg-type-sample heading" style="font-size:36px;font-weight:300;line-height:1">Headline 1</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta"><strong>H2</strong>44px · Medium · 0.25px</div>
+        <div class="sg-type-sample heading" style="font-size:32px;font-weight:500;line-height:1.18">Headline 2</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta"><strong>H3</strong>32px · Medium · 0.25px</div>
+        <div class="sg-type-sample heading" style="font-size:26px;font-weight:500;line-height:36px">Headline 3</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta"><strong>H4</strong>22px · Medium · 0.25px</div>
+        <div class="sg-type-sample heading" style="font-size:20px;font-weight:500;line-height:24px">Headline 4</div>
+      </div>
+      <div class="sg-type-row">
+        <div class="sg-type-meta"><strong>H5</strong>18px · Medium · 0.15px</div>
+        <div class="sg-type-sample heading" style="font-size:18px;font-weight:500;line-height:20px">Headline 5</div>
+      </div>
+    </div>
+
+    <div class="sg-subsection">
+      <div class="sg-type-row body-row">
+        <div class="sg-type-meta"><strong>Subtitle 1</strong>16px · Semibold · 0.15px</div>
+        <div class="sg-type-sample body" style="font-size:16px;font-weight:600;letter-spacing:0.15px">Quản lý nhân sự — Subtitle text</div>
+      </div>
+      <div class="sg-type-row body-row">
+        <div class="sg-type-meta"><strong>Subtitle 2</strong>14px · Semibold · 0.15px</div>
+        <div class="sg-type-sample body" style="font-size:14px;font-weight:600;letter-spacing:0.15px">Mã nhân viên / Đơn vị — Subtitle 2</div>
+      </div>
+      <div class="sg-type-row body-row">
+        <div class="sg-type-meta"><strong>Body 1</strong>16px · Medium · 0.5px</div>
+        <div class="sg-type-sample body" style="font-size:16px;font-weight:500;letter-spacing:0.5px;line-height:20px">Thông tin cơ bản của nhân viên trong hệ thống</div>
+      </div>
+      <div class="sg-type-row body-row">
+        <div class="sg-type-meta"><strong>Body 2</strong>14px · Regular · 0.25px</div>
+        <div class="sg-type-sample" style="font-size:14px;font-weight:400;letter-spacing:0.25px;line-height:20px;color:var(--color-text-secondary)">Placeholder text — Họ tên đầy đủ, Ngày sinh, Địa chỉ</div>
+      </div>
+      <div class="sg-type-row body-row">
+        <div class="sg-type-meta"><strong>BUTTON</strong>14px · Semibold · 1.25px</div>
+        <div class="sg-type-sample" style="font-size:14px;font-weight:600;letter-spacing:1.25px;text-transform:uppercase;color:var(--color-text-brand)">TÌM KIẾM · XÁC NHẬN</div>
+      </div>
+      <div class="sg-type-row body-row">
+        <div class="sg-type-meta"><strong>Caption</strong>12px · Medium · 0.4px</div>
+        <div class="sg-type-sample" style="font-size:12px;font-weight:500;letter-spacing:0.4px;color:var(--color-text-muted)">Tùy chọn · Ghi chú · Trợ giúp</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Spacing ===== -->
+  <section class="sg-section">
+    <div class="sg-section-title">Spacing</div>
+
+    <div class="sg-subsection">
+      <div class="sg-color-label">Scale — 4px base grid</div>
+      <div class="sg-spacing-row">
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:4px"></div><div class="sg-spacing-label"><span>4px</span>–1</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:8px"></div><div class="sg-spacing-label"><span>8px</span>–2</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:12px"></div><div class="sg-spacing-label"><span>12px</span>–3</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:16px"></div><div class="sg-spacing-label"><span>16px</span>–4</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:20px"></div><div class="sg-spacing-label"><span>20px</span>–5</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:24px"></div><div class="sg-spacing-label"><span>24px</span>–6</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:28px"></div><div class="sg-spacing-label"><span>28px</span>–7</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:32px"></div><div class="sg-spacing-label"><span>32px</span>–8</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:40px"></div><div class="sg-spacing-label"><span>40px</span>–10</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:48px"></div><div class="sg-spacing-label"><span>48px</span>–12</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:64px"></div><div class="sg-spacing-label"><span>64px</span>–16</div></div>
+        <div class="sg-spacing-item"><div class="sg-spacing-bar" style="height:80px;opacity:0.5"></div><div class="sg-spacing-label"><span>80px</span>–20</div></div>
+      </div>
+    </div>
+
+    <div class="sg-subsection">
+      <div class="sg-color-label">Radius &amp; Shadows</div>
+      <div class="sg-shadow-row">
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:4px;box-shadow:var(--shadow-sm)"></div><div class="sg-shadow-label">sm<span>4px</span></div></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:8px;box-shadow:var(--shadow-sm)"></div><div class="sg-shadow-label">md<span>8px</span></div></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:12px;box-shadow:var(--shadow-sm)"></div><div class="sg-shadow-label">lg<span>12px</span></div></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:20px;box-shadow:var(--shadow-sm)"></div><div class="sg-shadow-label">xl<span>20px</span></div></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:9999px;box-shadow:var(--shadow-sm)"></div><div class="sg-shadow-label">full<span>9999px</span></div></div>
+        <div class="sg-shadow-divider"></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:8px;box-shadow:var(--shadow-xs)"></div><div class="sg-shadow-label">xs shadow</div></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:8px;box-shadow:var(--shadow-sm)"></div><div class="sg-shadow-label">sm shadow</div></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:8px;box-shadow:var(--shadow-md)"></div><div class="sg-shadow-label">md shadow</div></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:8px;box-shadow:var(--shadow-lg)"></div><div class="sg-shadow-label">lg shadow</div></div>
+        <div class="sg-shadow-item"><div class="sg-shadow-box" style="border-radius:8px;box-shadow:var(--shadow-card)"></div><div class="sg-shadow-label">card shadow</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Icons ===== -->
+  <section class="sg-section">
+    <div class="sg-section-title">Icons — 63 Material-style families, currentColor SVG</div>
+    <div class="sg-icon-grid">
+      <div class="sg-ic" title="add_circle_outline"><span class="material-symbols-outlined">add_circle_outline</span></div>
+      <div class="sg-ic" title="app_settings_alt"><span class="material-symbols-outlined">app_settings_alt</span></div>
+      <div class="sg-ic" title="apps_outage"><span class="material-symbols-outlined">apps_outage</span></div>
+      <div class="sg-ic" title="apps"><span class="material-symbols-outlined">apps</span></div>
+      <div class="sg-ic" title="arrow_back_ios_new"><span class="material-symbols-outlined">arrow_back_ios_new</span></div>
+      <div class="sg-ic" title="arrow_back_ios"><span class="material-symbols-outlined">arrow_back_ios</span></div>
+      <div class="sg-ic" title="arrow_back"><span class="material-symbols-outlined">arrow_back</span></div>
+      <div class="sg-ic" title="arrow_downward"><span class="material-symbols-outlined">arrow_downward</span></div>
+      <div class="sg-ic" title="arrow_drop_down_circle"><span class="material-symbols-outlined">arrow_drop_down_circle</span></div>
+      <div class="sg-ic" title="arrow_drop_down"><span class="material-symbols-outlined">arrow_drop_down</span></div>
+      <div class="sg-ic" title="arrow_drop_up"><span class="material-symbols-outlined">arrow_drop_up</span></div>
+      <div class="sg-ic" title="arrow_forward_ios"><span class="material-symbols-outlined">arrow_forward_ios</span></div>
+      <div class="sg-ic" title="arrow_left"><span class="material-symbols-outlined">arrow_left</span></div>
+      <div class="sg-ic" title="arrow_right"><span class="material-symbols-outlined">arrow_right</span></div>
+      <div class="sg-ic" title="arrow_upward"><span class="material-symbols-outlined">arrow_upward</span></div>
+      <div class="sg-ic" title="border_color"><span class="material-symbols-outlined">border_color</span></div>
+      <div class="sg-ic" title="calendar_today"><span class="material-symbols-outlined">calendar_today</span></div>
+      <div class="sg-ic" title="campaign"><span class="material-symbols-outlined">campaign</span></div>
+      <div class="sg-ic" title="cancel"><span class="material-symbols-outlined">cancel</span></div>
+      <div class="sg-ic" title="check_box_outline_blank"><span class="material-symbols-outlined">check_box_outline_blank</span></div>
+      <div class="sg-ic" title="check_circle"><span class="material-symbols-outlined">check_circle</span></div>
+      <div class="sg-ic" title="checkbox_state_deselected"><span class="material-symbols-outlined">checkbox_state_deselected</span></div>
+      <div class="sg-ic" title="checkbox_state_intermediate"><span class="material-symbols-outlined">checkbox_state_intermediate</span></div>
+      <div class="sg-ic" title="checkbox_state_selected"><span class="material-symbols-outlined">checkbox_state_selected</span></div>
+      <div class="sg-ic" title="chevron_left"><span class="material-symbols-outlined">chevron_left</span></div>
+      <div class="sg-ic" title="chevron_right"><span class="material-symbols-outlined">chevron_right</span></div>
+      <div class="sg-ic" title="close"><span class="material-symbols-outlined">close</span></div>
+      <div class="sg-ic" title="delete"><span class="material-symbols-outlined">delete</span></div>
+      <div class="sg-ic" title="double_arrow"><span class="material-symbols-outlined">double_arrow</span></div>
+      <div class="sg-ic" title="east"><span class="material-symbols-outlined">east</span></div>
+      <div class="sg-ic" title="expand_circle_down"><span class="material-symbols-outlined">expand_circle_down</span></div>
+      <div class="sg-ic" title="first_page"><span class="material-symbols-outlined">first_page</span></div>
+      <div class="sg-ic" title="fullscreen_exit"><span class="material-symbols-outlined">fullscreen_exit</span></div>
+      <div class="sg-ic" title="fullscreen"><span class="material-symbols-outlined">fullscreen</span></div>
+      <div class="sg-ic" title="highlight_off"><span class="material-symbols-outlined">highlight_off</span></div>
+      <div class="sg-ic" title="home"><span class="material-symbols-outlined">home</span></div>
+      <div class="sg-ic" title="home_work"><span class="material-symbols-outlined">home_work</span></div>
+      <div class="sg-ic" title="last_page"><span class="material-symbols-outlined">last_page</span></div>
+      <div class="sg-ic" title="legend_toggle"><span class="material-symbols-outlined">legend_toggle</span></div>
+      <div class="sg-ic" title="maps_home_work"><span class="material-symbols-outlined">maps_home_work</span></div>
+      <div class="sg-ic" title="menu_open"><span class="material-symbols-outlined">menu_open</span></div>
+      <div class="sg-ic" title="menu"><span class="material-symbols-outlined">menu</span></div>
+      <div class="sg-ic" title="more_horiz"><span class="material-symbols-outlined">more_horiz</span></div>
+      <div class="sg-ic" title="more_vert"><span class="material-symbols-outlined">more_vert</span></div>
+      <div class="sg-ic" title="north_east"><span class="material-symbols-outlined">north_east</span></div>
+      <div class="sg-ic" title="north"><span class="material-symbols-outlined">north</span></div>
+      <div class="sg-ic" title="north_west"><span class="material-symbols-outlined">north_west</span></div>
+      <div class="sg-ic" title="notifications"><span class="material-symbols-outlined">notifications</span></div>
+      <div class="sg-ic" title="offline_share"><span class="material-symbols-outlined">offline_share</span></div>
+      <div class="sg-ic" title="payments"><span class="material-symbols-outlined">payments</span></div>
+      <div class="sg-ic" title="pivot_table_chart"><span class="material-symbols-outlined">pivot_table_chart</span></div>
+      <div class="sg-ic" title="refresh"><span class="material-symbols-outlined">refresh</span></div>
+      <div class="sg-ic" title="remove_red_eye"><span class="material-symbols-outlined">remove_red_eye</span></div>
+      <div class="sg-ic" title="search"><span class="material-symbols-outlined">search</span></div>
+      <div class="sg-ic" title="south_east"><span class="material-symbols-outlined">south_east</span></div>
+      <div class="sg-ic" title="south"><span class="material-symbols-outlined">south</span></div>
+      <div class="sg-ic" title="south_west"><span class="material-symbols-outlined">south_west</span></div>
+      <div class="sg-ic" title="subdirectory_arrow_left"><span class="material-symbols-outlined">subdirectory_arrow_left</span></div>
+      <div class="sg-ic" title="subdirectory_arrow_right"><span class="material-symbols-outlined">subdirectory_arrow_right</span></div>
+      <div class="sg-ic" title="switch_left"><span class="material-symbols-outlined">switch_left</span></div>
+      <div class="sg-ic" title="switch_right"><span class="material-symbols-outlined">switch_right</span></div>
+      <div class="sg-ic" title="unfold_less"><span class="material-symbols-outlined">unfold_less</span></div>
+      <div class="sg-ic" title="unfold_more"><span class="material-symbols-outlined">unfold_more</span></div>
+      <div class="sg-ic" title="waterfall_chart"><span class="material-symbols-outlined">waterfall_chart</span></div>
+      <div class="sg-ic" title="west"><span class="material-symbols-outlined">west</span></div>
+    </div>
+  </section>
+
+</div>
+
+<script src="resolve-token.js"></script>
+</body></html>

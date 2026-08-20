@@ -1,0 +1,25 @@
+<!-- @dsCard group="Components" viewport="700x100" name="Checkbox & Radio & Toggle" subtitle="selection controls" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+  body { margin:0; padding:16px 20px; background:#fff; font-family:var(--font-family-body); font-size:13px; color:#4E4B66; }
+  .row { display:flex; gap:24px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+  .cb { display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
+  .box { width:18px; height:18px; border-radius:4px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .radio-dot { width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .toggle-track { width:36px; height:20px; border-radius:10px; position:relative; }
+  .toggle-thumb { width:16px; height:16px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.2); position:absolute; top:2px; }
+</style></head><body>
+<div class="row">
+  <span class="cb"><span class="box" style="border:2px solid #D9DBE9;background:#fff"></span>Không chọn</span>
+  <span class="cb"><span class="box" style="border:2px solid #141ED2;background:#141ED2"><svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Đã chọn</span>
+  <span class="cb"><span class="box" style="border:2px solid #141ED2;background:#141ED2"><span style="width:8px;height:2px;background:#fff;border-radius:1px;display:block"></span></span>Nửa chọn</span>
+  <span class="cb" style="opacity:.4"><span class="box" style="border:2px solid #D9DBE9;background:#F4F6FA"></span>Vô hiệu</span>
+</div>
+<div class="row">
+  <span class="cb"><span class="radio-dot" style="border:2px solid #D9DBE9;background:#fff"></span>Không chọn</span>
+  <span class="cb"><span class="radio-dot" style="border:2px solid #141ED2;background:#fff"><span style="width:8px;height:8px;border-radius:50%;background:#141ED2;display:block"></span></span>Đã chọn</span>
+  <span style="width:1px;height:32px;background:#EDF2F7"></span>
+  <span class="cb"><span class="toggle-track" style="background:#D9DBE9"><span class="toggle-thumb" style="left:2px"></span></span>Tắt</span>
+  <span class="cb"><span class="toggle-track" style="background:#141ED2"><span class="toggle-thumb" style="left:18px"></span></span>Bật</span>
+</div>
+</body></html>

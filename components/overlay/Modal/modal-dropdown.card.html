@@ -1,0 +1,74 @@
+<!-- @dsCard group="Components" viewport="700x220" name="Modal & Dropdown & Popconfirm" subtitle="Overlay and menu components" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<style>
+  body { margin:0; padding:16px 20px; background:#F4F6FA; font-family:var(--font-family-body); display:flex; gap:16px; align-items:flex-start; }
+  .msym { font-family:'Material Symbols Outlined'; font-style:normal; user-select:none; line-height:1; display:inline-block; flex-shrink:0; }
+  .btn { display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; border:none; }
+  .btn-outline { background:#fff; color:var(--color-text-secondary,#6E7191); border:1px solid var(--color-border-default,#D9DBE9); }
+  .btn-primary { background:var(--color-bg-brand,#141ED2); color:var(--color-text-inverse,#fff); }
+
+  /* Modal — matches components/overlay/Modal/Modal.jsx (radius 12, shadow 0 16px 40px rgba(20,20,42,.18)) */
+  .modal { background:#fff; border-radius:12px; box-shadow:0 16px 40px rgba(20,20,42,.18); width:270px; overflow:hidden; }
+  .mh { padding:16px 18px; border-bottom:1px solid var(--color-neutral-200,#EDF2F7); display:flex; justify-content:space-between; align-items:center; }
+  .mt { font-size:16px; font-weight:700; color:var(--color-text-primary,#14142A); }
+  .mc { color:var(--color-text-muted,#A0A3BD); cursor:pointer; font-size:18px; }
+  .mb { padding:16px 18px; font-size:12px; color:var(--color-text-secondary,#6E7191); line-height:1.5; }
+  .mb .field { margin-top:10px; }
+  .mb label { display:block; font-size:12px; font-weight:600; color:var(--color-text-body,#4E4B66); margin-bottom:4px; }
+  .mb select { width:100%; height:36px; border-radius:8px; border:1px solid var(--color-border-default,#D9DBE9); padding:0 10px; font-size:12px; font-family:inherit; color:var(--color-text-body,#4E4B66); box-sizing:border-box; }
+  .mf { padding:12px 18px; border-top:1px solid var(--color-neutral-200,#EDF2F7); display:flex; gap:8px; justify-content:flex-end; }
+
+  /* Dropdown — matches components/overlay/Dropdown/dropdown.card.html (radius 8, border, shadow 0 8px 24px rgba(75,99,226,.12)) */
+  .menu { background:#fff; border-radius:8px; border:1px solid var(--color-neutral-200,#EDF2F7); box-shadow:0 8px 24px rgba(75,99,226,.12); overflow:hidden; min-width:170px; }
+  .mi { display:flex; align-items:center; gap:8px; padding:9px 14px; font-size:13px; font-weight:500; cursor:pointer; color:var(--color-text-body,#4E4B66); }
+  .mi:hover { background:var(--color-bg-hover,#F4F5FF); }
+  .mi .msym { font-size:17px; color:var(--color-icon-default,#6E7191); }
+  .mi.danger { color:var(--color-text-error,#C30052); }
+  .mi.danger .msym { color:var(--color-icon-error,#EB2D4B); }
+  .sep { height:1px; background:var(--color-neutral-200,#EDF2F7); margin:4px 0; }
+
+  /* Popconfirm — matches components/overlay/Popconfirm/Popconfirm.jsx (radius 8, shadow 0 8px 24px rgba(75,99,226,.15), width 260) */
+  .pc { background:#fff; border-radius:8px; border:1px solid var(--color-neutral-200,#EDF2F7); box-shadow:0 8px 24px rgba(75,99,226,.15); padding:16px; width:260px; }
+  .pc-title { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:700; color:var(--color-text-primary,#14142A); margin-bottom:6px; }
+  .pc-title .msym { font-size:18px; color:var(--color-icon-warning,#F4B740); }
+  .pc-desc { font-size:12px; color:var(--color-text-secondary,#6E7191); margin-bottom:12px; line-height:1.5; }
+  .pc-actions { display:flex; gap:8px; justify-content:flex-end; }
+</style></head><body>
+
+<!-- Modal: reserved for flows needing real content (a form, not a bare yes/no — that's Popconfirm, see the 3rd card) -->
+<div class="modal">
+  <div class="mh"><span class="mt">Xóa hồ sơ nhân viên</span><span class="mc msym">close</span></div>
+  <div class="mb">
+    Hồ sơ <strong>Nguyễn Văn An</strong> sẽ bị xóa vĩnh viễn khỏi hệ thống.
+    <div class="field">
+      <label>Lý do xóa <span style="color:var(--color-text-error,#C30052)">*</span></label>
+      <select><option>Nghỉ việc</option></select>
+    </div>
+  </div>
+  <div class="mf">
+    <button class="btn btn-outline">Hủy</button>
+    <button class="btn btn-primary">Xóa</button>
+  </div>
+</div>
+
+<!-- Dropdown: click-triggered menu, danger item last + separated by a sep divider -->
+<div class="menu">
+  <div class="mi"><span class="msym">edit</span>Chỉnh sửa</div>
+  <div class="mi"><span class="msym">visibility</span>Xem chi tiết</div>
+  <div class="mi"><span class="msym">content_copy</span>Sao chép</div>
+  <div class="sep"></div>
+  <div class="mi danger"><span class="msym">delete</span>Xóa hồ sơ</div>
+</div>
+
+<!-- Popconfirm: compact, one-line confirmation — the correct choice for a bare yes/no (contrast with the Modal card above) -->
+<div class="pc">
+  <div class="pc-title"><span class="msym">warning</span>Xác nhận xóa?</div>
+  <div class="pc-desc">Thao tác này không thể hoàn tác.</div>
+  <div class="pc-actions">
+    <button class="btn btn-outline">Hủy</button>
+    <button class="btn" style="background:#EB2D4B;color:#fff">Xóa</button>
+  </div>
+</div>
+
+</body></html>

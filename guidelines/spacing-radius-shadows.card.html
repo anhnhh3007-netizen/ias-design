@@ -1,0 +1,29 @@
+<!-- @dsCard group="Spacing" viewport="700x140" name="Radius & Shadows" subtitle="Corner radii and elevation shadow tokens" -->
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 16px; background: var(--color-bg-page); font-family: var(--font-family-body); }
+  .row { display: flex; gap: 12px; align-items: flex-end; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .box { width: 60px; height: 48px; background: var(--color-bg-surface); }
+  .label { font-size: 9px; font-weight: 600; color: var(--color-text-secondary); text-align: center; line-height: 1.4; }
+  .label span { display: block; color: var(--color-text-muted); }
+  .divider { width: 1px; background: var(--color-border-default); height: 80px; margin: 0 4px; }
+</style>
+</head><body>
+<div class="row">
+  <div class="item"><div class="box" style="border-radius:4px;box-shadow:var(--shadow-sm)"></div><div class="label">sm<span>4px</span></div></div>
+  <div class="item"><div class="box" style="border-radius:8px;box-shadow:var(--shadow-sm)"></div><div class="label">md<span>8px</span></div></div>
+  <div class="item"><div class="box" style="border-radius:12px;box-shadow:var(--shadow-sm)"></div><div class="label">lg<span>12px</span></div></div>
+  <div class="item"><div class="box" style="border-radius:20px;box-shadow:var(--shadow-sm)"></div><div class="label">xl<span>20px</span></div></div>
+  <div class="item"><div class="box" style="border-radius:9999px;box-shadow:var(--shadow-sm)"></div><div class="label">full<span>9999px</span></div></div>
+  <div class="divider"></div>
+  <div class="item"><div class="box" style="border-radius:8px;box-shadow:var(--shadow-xs)"></div><div class="label">xs shadow</div></div>
+  <div class="item"><div class="box" style="border-radius:8px;box-shadow:var(--shadow-sm)"></div><div class="label">sm shadow</div></div>
+  <div class="item"><div class="box" style="border-radius:8px;box-shadow:var(--shadow-md)"></div><div class="label">md shadow</div></div>
+  <div class="item"><div class="box" style="border-radius:8px;box-shadow:var(--shadow-lg)"></div><div class="label">lg shadow</div></div>
+  <div class="item"><div class="box" style="border-radius:8px;box-shadow:var(--shadow-card)"></div><div class="label">card shadow</div></div>
+</div>
+</body></html>

@@ -1,0 +1,105 @@
+<!-- @dsCard group="Components" viewport="700x320" name="Menu Item" subtitle="nav · tree · action variants with Material Symbols" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<link rel="stylesheet" href="../../../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<style>
+body { margin:0; padding:12px; background:#F4F6FA; font-family:var(--font-family-body,'Plus Jakarta Sans',sans-serif); display:flex; gap:12px; flex-wrap:wrap; }
+.col { display:flex; flex-direction:column; gap:2px; }
+.lbl { font-size:10px; font-weight:700; color:#A0A3BD; letter-spacing:.8px; text-transform:uppercase; padding:0 10px 6px; }
+.nav { display:flex; align-items:center; gap:10px; padding:10px; border-radius:8px; cursor:pointer; background:#0D0D2B; color:#CBD0E8; font-size:13px; font-weight:500; white-space:nowrap; min-width:180px; }
+.nav.active { color:#fff; background:rgba(255,255,255,.10); font-weight:600; }
+.nav:hover { background:rgba(255,255,255,.07); color:#fff; }
+.ms { font-family:'Material Symbols Outlined'; font-style:normal; user-select:none; line-height:1; display:inline-block; flex-shrink:0; }
+.tree { display:flex; align-items:center; gap:8px; padding:8px 8px 8px 6px; border-radius:6px; cursor:pointer; background:#0D0D2B; color:#CBD0E8; font-size:13px; font-weight:600; white-space:nowrap; }
+.tree.leaf { color:#8B8FBD; font-weight:400; }
+.tree.sub { font-size:12px; padding-left:20px; }
+.act { display:flex; align-items:center; gap:8px; padding:9px 14px; border-radius:6px; cursor:pointer; background:#fff; color:#4E4B66; font-size:13px; font-weight:500; white-space:nowrap; min-width:180px; position:relative; border:none; width:100%; text-align:left; }
+.act.active { background:rgba(20,30,210,.08); color:#141ED2; font-weight:600; }
+.act.active::before { content:''; position:absolute; left:0; top:4px; bottom:4px; width:3px; background:#141ED2; border-radius:0 3px 3px 0; }
+.act:hover { background:#F4F5FF; }
+.act.danger { color:#EB2D4B; }
+.act.disabled { color:#A0A3BD; cursor:not-allowed; background:#fff; }
+</style>
+</head>
+<body>
+
+<!-- NAV variant -->
+<div class="col">
+  <div class="lbl">Nav variant</div>
+  <div style="background:#0D0D2B;border-radius:10px;padding:8px 6px;display:flex;flex-direction:column;gap:2px">
+    <div class="nav active">
+      <span class="ms" style="font-size:22px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24">home</span>
+      <span>Trang chủ</span>
+    </div>
+    <div class="nav">
+      <span class="ms" style="font-size:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">account_tree</span>
+      <span>Mô hình và kế hoạch</span>
+      <span class="ms" style="font-size:18px;margin-left:auto;color:#8B8FBD;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">arrow_drop_down</span>
+    </div>
+    <div class="nav">
+      <span class="ms" style="font-size:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">how_to_reg</span>
+      <span>Onboarding</span>
+    </div>
+    <div class="nav">
+      <span class="ms" style="font-size:22px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">people</span>
+      <span>Thông tin nhân sự</span>
+    </div>
+  </div>
+</div>
+
+<!-- TREE variant -->
+<div class="col">
+  <div class="lbl">Tree variant</div>
+  <div style="background:#0D0D2B;border-radius:10px;padding:8px 6px;display:flex;flex-direction:column;gap:1px;min-width:180px">
+    <div class="tree">
+      <span class="ms" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 20">remove</span>
+      <span>Mô hình tổ chức</span>
+    </div>
+    <div class="tree sub">
+      <span class="ms" style="font-size:14px;font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 20">remove</span>
+      <span>Mô hình tổ chức</span>
+    </div>
+    <div class="tree sub" style="padding-left:34px">
+      <span class="ms" style="font-size:14px;font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 20">add</span>
+      <span>Mô hình tổ chức</span>
+    </div>
+    <div class="tree sub leaf" style="padding-left:34px">
+      <span class="ms" style="font-size:9px;font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 20">fiber_manual_record</span>
+      <span>Mô hình tổ chức</span>
+    </div>
+    <div class="tree" style="margin-top:2px">
+      <span class="ms" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 20">add</span>
+      <span>Mô hình tổ chức</span>
+    </div>
+  </div>
+</div>
+
+<!-- ACTION variant -->
+<div class="col">
+  <div class="lbl">Action variant</div>
+  <div style="background:#fff;border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:1px;box-shadow:0 4px 16px rgba(75,99,226,.1)">
+    <button class="act active">
+      <span class="ms" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">people</span>
+      Quản lý nhân sự
+    </button>
+    <button class="act">
+      <span class="ms" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">business</span>
+      Cơ cấu tổ chức
+    </button>
+    <button class="act">
+      <span class="ms" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">person_add</span>
+      Tuyển dụng
+      <span style="margin-left:auto;color:#A0A3BD;font-size:14px">›</span>
+    </button>
+    <button class="act danger">
+      <span class="ms" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">delete</span>
+      Xóa mục
+    </button>
+    <button class="act disabled" disabled>
+      <span class="ms" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">settings</span>
+      Vô hiệu hóa
+    </button>
+  </div>
+</div>
+
+</body></html>

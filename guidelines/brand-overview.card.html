@@ -1,0 +1,49 @@
+<!-- @dsCard group="Brand" viewport="700x150" name="Logo & Brand" subtitle="MB Bank HCM-HRIS wordmark and brand identity" -->
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; padding: 20px; background: var(--color-bg-surface); font-family: var(--font-family-body); display: flex; gap: 32px; align-items: center; }
+  .logo-block { display: flex; align-items: center; gap: 12px; padding: 16px 24px; border-radius: 12px; }
+  .logo-icon { width: 44px; height: 44px; background: var(--color-bg-brand); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .logo-icon span { color: var(--color-text-inverse); font-weight: 800; font-size: 18px; letter-spacing: -0.5px; }
+  .logo-text { display: flex; flex-direction: column; }
+  .logo-text .top { font-size: 18px; font-weight: 700; color: var(--color-text-brand); letter-spacing: 0.5px; line-height: 1; }
+  .logo-text .sub { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); letter-spacing: 1.2px; text-transform: uppercase; margin-top: 3px; }
+  .dark { background: var(--color-neutral-900); }
+  .dark .logo-text .top { color: var(--color-text-inverse); }
+  .dark .logo-text .sub { color: var(--color-text-muted); }
+  .divider { width: 1px; height: 80px; background: var(--color-neutral-200); }
+  .palette { display: flex; gap: 8px; align-items: center; }
+  .dot { width: 32px; height: 32px; border-radius: 50%; }
+  .dot-label { font-size: 9px; color: var(--color-text-muted); text-align: center; margin-top: 4px; font-weight: 600; }
+  .dot-wrap { display: flex; flex-direction: column; align-items: center; }
+</style>
+</head><body>
+  <div class="logo-block" style="border: 1px solid var(--color-neutral-200);">
+    <div class="logo-icon"><span>MB</span></div>
+    <div class="logo-text">
+      <span class="top">HCM · HRIS</span>
+      <span class="sub">Quản lý nhân sự</span>
+    </div>
+  </div>
+  <div class="logo-block dark">
+    <div class="logo-icon" style="background:var(--color-bg-surface)"><span style="color:var(--color-text-brand)">MB</span></div>
+    <div class="logo-text">
+      <span class="top">HCM · HRIS</span>
+      <span class="sub">Quản lý nhân sự</span>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="palette">
+    <div class="dot-wrap" data-token="--color-primary-500"><div class="dot" style="background:var(--color-primary-500)"></div><div class="dot-label hex"></div></div>
+    <div class="dot-wrap" data-token="--color-primary-900"><div class="dot" style="background:var(--color-primary-900)"></div><div class="dot-label hex"></div></div>
+    <div class="dot-wrap" data-token="--color-accent-500"><div class="dot" style="background:var(--color-accent-500)"></div><div class="dot-label hex"></div></div>
+    <div class="dot-wrap" data-token="--color-error-500"><div class="dot" style="background:var(--color-error-500)"></div><div class="dot-label hex"></div></div>
+    <div class="dot-wrap" data-token="--color-success-500"><div class="dot" style="background:var(--color-success-500)"></div><div class="dot-label hex"></div></div>
+    <div class="dot-wrap" data-token="--color-warning-500"><div class="dot" style="background:var(--color-warning-500)"></div><div class="dot-label hex"></div></div>
+    <div class="dot-wrap" data-token="--color-neutral-900"><div class="dot" style="background:var(--color-neutral-900)"></div><div class="dot-label hex"></div></div>
+  </div>
+<script src="resolve-token.js"></script>
+</body></html>

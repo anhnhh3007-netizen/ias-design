@@ -1,0 +1,50 @@
+<!-- @dsCard group="Components" viewport="360x220" name="RowMenu" subtitle="Table row more_vert menu — text-only, auto-sorted, no separator" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+  body { margin:0; padding:16px; background:var(--color-bg-page); font-family:var(--font-family-body); display:flex; justify-content:flex-end; }
+  .menu { background:var(--color-bg-surface); border:1px solid var(--color-border-default); border-radius:8px; box-shadow:0 8px 24px rgba(75,99,226,.12); min-width:190px; padding:4px; }
+  /* Text-only — RowMenu has no icon slot at all (updated 2026-08-18) */
+  .mi { display:flex; align-items:center; width:100%; padding:9px 10px; border-radius:6px; font-size:13px; font-weight:500; color:var(--color-text-body); cursor:pointer; }
+  .mi:hover { background:var(--color-bg-hover); }
+  /* No sep before danger — red text alone marks it destructive (updated 2026-08-18, RowMenu never renders a divider) */
+  .mi.danger { color:var(--color-text-error); }
+</style></head><body>
+<div class="menu">
+  <div class="mi">Xem chi tiết</div>
+  <div class="mi">Chỉnh sửa</div>
+  <div class="mi">Gửi duyệt</div>
+  <div class="mi">Lịch sử thay đổi</div>
+  <div class="mi danger">Xóa</div>
+</div>
+</body></html>
+
+<!--
+## 📊 Component Coverage Report — RowMenu
+
+| # | Element | DS Component used | Status |
+|---|---|---|---|
+| 1 | Row action overflow menu | RowMenu | ✅ DS (this file is its reference implementation) |
+| 2 | Danger item styling | Red text only, no `sep` (RowMenu-specific exception to the generic Dropdown cross-cutting rule) | ✅ DS |
+
+**DS component coverage: 2 / 2 = 100%**
+
+## 🎨 Color Token Coverage — RowMenu
+
+| # | Element (property) | Location | Original hex | Category | Matched Semantic Alias | Match |
+|---|---|---|---|---|---|---|
+| 1 | Panel background | `.menu` | `#FFFFFF` | background | `--color-bg-surface` | ✅ Exact |
+| 2 | Panel border | `.menu` | `#D9DBE9` | border | `--color-border-default` | ✅ Exact |
+| 3 | Item text | `.mi` | `#4E4B66` | text | `--color-text-body` | ✅ Exact |
+| 4 | Item hover fill | `.mi:hover` | `#F4F5FF` | background | `--color-bg-hover` | ✅ Exact |
+| 5 | Danger item text | `.mi.danger` | `#C30052` | text | `--color-text-error` | ✅ Exact |
+
+**Color token coverage: 5 / 5 = 100% · 0 severe gaps**
+
+## 🔤 Typography Scale Coverage — RowMenu
+
+| # | Text element | Rendered size / weight | Matched scale | Match | Class used? |
+|---|---|---|---|---|---|
+| 1 | Menu item label | 13px / 500 | Body 2 (14px/400) | ⚠️ Nearest (no exact 13px/500 scale) | ❌ inline `font-size`/`font-weight`, not `className="hcm-body2"` — matches `Dropdown`/`DropdownMenuItem`'s own established item sizing (13px/500), kept for visual consistency with the sibling `Dropdown` component rather than switching only `RowMenu` to Body 2 |
+
+**Typography scale coverage: 1 / 1 scored element matched to nearest declared scale = 100% · Utility-class adoption: 0 / 1 = 0% (deliberate — see note above)**
+-->

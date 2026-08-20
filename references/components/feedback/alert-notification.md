@@ -1,0 +1,3 @@
+# Alert vs. Notification — inline vs. floating
+- **`Alert`** = inline, persistent banner living in the content flow (tinted background + 1px border matching status + circular icon badge, title above description). Use it for messages that stay until the user acts or the underlying condition changes (e.g. "hồ sơ chưa đầy đủ").
+- **`Notification`** = floating, transient toast (`duration` auto-dismiss prop), capped at 380px wide, visually similar but not laid into the page flow. Use it only for system-level, one-off events (save succeeded, connection lost, session expiring) — never for a field-level validation message (that belongs on the `Input`'s own `feedback` prop) and never for something the user must still act on after it disappears.

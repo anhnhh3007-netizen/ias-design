@@ -1,0 +1,606 @@
+<!-- @dsCard group="HCM System" viewport="1366x768" name="HCM · HRIS Dashboard" subtitle="Employee management · Org chart · HR workflows" -->
+<!DOCTYPE html>
+<html lang="vi"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HCM – HRIS System</title>
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Averta Std CY","Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; background: #F4F6FA; color: #4E4B66; font-size: 14px; height: 100vh; overflow: hidden; }
+
+/* Sidebar */
+.sidebar { width: 240px; min-width: 240px; background: #fff; border-right: 1px solid #D9DBE9; display: flex; flex-direction: column; height: 100vh; transition: width 0.2s; }
+.sidebar.mini { width: 64px; min-width: 64px; }
+.sidebar-header { padding: 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #EDF2F7; height: 64px; }
+.sidebar-logo { width: 36px; height: 36px; background: #141ED2; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.sidebar-logo span { color: #fff; font-weight: 800; font-size: 13px; }
+.sidebar-title { overflow: hidden; }
+.sidebar-title .top { font-size: 14px; font-weight: 700; color: #141ED2; white-space: nowrap; }
+.sidebar-title .sub { font-size: 10px; color: #A0A3BD; white-space: nowrap; letter-spacing: 0.5px; text-transform: uppercase; }
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 8px 0; }
+.nav-section { padding: 6px 12px 2px; font-size: 10px; font-weight: 700; color: #A0A3BD; letter-spacing: 0.8px; text-transform: uppercase; }
+.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; border-radius: 0; position: relative; transition: background 0.15s; user-select: none; }
+.nav-item:hover { background: rgba(20,30,210,0.05); }
+.nav-item.active { background: rgba(20,30,210,0.08); }
+.nav-item.active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 3px; background: #141ED2; border-radius: 0 3px 3px 0; }
+.nav-item .icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: #6E7191; }
+.nav-item.active .icon { color: #141ED2; }
+.nav-item .label { font-size: 13px; font-weight: 500; color: #4E4B66; white-space: nowrap; overflow: hidden; }
+.nav-item.active .label { color: #141ED2; font-weight: 600; }
+.nav-item .badge { margin-left: auto; background: #EB2D4B; color: #fff; font-size: 10px; font-weight: 700; border-radius: 9999px; padding: 1px 6px; }
+.sidebar-footer { padding: 12px 16px; border-top: 1px solid #EDF2F7; display: flex; align-items: center; gap: 10px; }
+.avatar-sm { width: 32px; height: 32px; border-radius: 50%; background: #141ED2; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.avatar-sm span { color: #fff; font-size: 12px; font-weight: 700; }
+
+/* Header */
+.header { height: 64px; background: #fff; border-bottom: 1px solid #D9DBE9; display: flex; align-items: center; padding: 0 24px; gap: 16px; flex-shrink: 0; }
+.header-title { font-size: 18px; font-weight: 700; color: #14142A; flex: 1; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.icon-btn { width: 36px; height: 36px; border-radius: 9999px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--color-text-secondary, #6E7191); transition: background 0.15s, color 0.15s; }
+.icon-btn:hover { background: var(--color-bg-hover, #F4F5FF); color: var(--color-icon-brand, #141ED2); }
+.notification-dot { position: relative; }
+.notification-dot::after { content: ''; position: absolute; top: 6px; right: 6px; width: 8px; height: 8px; background: #EB2D4B; border-radius: 50%; border: 2px solid #fff; }
+
+/* Layout */
+.app { display: flex; height: 100vh; overflow: hidden; }
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+.content { flex: 1; overflow-y: auto; padding: 24px; }
+
+/* Breadcrumb */
+.breadcrumb { display: flex; align-items: center; gap: 6px; margin-bottom: 16px; font-size: 12px; color: #A0A3BD; }
+.breadcrumb a { color: #141ED2; text-decoration: none; cursor: pointer; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb span { color: #D9DBE9; }
+
+/* Page header */
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.page-title { font-size: 20px; font-weight: 700; color: #14142A; }
+.page-actions { display: flex; gap: 8px; }
+
+/* Buttons — synced 2026-07-23 with components/forms/Button (Figma IDS_WEB
+   node 4901:33217): height 40 (medium)/32 (sm), 16px horizontal padding,
+   ghost/outline lost their old muted-border look, .btn-secondary renamed to
+   .btn-outline since its white-bg/brand-border look is the new spec's
+   "outline" variant, not "secondary" (which is now a solid tint fill). */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 var(--space-button-px, 16px); border-radius: 8px; font-size: 14px; font-weight: var(--font-weight-semibold, 600); cursor: pointer; border: none; letter-spacing: 0.28px; transition: background 0.15s, border-color 0.15s, color 0.15s; white-space: nowrap; box-sizing: border-box; }
+.btn-primary { background: var(--color-bg-brand, #141ED2); color: var(--color-text-inverse, #fff); }
+.btn-primary:hover { background: var(--color-primary-700, #0E15A8); }
+.btn-outline { background: transparent; color: var(--color-text-primary, #14142A); border: 1px solid var(--color-primary-200, #C4C6F7); }
+.btn-outline:hover { background: transparent; border-color: var(--color-border-focus, #141ED2); }
+.btn-ghost { background: transparent; color: var(--color-text-primary, #14142A); border: none; border-radius: 9999px; }
+.btn-ghost:hover { background: var(--color-bg-hover, #F4F5FF); }
+.btn-sm { height: 32px; }
+.btn svg { width: 16px; height: 16px; }
+
+/* Search bar */
+.search-bar { position: relative; display: flex; align-items: center; }
+.search-bar input { width: 280px; height: 36px; border: 1px solid #D9DBE9; border-radius: 8px; padding: 0 12px 0 36px; font-size: 13px; font-family: inherit; color: #4E4B66; background: #fff; outline: none; transition: border-color 0.15s; }
+.search-bar input:focus { border-color: #141ED2; box-shadow: 0 0 0 3px rgba(20,30,210,0.08); }
+.search-bar input::placeholder { color: #A0A3BD; }
+.search-bar .search-icon { position: absolute; left: 10px; color: #A0A3BD; width: 16px; height: 16px; }
+
+/* Stats cards */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(75,99,226,0.08); }
+.stat-card .stat-label { font-size: 12px; font-weight: 500; color: #6E7191; margin-bottom: 8px; }
+.stat-card .stat-value { font-size: 28px; font-weight: 700; color: #14142A; line-height: 1; }
+.stat-card .stat-change { font-size: 12px; margin-top: 6px; }
+.stat-card .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+
+/* Tabs */
+.tabs { display: flex; border-bottom: 2px solid #EDF2F7; margin-bottom: 16px; gap: 0; }
+.tab { padding: 10px 20px; font-size: 13px; font-weight: 500; color: #6E7191; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: color 0.15s; white-space: nowrap; }
+.tab:hover { color: #141ED2; }
+.tab.active { color: #141ED2; font-weight: 700; border-bottom-color: #141ED2; }
+
+/* Filter bar */
+.filter-bar { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+.filter-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 9999px; border: 1px solid #D9DBE9; background: #fff; font-size: 12px; font-weight: 500; color: #4E4B66; cursor: pointer; transition: all 0.15s; }
+.filter-chip:hover { border-color: #141ED2; color: #141ED2; background: #F4F5FF; }
+.filter-chip.active { background: #E8EAF6; border-color: #141ED2; color: #141ED2; }
+.select-field { height: 36px; border: 1px solid #D9DBE9; border-radius: 8px; padding: 0 10px; font-size: 13px; font-family: inherit; color: #4E4B66; background: #fff; cursor: pointer; outline: none; }
+.select-field:focus { border-color: #141ED2; }
+
+/* Table */
+.table-wrap { background: #fff; border: none; border-radius: 0; overflow: hidden; }
+.table { width: 100%; border-collapse: collapse; }
+.table thead tr { background: #F4F6FA; }
+.table th { padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 700; color: #6E7191; letter-spacing: 0.4px; text-transform: uppercase; border: none; white-space: nowrap; }
+.table td { padding: 13px 16px; font-size: 13px; color: #4E4B66; border: 0.5px solid #D9DBE9; vertical-align: middle; }
+.table tbody tr:hover { background: #F4F5FF; }
+
+/* Status badges */
+.status { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 9999px; font-size: 11px; font-weight: 600; }
+.status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+.status-active { background: #F2FFFB; color: #00966D; }
+.status-active::before { background: #00BA88; }
+.status-pending { background: #FFF9EF; color: #946200; }
+.status-pending::before { background: #F4B740; }
+.status-inactive { background: #F4F6FA; color: #6E7191; }
+.status-inactive::before { background: #A0A3BD; }
+.status-error { background: #FFF3F8; color: #C30052; }
+.status-error::before { background: #EB2D4B; }
+
+/* Avatar in table */
+.user-cell { display: flex; align-items: center; gap: 10px; }
+.avatar-md { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; }
+.user-cell .user-name { font-size: 13px; font-weight: 600; color: #14142A; }
+.user-cell .user-code { font-size: 11px; color: #A0A3BD; }
+
+/* Pagination */
+.pagination { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-top: 1px solid #EDF2F7; background: #fff; border-radius: 0 0 12px 12px; }
+.pagination-info { font-size: 12px; color: #6E7191; }
+.pagination-btns { display: flex; gap: 4px; }
+.page-btn { width: 32px; height: 32px; border-radius: 6px; border: 1px solid #D9DBE9; background: #fff; cursor: pointer; font-size: 13px; color: #4E4B66; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.page-btn:hover { border-color: #141ED2; color: #141ED2; background: #F4F5FF; }
+.page-btn.active { background: #141ED2; color: #fff; border-color: #141ED2; }
+
+/* Modal overlay */
+.modal-overlay { position: fixed; inset: 0; background: rgba(20,20,42,0.45); display: flex; align-items: center; justify-content: center; z-index: 400; }
+.modal { background: #fff; border-radius: 12px; box-shadow: 0 16px 40px rgba(20,20,42,0.18); width: 520px; max-width: 95vw; max-height: 90vh; display: flex; flex-direction: column; }
+.modal-header { padding: 20px 24px; border-bottom: 1px solid #EDF2F7; display: flex; align-items: center; justify-content: space-between; }
+.modal-title { font-size: 16px; font-weight: 700; color: #14142A; }
+.modal-body { padding: 24px; overflow-y: auto; flex: 1; }
+.modal-footer { padding: 16px 24px; border-top: 1px solid #EDF2F7; display: flex; gap: 8px; justify-content: flex-end; }
+.modal-close { width: 32px; height: 32px; border-radius: 6px; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #6E7191; }
+.modal-close:hover { background: #F4F6FA; color: #EB2D4B; }
+
+/* Form fields */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label { font-size: 12px; font-weight: 600; color: #4E4B66; }
+.form-input { height: 40px; border: 1px solid #D9DBE9; border-radius: 8px; padding: 0 12px; font-size: 13px; font-family: inherit; color: #4E4B66; background: #fff; outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
+.form-input:focus { border-color: #141ED2; box-shadow: 0 0 0 3px rgba(20,30,210,0.08); }
+.form-input::placeholder { color: #A0A3BD; }
+.form-select { height: 40px; border: 1px solid #D9DBE9; border-radius: 8px; padding: 0 12px; font-size: 13px; font-family: inherit; color: #4E4B66; background: #fff; outline: none; cursor: pointer; }
+.form-select:focus { border-color: #141ED2; }
+
+/* Spinner */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner { width: 20px; height: 20px; border: 2px solid #E8EAF6; border-top-color: #141ED2; border-radius: 50%; animation: spin 0.7s linear infinite; }
+
+/* Alert banner */
+.alert-banner { display: flex; gap: 12px; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; align-items: flex-start; }
+.alert-banner.success { background: #F2FFFB; border: 1px solid #00BA88; }
+.alert-banner.success .alert-icon { color: #00BA88; }
+.alert-banner .alert-content .title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.alert-banner .alert-content .desc { font-size: 12px; color: #6E7191; }
+
+/* Tooltip */
+.with-tooltip { position: relative; }
+.with-tooltip:hover .tooltip-text { opacity: 1; visibility: visible; transform: translateY(0); }
+.tooltip-text { position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%) translateY(4px); background: #14142A; color: #fff; font-size: 11px; padding: 5px 10px; border-radius: 6px; white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.15s; pointer-events: none; }
+
+/* Steps */
+.steps { display: flex; gap: 0; align-items: center; margin-bottom: 20px; }
+.step { display: flex; align-items: center; gap: 8px; }
+.step-circle { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.step-circle.done { background: #00BA88; color: #fff; }
+.step-circle.active { background: #141ED2; color: #fff; }
+.step-circle.pending { background: #EDF2F7; color: #A0A3BD; }
+.step-label { font-size: 12px; font-weight: 600; color: #4E4B66; }
+.step-label.active { color: #141ED2; }
+.step-line { flex: 1; height: 2px; background: #EDF2F7; margin: 0 8px; min-width: 32px; }
+.step-line.done { background: #00BA88; }
+
+/* Sidebar mini toggle btn */
+.toggle-sidebar { width: 28px; height: 28px; border-radius: 6px; border: 1px solid #D9DBE9; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #6E7191; transition: all 0.15s; margin-left: auto; flex-shrink: 0; }
+.toggle-sidebar:hover { background: #F4F5FF; color: #141ED2; border-color: #141ED2; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useCallback } = React;
+
+/* ── Data ── */
+const employees = [
+  { id: "NV001", name: "Nguyễn Văn An", dept: "Phòng Kế toán", position: "Kế toán trưởng", join: "01/03/2019", status: "active", color: "#141ED2" },
+  { id: "NV002", name: "Trần Thị Bích", dept: "Phòng Nhân sự", position: "Chuyên viên NS", join: "15/06/2020", status: "active", color: "#7B61FF" },
+  { id: "NV003", name: "Lê Minh Cường", dept: "Phòng CNTT", position: "Lập trình viên", join: "08/11/2021", status: "pending", color: "#00BA88" },
+  { id: "NV004", name: "Phạm Thị Dung", dept: "Phòng Kinh doanh", position: "Nhân viên KD", join: "20/02/2022", status: "active", color: "#F4B740" },
+  { id: "NV005", name: "Hoàng Văn Em", dept: "Phòng Pháp chế", position: "Chuyên viên PL", join: "05/09/2021", status: "inactive", color: "#EB2D4B" },
+  { id: "NV006", name: "Vũ Thị Phương", dept: "Phòng CNTT", position: "Quản lý dự án", join: "12/01/2020", status: "active", color: "#00966D" },
+  { id: "NV007", name: "Đặng Văn Giang", dept: "Phòng Kế toán", position: "Nhân viên KT", join: "30/07/2023", status: "pending", color: "#141ED2" },
+];
+
+const modules = [
+  { icon: "👥", label: "Quản lý nhân sự", active: true },
+  { icon: "🏢", label: "Cơ cấu tổ chức", active: false },
+  { icon: "📋", label: "Quản lý tuyển dụng", active: false },
+  { icon: "🎯", label: "Quản lý thành tích", active: false },
+  { icon: "💰", label: "Quản lý lương", active: false },
+  { icon: "📅", label: "Chấm công / Nghỉ phép", active: false },
+  { icon: "📊", label: "Báo cáo & Thống kê", active: false },
+  { icon: "⚙️", label: "Cài đặt hệ thống", active: false },
+];
+
+function SVGIcon({ path, size = 18 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d={path} />
+    </svg>
+  );
+}
+
+const ICONS = {
+  search: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z",
+  bell: "M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z",
+  menu: "M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z",
+  close: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z",
+  add: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z",
+  edit: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z",
+  delete: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z",
+  download: "M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z",
+  filter: "M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39A1 1 0 0 0 18.95 4H5.04a1 1 0 0 0-.79 1.61z",
+  chevron_right: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z",
+  chevron_down: "M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z",
+  person: "M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z",
+  check: "M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z",
+  more: "M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z",
+  refresh: "M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z",
+};
+
+function App() {
+  const [activeModule, setActiveModule] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
+  const [search, setSearch] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [sidebarMini, setSidebarMini] = useState(false);
+  const [modalStep, setModalStep] = useState(1);
+  const [selectedRows, setSelectedRows] = useState(new Set());
+
+  const tabs = ["Tất cả nhân viên", "Đang làm việc", "Chờ phê duyệt", "Đã nghỉ việc"];
+  const filtered = employees.filter(e => {
+    const q = search.toLowerCase();
+    const matchSearch = !q || e.name.toLowerCase().includes(q) || e.id.toLowerCase().includes(q) || e.dept.toLowerCase().includes(q);
+    const matchTab = activeTab === 0 ? true : activeTab === 1 ? e.status === "active" : activeTab === 2 ? e.status === "pending" : e.status === "inactive";
+    return matchSearch && matchTab;
+  });
+
+  const toggleRow = id => {
+    const next = new Set(selectedRows);
+    next.has(id) ? next.delete(id) : next.add(id);
+    setSelectedRows(next);
+  };
+
+  const statusLabel = s => ({ active: "Đang làm việc", pending: "Chờ duyệt", inactive: "Đã nghỉ" }[s]);
+  const statusClass = s => ({ active: "status-active", pending: "status-pending", inactive: "status-inactive" }[s]);
+  const initials = name => name.split(" ").map(w => w[0]).slice(-2).join("").toUpperCase();
+
+  const handleSave = () => {
+    setShowModal(false);
+    setModalStep(1);
+    setShowAlert(true);
+    setTimeout(() => setShowAlert(false), 3500);
+  };
+
+  return (
+    <div className="app">
+      {/* Sidebar */}
+      <div className={`sidebar${sidebarMini ? " mini" : ""}`}>
+        <div className="sidebar-header">
+          <div className="sidebar-logo"><span>MB</span></div>
+          {!sidebarMini && (
+            <div className="sidebar-title">
+              <div className="top">HCM · HRIS</div>
+              <div className="sub">Quản lý nhân sự</div>
+            </div>
+          )}
+          <button className="toggle-sidebar" onClick={() => setSidebarMini(v => !v)}>
+            <SVGIcon path={ICONS.menu} size={16} />
+          </button>
+        </div>
+        <div className="sidebar-nav">
+          {!sidebarMini && <div className="nav-section">Modules</div>}
+          {modules.map((m, i) => (
+            <div key={i} className={`nav-item${activeModule === i ? " active" : ""}`} onClick={() => setActiveModule(i)}>
+              <div className="icon" style={{ fontSize: 18 }}>{m.icon}</div>
+              {!sidebarMini && <span className="label">{m.label}</span>}
+              {!sidebarMini && i === 2 && <span className="badge">3</span>}
+            </div>
+          ))}
+        </div>
+        <div className="sidebar-footer">
+          <div className="avatar-sm"><span>NT</span></div>
+          {!sidebarMini && (
+            <div style={{ overflow: "hidden" }}>
+              <div style={{ fontSize: 13, fontWeight: 600, color: "#14142A", whiteSpace: "nowrap" }}>Nguyễn Thành</div>
+              <div style={{ fontSize: 11, color: "#A0A3BD" }}>Quản trị viên</div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Main */}
+      <div className="main">
+        <div className="header">
+          <div className="header-title">Quản lý nhân sự</div>
+          <div className="header-actions">
+            <button className="btn btn-outline btn-sm">
+              <SVGIcon path={ICONS.download} size={15} />
+              Xuất Excel
+            </button>
+            <button className="icon-btn notification-dot" title="Thông báo">
+              <SVGIcon path={ICONS.bell} size={18} />
+            </button>
+            <div className="avatar-sm" style={{ cursor: "pointer" }}><span>NT</span></div>
+          </div>
+        </div>
+
+        <div className="content">
+          {/* Breadcrumb */}
+          <div className="breadcrumb">
+            <a>Trang chủ</a>
+            <span>›</span>
+            <a>Nhân sự</a>
+            <span>›</span>
+            Danh sách nhân viên
+          </div>
+
+          {/* Alert */}
+          {showAlert && (
+            <div className="alert-banner success">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#00BA88"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              <div className="alert-content">
+                <div className="title" style={{ color: "#00966D" }}>Thêm nhân viên thành công</div>
+                <div className="desc">Hồ sơ nhân viên mới đã được tạo và đang chờ phê duyệt.</div>
+              </div>
+            </div>
+          )}
+
+          {/* Stats */}
+          <div className="stats-grid">
+            {[
+              { label: "Tổng nhân viên", value: "1,248", change: "+12 tháng này", color: "#141ED2", bg: "#E8EAF6", icon: ICONS.person },
+              { label: "Đang làm việc", value: "1,187", change: "95.1% tổng số", color: "#00966D", bg: "#F2FFFB", icon: ICONS.check },
+              { label: "Chờ phê duyệt", value: "23", change: "3 cần xử lý gấp", color: "#946200", bg: "#FFF9EF", icon: ICONS.refresh },
+              { label: "Đã nghỉ việc", value: "38", change: "Tháng 6/2026", color: "#EB2D4B", bg: "#FFF3F8", icon: ICONS.close },
+            ].map((s, i) => (
+              <div className="stat-card" key={i}>
+                <div className="stat-icon" style={{ background: s.bg, color: s.color }}>
+                  <SVGIcon path={s.icon} size={20} />
+                </div>
+                <div className="stat-label">{s.label}</div>
+                <div className="stat-value" style={{ color: s.color }}>{s.value}</div>
+                <div className="stat-change" style={{ color: s.color }}>{s.change}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Page header */}
+          <div className="page-header">
+            <div>
+              <div className="page-title">Danh sách nhân viên</div>
+            </div>
+            <div className="page-actions">
+              <button className="btn btn-ghost btn-sm">
+                <SVGIcon path={ICONS.filter} size={15} />
+                Bộ lọc
+              </button>
+              <button className="btn btn-primary" onClick={() => { setShowModal(true); setModalStep(1); }}>
+                <SVGIcon path={ICONS.add} size={16} />
+                Thêm nhân viên
+              </button>
+            </div>
+          </div>
+
+          {/* Tabs + Search */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 0 }}>
+            <div className="tabs" style={{ marginBottom: 0, flex: 1 }}>
+              {tabs.map((t, i) => (
+                <div key={i} className={`tab${activeTab === i ? " active" : ""}`} onClick={() => setActiveTab(i)}>
+                  {t}
+                  {i === 2 && <span style={{ marginLeft: 6, background: "#F4B740", color: "#fff", borderRadius: "9999px", fontSize: 10, fontWeight: 700, padding: "1px 6px" }}>23</span>}
+                </div>
+              ))}
+            </div>
+            <div className="search-bar" style={{ marginBottom: 0 }}>
+              <svg className="search-icon" viewBox="0 0 24 24" fill="currentColor"><path d={ICONS.search} /></svg>
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Tìm nhân viên, mã NV..." />
+            </div>
+          </div>
+
+          {/* Filter bar */}
+          <div className="filter-bar" style={{ marginTop: 12 }}>
+            <select className="select-field"><option>Tất cả phòng ban</option><option>Phòng Kế toán</option><option>Phòng Nhân sự</option><option>Phòng CNTT</option></select>
+            <select className="select-field"><option>Tất cả chức danh</option><option>Kế toán trưởng</option><option>Chuyên viên</option><option>Quản lý</option></select>
+            <select className="select-field"><option>Năm 2026</option><option>Năm 2025</option><option>Năm 2024</option></select>
+            {search && <div className="filter-chip active" onClick={() => setSearch("")}>"{search}" ✕</div>}
+          </div>
+
+          {/* Table */}
+          <div className="table-wrap">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th style={{ width: 44 }}>
+                    <input type="checkbox" style={{ accentColor: "#141ED2", cursor: "pointer" }} onChange={() => {}} />
+                  </th>
+                  <th>Nhân viên</th>
+                  <th>Mã NV</th>
+                  <th>Phòng ban</th>
+                  <th>Chức danh</th>
+                  <th>Ngày vào làm</th>
+                  <th>Trạng thái</th>
+                  <th style={{ width: 100 }}>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.length === 0 ? (
+                  <tr><td colSpan={8} style={{ textAlign: "center", padding: "40px", color: "#A0A3BD" }}>
+                    Không tìm thấy nhân viên nào
+                  </td></tr>
+                ) : filtered.map(e => (
+                  <tr key={e.id}>
+                    <td>
+                      <input type="checkbox" checked={selectedRows.has(e.id)} onChange={() => toggleRow(e.id)} style={{ accentColor: "#141ED2", cursor: "pointer" }} />
+                    </td>
+                    <td>
+                      <div className="user-cell">
+                        <div className="avatar-md" style={{ background: e.color }}>{initials(e.name)}</div>
+                        <div>
+                          <div className="user-name">{e.name}</div>
+                          <div className="user-code">{e.id}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td style={{ fontFamily: "monospace", fontSize: 12, color: "#6E7191" }}>{e.id}</td>
+                    <td>{e.dept}</td>
+                    <td>{e.position}</td>
+                    <td style={{ color: "#6E7191" }}>{e.join}</td>
+                    <td><span className={`status ${statusClass(e.status)}`}>{statusLabel(e.status)}</span></td>
+                    <td>
+                      <div style={{ display: "flex", gap: 4 }}>
+                        <button className="icon-btn" style={{ width: 28, height: 28 }} title="Xem chi tiết">
+                          <SVGIcon path="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" size={15} />
+                        </button>
+                        <button className="icon-btn" style={{ width: 28, height: 28 }} title="Chỉnh sửa">
+                          <SVGIcon path={ICONS.edit} size={14} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="pagination">
+              <div className="pagination-info">Hiển thị 1–{filtered.length} / {employees.length} nhân viên</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                <select className="select-field" style={{ height: 28, fontSize: 12 }}>
+                  <option>10 / trang</option><option>20 / trang</option><option>50 / trang</option>
+                </select>
+                <div className="pagination-btns">
+                  {["‹", "1", "2", "3", "›"].map((p, i) => (
+                    <button key={i} className={`page-btn${(i === 1) ? " active" : ""}`} onClick={() => setCurrentPage(i)}>{p}</button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modal — Add Employee */}
+      {showModal && (
+        <div className="modal-overlay" onClick={e => e.target === e.currentTarget && setShowModal(false)}>
+          <div className="modal">
+            <div className="modal-header">
+              <div className="modal-title">Thêm nhân viên mới</div>
+              <button className="modal-close" onClick={() => setShowModal(false)}>
+                <SVGIcon path={ICONS.close} size={18} />
+              </button>
+            </div>
+            <div className="modal-body">
+              {/* Steps */}
+              <div className="steps">
+                <div className="step">
+                  <div className={`step-circle ${modalStep > 1 ? "done" : "active"}`}>{modalStep > 1 ? "✓" : "1"}</div>
+                  <span className={`step-label${modalStep === 1 ? " active" : ""}`}>Thông tin cơ bản</span>
+                </div>
+                <div className={`step-line${modalStep > 1 ? " done" : ""}`} />
+                <div className="step">
+                  <div className={`step-circle ${modalStep > 2 ? "done" : modalStep === 2 ? "active" : "pending"}`}>{modalStep > 2 ? "✓" : "2"}</div>
+                  <span className={`step-label${modalStep === 2 ? " active" : ""}`}>Vị trí công tác</span>
+                </div>
+                <div className={`step-line${modalStep > 2 ? " done" : ""}`} />
+                <div className="step">
+                  <div className={`step-circle ${modalStep === 3 ? "active" : "pending"}`}>3</div>
+                  <span className={`step-label${modalStep === 3 ? " active" : ""}`}>Xác nhận</span>
+                </div>
+              </div>
+
+              {modalStep === 1 && (
+                <div>
+                  <div className="form-row">
+                    <div className="form-group"><label className="form-label">Họ và tên *</label><input className="form-input" placeholder="Nguyễn Văn A" /></div>
+                    <div className="form-group"><label className="form-label">Mã nhân viên</label><input className="form-input" placeholder="Tự động tạo" disabled style={{ background: "#F4F6FA", color: "#A0A3BD" }} /></div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group"><label className="form-label">Ngày sinh *</label><input className="form-input" type="date" /></div>
+                    <div className="form-group"><label className="form-label">Giới tính</label>
+                      <select className="form-select"><option>Nam</option><option>Nữ</option><option>Khác</option></select>
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group"><label className="form-label">Email công ty *</label><input className="form-input" placeholder="tennv@mbbank.com.vn" /></div>
+                    <div className="form-group"><label className="form-label">Số điện thoại</label><input className="form-input" placeholder="0912 345 678" /></div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group full"><label className="form-label">Địa chỉ thường trú</label><input className="form-input" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố" /></div>
+                  </div>
+                </div>
+              )}
+
+              {modalStep === 2 && (
+                <div>
+                  <div className="form-row">
+                    <div className="form-group"><label className="form-label">Phòng ban *</label>
+                      <select className="form-select"><option>-- Chọn phòng ban --</option><option>Phòng Kế toán</option><option>Phòng Nhân sự</option><option>Phòng CNTT</option><option>Phòng Kinh doanh</option></select>
+                    </div>
+                    <div className="form-group"><label className="form-label">Chức danh *</label>
+                      <select className="form-select"><option>-- Chọn chức danh --</option><option>Nhân viên</option><option>Chuyên viên</option><option>Trưởng nhóm</option><option>Phó phòng</option><option>Trưởng phòng</option></select>
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group"><label className="form-label">Ngày vào làm *</label><input className="form-input" type="date" /></div>
+                    <div className="form-group"><label className="form-label">Loại hợp đồng</label>
+                      <select className="form-select"><option>Thử việc</option><option>Xác định thời hạn</option><option>Không xác định thời hạn</option></select>
+                    </div>
+                  </div>
+                  <div className="form-row">
+                    <div className="form-group"><label className="form-label">Hệ số lương</label><input className="form-input" placeholder="3.00" /></div>
+                    <div className="form-group"><label className="form-label">Ngân hàng nhận lương</label>
+                      <select className="form-select"><option>MB Bank</option><option>Vietcombank</option><option>Techcombank</option></select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {modalStep === 3 && (
+                <div style={{ textAlign: "center", padding: "20px 0" }}>
+                  <div style={{ width: 64, height: 64, borderRadius: "50%", background: "#F2FFFB", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+                    <svg width={32} height={32} viewBox="0 0 24 24" fill="#00BA88"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  </div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: "#14142A", marginBottom: 8 }}>Xác nhận tạo hồ sơ</div>
+                  <div style={{ fontSize: 13, color: "#6E7191", marginBottom: 20 }}>Thông tin nhân viên mới sẽ được lưu và gửi đến quản lý để phê duyệt.</div>
+                  <div style={{ background: "#F4F6FA", borderRadius: 8, padding: "16px 20px", textAlign: "left" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8 }}>
+                      <span style={{ fontSize: 12, color: "#6E7191" }}>Trạng thái</span>
+                      <span className="status status-pending">Chờ phê duyệt</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                      <span style={{ fontSize: 12, color: "#6E7191" }}>Người tạo</span>
+                      <span style={{ fontSize: 12, fontWeight: 600, color: "#4E4B66" }}>Nguyễn Thành (Admin)</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="modal-footer">
+              {modalStep > 1 && <button className="btn btn-ghost" onClick={() => setModalStep(s => s - 1)}>← Quay lại</button>}
+              <button className="btn btn-ghost" onClick={() => setShowModal(false)}>Hủy</button>
+              {modalStep < 3
+                ? <button className="btn btn-primary" onClick={() => setModalStep(s => s + 1)}>Tiếp theo →</button>
+                : <button className="btn btn-primary" onClick={handleSave}>
+                    <SVGIcon path={ICONS.check} size={16} />
+                    Xác nhận tạo
+                  </button>
+              }
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body></html>

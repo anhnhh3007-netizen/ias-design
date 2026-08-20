@@ -1,0 +1,13 @@
+<!-- @dsCard group="Components" viewport="700x100" name="Progress" subtitle="Horizontal progress bar variants" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>body{margin:0;padding:16px 20px;background:#fff;font-family:var(--font-family-body);display:flex;flex-direction:column;gap:12px}
+.row{display:flex;align-items:center;gap:10px}
+.bar{flex:1;border-radius:999px;background:#EDF2F7;overflow:hidden}
+.fill{height:100%;border-radius:999px;transition:width .3s}
+.lbl{font-size:12px;font-weight:600;color:#6E7191;min-width:34px;text-align:right}
+</style></head><body>
+<div class="row"><div class="bar" style="height:4px"><div class="fill" style="width:30%;background:#141ED2"></div></div><span class="lbl">30%</span></div>
+<div class="row"><div class="bar" style="height:8px"><div class="fill" style="width:65%;background:#141ED2"></div></div><span class="lbl">65%</span></div>
+<div class="row"><div class="bar" style="height:8px"><div class="fill" style="width:85%;background:#00BA88"></div></div><span class="lbl" style="color:#00966D">85%</span></div>
+<div class="row"><div class="bar" style="height:8px"><div class="fill" style="width:40%;background:#F4B740"></div></div><span class="lbl" style="color:#946200">40%</span></div>
+</body></html>

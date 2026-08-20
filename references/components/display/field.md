@@ -1,0 +1,4 @@
+# Field (added 2026-07-31)
+Read-only label/value pair for a record-detail display grid (`Drawer` bodies, "Xem chi tiết" pages) — source at `components/display/Field/`. Not for editable inputs — those stay on the Forms family / `FilterCard`'s own field styling.
+- Fixed anatomy: 12px/500 muted caption label (`--color-text-secondary`) above, 14px/400 primary-text value (`--color-text-primary`) below, with a `1px solid --color-neutral-200` divider under the value. Canonical spec taken from `templates/ias-xem-chi-tiet/XemChiTiet.dc.html`'s field-grid — `Drawer`'s own field styling used to be a slightly different ad-hoc version (13px bold value, no divider) before this was formalized; both now converge on `Field`.
+- `Field` doesn't own the surrounding grid — place several inside any `display:grid` container (2-column in `Drawer`, 3-column in `XemChiTiet.dc.html`); pass `full` to span a field across every column for a long value (e.g. "Mô tả").

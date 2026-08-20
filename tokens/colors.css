@@ -1,0 +1,115 @@
+/* HCM Design System — Color Tokens
+   Source: HCM System Web.fig / Color page
+   Primary brand: Averta Std CY, deep blue (#141ED2) + violet accent (#7B61FF)
+*/
+
+:root {
+  /* ── Brand Primary ──────────────────────────────── */
+  --color-primary-900:   #00009A;   /* Darkest blue */
+  --color-primary-700:   #0E15A8;
+  --color-primary-500:   #141ED2;   /* Core brand blue */
+  --color-primary-400:   #4B63E2;
+  --color-primary-300:   #7F85F5;
+  --color-primary-200:   #C4C6F7;
+  --color-primary-100:   #E8EAF6;   /* Very light blue tint */
+  --color-primary-50:    #F4F5FF;
+
+  /* ── Brand Accent / Secondary (Violet) ─────────── */
+  --color-accent-700:    #5500CC;
+  --color-accent-500:    #7B61FF;   /* Core violet */
+  --color-accent-300:    #9B40FF;
+  --color-accent-200:    #BC80FF;
+  --color-accent-100:    #EEDFFF;
+
+  /* ── Semantic: Success ──────────────────────────── */
+  --color-success-700:   #00966D;
+  --color-success-500:   #00BA88;
+  --color-success-300:   #0B7659;
+  --color-success-100:   #F2FFFB;
+
+  /* ── Semantic: Error ────────────────────────────── */
+  --color-error-700:     #C30052;
+  --color-error-500:     #EB2D4B;
+  --color-error-400:     #ED2E7E;
+  --color-error-300:     #FF84B7;
+  --color-error-100:     #FFF3F8;
+
+  /* ── Semantic: Warning ──────────────────────────── */
+  --color-warning-700:   #946200;
+  --color-warning-500:   #F4B740;
+  --color-warning-400:   #E39114;
+  --color-warning-300:   #FFD789;
+  --color-warning-100:   #FFF9EF;
+
+  /* ── Semantic: Alert/Danger ─────────────────────── */
+  --color-alert-500:     #FA0B0B;
+  --color-alert-400:     #FA4949;
+  --color-alert-300:     #FF8787;
+  --color-alert-100:     #FFC9C9;
+
+  /* ── Semantic: Info / Day Blue ──────────────────── */
+  --color-info-500:      #66CAFF;
+  --color-info-400:      #76CCE7;
+  --color-info-300:      #99DCFF;
+  --color-info-100:      #D6F1FF;
+
+  /* ── Neutral / Grayscale ────────────────────────── */
+  --color-neutral-900:   #14142A;   /* Near-black text */
+  --color-neutral-800:   #262626;
+  --color-neutral-700:   #4E4B66;   /* Dark body text */
+  --color-neutral-600:   #6E7191;
+  --color-neutral-500:   #A0A3BD;   /* Muted/placeholder */
+  --color-neutral-400:   #C4C4D4;
+  --color-neutral-300:   #D9DBE9;   /* Borders / dividers */
+  --color-neutral-200:   #EDF2F7;   /* Subtle surfaces */
+  --color-neutral-100:   #F4F6FA;   /* Page background */
+  --color-neutral-50:    #FAFAFA;
+  --color-neutral-0:     #FFFFFF;
+
+  /* ── Semantic Aliases ───────────────────────────── */
+  --color-bg-page:          var(--color-neutral-100);
+  --color-bg-surface:       var(--color-neutral-0);
+  --color-bg-overlay:       rgba(20, 20, 42, 0.5);
+  --color-bg-hover:         var(--color-primary-50);
+  --color-bg-error:         var(--color-error-100);
+  --color-bg-success:       var(--color-success-100);
+  --color-bg-warning:       var(--color-warning-100);
+  /* Solid/vivid backgrounds — for small status swatches (dots, chart
+     segments) and active/selected pills, as opposed to the pale tints
+     above which are meant for banner/card surfaces. */
+  --color-bg-brand:         var(--color-primary-500);
+  --color-bg-success-solid: var(--color-success-500);
+  --color-bg-warning-solid: var(--color-warning-500);
+  --color-bg-error-solid:   var(--color-error-500);
+
+  --color-text-primary:  var(--color-neutral-900);
+  --color-text-body:     var(--color-neutral-700);
+  --color-text-secondary:var(--color-neutral-600);
+  --color-text-muted:    var(--color-neutral-500);
+  --color-text-inverse:  var(--color-neutral-0);
+  --color-text-brand:    var(--color-primary-500);
+  --color-text-link:     var(--color-primary-500);
+  --color-text-accent:   var(--color-accent-500);
+  --color-text-error:    var(--color-error-700);
+  --color-text-success:  var(--color-success-700);
+  --color-text-warning:  var(--color-warning-700);
+
+  --color-border-default:var(--color-neutral-300);
+  --color-border-strong: var(--color-neutral-400);
+  --color-border-focus:  var(--color-primary-500);
+  --color-border-error:  var(--color-error-500);
+  --color-border-success:var(--color-success-500);
+  --color-border-warning:var(--color-warning-500);
+
+  --color-icon-default:  var(--color-neutral-600);
+  --color-icon-brand:    var(--color-primary-500);
+  --color-icon-accent:   var(--color-accent-500);
+  --color-icon-muted:    var(--color-neutral-500);
+  --color-icon-error:    var(--color-error-500);
+  --color-icon-success:  var(--color-success-500);
+  --color-icon-warning:  var(--color-warning-500);
+  /* For an icon glyph drawn on a solid/vivid background (--color-bg-brand
+     and the -solid status backgrounds above) — same pairing as
+     --color-text-inverse for text on those same backgrounds. */
+  --color-icon-inverse:  var(--color-neutral-0);
+}

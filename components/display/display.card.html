@@ -1,0 +1,41 @@
+<!-- @dsCard group="Components" viewport="700x160" name="Display — Avatar · Badge · Toggle · Tabs" subtitle="Key display primitives" -->
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="../../components/display/Components.bundle.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<style>
+  body { margin: 0; padding: 16px 20px; background: #fff; font-family: var(--font-family-body); }
+  .row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
+  .section-label { font-size: 10px; font-weight: 700; color: #A0A3BD; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 8px; }
+</style>
+</head><body>
+<div id="root"></div>
+<script type="text/babel">
+const { Badge5, Toogle, Tab2 } = window;
+function Card() {
+  return (
+    <div>
+      <div className="section-label">Badge · Toggle · Tabs</div>
+      <div className="row">
+        <Badge5 property1="badge" text1="Phó phòng" />
+        <Badge5 property1="badge" text1="Trưởng phòng" />
+        <Badge5 property1="close" text1="Nhân viên" />
+        <Toogle property1="bật" text1="Bật" />
+        <Toogle property1="tắt" text1="Tắt" />
+      </div>
+      <div className="row">
+        <Tab2 choose={true} placement="left" text1="Chi nhánh" />
+        <Tab2 choose={false} placement="left" text1="Phòng ban" />
+        <Tab2 choose={false} placement="left" text1="Chức danh" />
+        <Tab2 choose={false} placement="left" text1="Nhân viên" />
+      </div>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<Card />);
+</script>
+</body></html>

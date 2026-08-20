@@ -1,0 +1,25 @@
+<!-- @dsCard group="Components" viewport="700x120" name="Avatar & Badge" subtitle="Avatars with initials · status badges · tags" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+  body { margin:0; padding:16px 20px; background:#fff; font-family:var(--font-family-body); }
+  .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+  .av { border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; color:#fff; flex-shrink:0; }
+  .badge { display:inline-flex; align-items:center; gap:5px; padding:3px 10px; border-radius:9999px; font-size:11px; font-weight:600; }
+  .badge::before { content:''; width:6px; height:6px; border-radius:50%; }
+</style></head><body>
+<div class="row">
+  <div class="av" style="width:40px;height:40px;background:#141ED2;font-size:14px">NA</div>
+  <div class="av" style="width:40px;height:40px;background:#7B61FF;font-size:14px">TB</div>
+  <div class="av" style="width:40px;height:40px;background:#00BA88;font-size:14px">LC</div>
+  <div class="av" style="width:32px;height:32px;background:#F4B740;font-size:12px">PD</div>
+  <div class="av" style="width:48px;height:48px;background:#EB2D4B;font-size:16px">HE</div>
+</div>
+<div class="row">
+  <span class="badge" style="background:#E8EAF6;color:#141ED2"><span style="background:#141ED2"></span>Đang làm việc</span>
+  <span class="badge" style="background:#FFF9EF;color:#946200"><span style="background:#F4B740"></span>Chờ duyệt</span>
+  <span class="badge" style="background:#FFF3F8;color:#C30052"><span style="background:#EB2D4B"></span>Nghỉ việc</span>
+  <span class="badge" style="background:#F2FFFB;color:#00966D"><span style="background:#00BA88"></span>Hoàn thành</span>
+  <span class="badge" style="background:#EEDFFF;color:#5500CC"><span style="background:#7B61FF"></span>Thử việc</span>
+  <span class="badge" style="background:#F4F6FA;color:#6E7191;cursor:pointer">Phó phòng ✕</span>
+</div>
+</body></html>

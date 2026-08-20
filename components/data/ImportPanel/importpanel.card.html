@@ -1,0 +1,75 @@
+<!-- @dsCard group="Components" viewport="760x260" name="ImportPanel" subtitle="Dismissible inline 2-step import panel — download template, then upload the filled file" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+body{margin:0;padding:16px 20px;background:#F4F6FA;font-family:var(--font-family-body);display:flex;flex-direction:column;gap:16px}
+.ip{position:relative;background:#fff;border:1px solid var(--color-border-default,#D9DBE9);border-radius:12px;padding:20px 24px}
+.ip-close{position:absolute;top:14px;right:14px;width:28px;height:28px;border:none;background:transparent;color:var(--color-text-muted,#A0A3BD);cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.ip-close:hover{background:var(--color-bg-hover,#F4F5FF);color:var(--color-text-primary,#14142A)}
+.ip-row{display:flex;align-items:flex-start;gap:20px}
+.ip-step{flex:1;min-width:0}
+.ip-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.ip-badge{width:22px;height:22px;border-radius:50%;background:var(--color-bg-brand,#141ED2);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ip-label{font-size:14px;font-weight:600;color:var(--color-text-primary,#14142A)}
+.ip-connector{flex:0 1 56px;align-self:center;margin-top:27px;border-top:1px dashed var(--color-border-strong,#C4C4D4);min-width:24px}
+.ip-chip{display:flex;align-items:center;gap:10px;background:var(--color-bg-page,#F4F6FA);border:1px solid var(--color-border-default,#D9DBE9);border-radius:8px;padding:8px 10px 8px 12px;width:100%;box-sizing:border-box}
+.ip-chip .fname{font-size:13px;color:var(--color-text-body,#4E4B66);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ip-dl-btn{width:26px;height:26px;flex-shrink:0;border:1px solid var(--color-primary-200,#C4C6F7);border-radius:6px;background:transparent;color:var(--color-icon-brand,#141ED2);cursor:pointer;display:flex;align-items:center;justify-content:center}
+.ip-dl-btn:hover{border-color:var(--color-border-focus,#141ED2)}
+.ip-upload-trigger{display:inline-flex;align-items:center;gap:6px;background:transparent;border:none;cursor:pointer;padding:0;color:var(--color-text-link,#141ED2);font-size:13px;font-weight:600}
+.ip-upload-trigger:hover{text-decoration:underline}
+.ip-hint{color:var(--color-text-muted,#A0A3BD);font-weight:400}
+.ip-selected{display:flex;align-items:center;gap:10px}
+.ip-selected .ip-chip{width:auto;flex:1;min-width:0}
+.ip-confirm{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 16px;border-radius:8px;font-size:13px;font-weight:600;font-family:inherit;border:none;cursor:pointer;background:var(--color-bg-brand,#141ED2);color:#fff;white-space:nowrap}
+</style></head><body>
+
+<!-- Default state — step 1 always ready, step 2 waiting for a file -->
+<div class="ip">
+  <button class="ip-close" title="Đóng"><span>&#10005;</span></button>
+  <div class="ip-row">
+    <div class="ip-step">
+      <div class="ip-head"><span class="ip-badge">1</span><span class="ip-label">Tải xuống hồ sơ mẫu</span></div>
+      <div class="ip-chip">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--color-icon-success,#00BA88)"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        <span class="fname">Template_file.xlsx</span>
+        <button class="ip-dl-btn" title="Tải xuống"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>
+      </div>
+    </div>
+    <div class="ip-connector"></div>
+    <div class="ip-step">
+      <div class="ip-head"><span class="ip-badge">2</span><span class="ip-label">Tải lên hồ sơ đã bổ sung thông tin</span></div>
+      <button class="ip-upload-trigger">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="transform:rotate(180deg)"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+        Tải file <span class="ip-hint">(Dung lượng tối đa 50MB)</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Selected state — step 2 shows the picked file + a Confirm action (Nhập dữ liệu) -->
+<div class="ip">
+  <button class="ip-close" title="Đóng"><span>&#10005;</span></button>
+  <div class="ip-row">
+    <div class="ip-step">
+      <div class="ip-head"><span class="ip-badge">1</span><span class="ip-label">Tải xuống hồ sơ mẫu</span></div>
+      <div class="ip-chip">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--color-icon-success,#00BA88)"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        <span class="fname">Template_file.xlsx</span>
+        <button class="ip-dl-btn" title="Tải xuống"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg></button>
+      </div>
+    </div>
+    <div class="ip-connector"></div>
+    <div class="ip-step">
+      <div class="ip-head"><span class="ip-badge">2</span><span class="ip-label">Tải lên hồ sơ đã bổ sung thông tin</span></div>
+      <div class="ip-selected">
+        <div class="ip-chip">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--color-icon-success,#00BA88)"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+          <span class="fname">Can_cu_xu_phat_2026.xlsx</span>
+        </div>
+        <button class="ip-confirm">Nhập dữ liệu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body></html>
