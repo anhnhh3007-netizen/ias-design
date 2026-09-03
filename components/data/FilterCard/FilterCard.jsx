@@ -45,8 +45,8 @@ export function FilterCard({
 }) {
   return (
     <div className={className} style={{
-      background: '#fff', borderRadius: 12, padding: '16px 20px',
-      boxShadow: '0 2px 8px rgba(75,99,226,0.08)',
+      background: '#fff', border: '1px solid var(--color-border-default, #D9DBE9)',
+      borderRadius: 12, padding: '16px 20px',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       ...style,
     }} {...rest}>

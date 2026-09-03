@@ -12,12 +12,12 @@ export function Breadcrumb({ items = [], separator = '›', className = '', styl
         const isLast = i === items.length - 1;
         return (
           <React.Fragment key={i}>
-            {i > 0 && <span style={{ color: '#D9DBE9', userSelect: 'none' }}>{separator}</span>}
+            {i > 0 && <span style={{ color: 'var(--color-neutral-300, #D9DBE9)', userSelect: 'none' }}>{separator}</span>}
             {isLast ? (
-              <span style={{ color: '#6E7191', fontWeight: 500 }}>{item.label}</span>
+              <span style={{ color: 'var(--color-text-secondary, #6E7191)', fontWeight: 500 }}>{item.label}</span>
             ) : (
               <a href={item.href || '#'} onClick={item.onClick}
-                style={{ color: '#141ED2', textDecoration: 'none', fontWeight: 500,
+                style={{ color: 'var(--color-text-link, #141ED2)', textDecoration: 'none', fontWeight: 500,
                   cursor: 'pointer' }}
                 onMouseEnter={e => e.target.style.textDecoration = 'underline'}
                 onMouseLeave={e => e.target.style.textDecoration = 'none'}>

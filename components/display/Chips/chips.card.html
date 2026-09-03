@@ -1,0 +1,79 @@
+<!-- @dsCard group="Components" viewport="820x520" name="Chips" subtitle="assist · filter · input · suggestion — states + small/medium/large sizes (default medium)" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+<style>
+  body { margin:0; padding:16px 20px; background:#fff; font-family:var(--font-family-body); }
+  .msym{font-family:'Material Symbols Outlined';font-style:normal;user-select:none;line-height:1;display:inline-block;flex-shrink:0}
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:14px; }
+  .lbl { width:110px; flex-shrink:0; font-size:11px; font-weight:600; color:#6E7191; text-transform:uppercase; letter-spacing:.4px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 14px; border-radius:var(--radius-full,9999px);
+    font-size:13px; font-weight:500; line-height:1; white-space:nowrap; box-sizing:border-box; font-family:inherit; cursor:pointer; border:none; }
+  .chip-icon { padding-left:10px; }
+  .chip .msym { font-size:16px; }
+  .chip-x { display:inline-flex; align-items:center; justify-content:center; width:16px; height:16px; border-radius:50%; opacity:.7; font-size:11px; margin-left:2px; }
+  /* size="small"/"large" — same 3-tier naming as Badge's own size prop, see chips.md's
+     size table; medium (the base .chip rule above) stays the default for both components. */
+  .chip-sm { height:24px; padding:0 10px; font-size:11px; }
+  .chip-sm.chip-icon { padding:0 10px 0 6px; }
+  .chip-sm .msym { font-size:14px; }
+  .chip-lg { height:40px; padding:0 16px; font-size:14px; }
+  .chip-lg.chip-icon { padding:0 16px 0 12px; }
+  .chip-lg .msym { font-size:18px; }
+  /* Badge comparison row — exact markup/values from Badge/badge.card.html */
+  .b { display:inline-flex; align-items:center; gap:6px; padding:4px 12px; border-radius:9999px; font-size:12px; font-weight:600; }
+  .b.sm { gap:4px; padding:2px 8px; font-size:10px; }
+  .b.md { gap:5px; padding:3px 10px; font-size:11px; }
+</style></head><body>
+
+<!-- Colors below are var(--color-*) from tokens/colors.css per color-rules.md's
+     "new/updated components must use tokens/colors.css" rule — see Chips.jsx's
+     own comment header for the exact state → token mapping (revised 2026-08-26:
+     default fill is --color-bg-hover, not white, so chips don't wash out against
+     a white FilterCard surface; hover escalates to --color-primary-200, mirroring
+     Button's own `secondary` variant ladder). -->
+
+<div class="row"><span class="lbl">Assist</span>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Áp dụng gần đây</button>
+  <button class="chip" style="background:var(--color-primary-200);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Hover</button>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-focus);box-shadow:0 0 0 3px rgba(20,30,210,.08)">Focused</button>
+  <button class="chip chip-icon" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default)"><span class="msym" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">event</span>Thêm vào lịch</button>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-secondary);border:1px solid var(--color-border-default);opacity:.5;cursor:not-allowed">Vô hiệu</button>
+</div>
+
+<div class="row"><span class="lbl">Filter</span>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Kế toán</button>
+  <button class="chip" style="background:var(--color-primary-200);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Hover</button>
+  <button class="chip chip-icon" style="background:var(--color-bg-brand);color:var(--color-text-inverse);border:none"><span style="font-size:14px;font-weight:700">✓</span>CNTT (đã chọn)</button>
+  <button class="chip chip-icon" style="background:var(--color-primary-700);color:var(--color-text-inverse);border:none"><span style="font-size:14px;font-weight:700">✓</span>Selected hover</button>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-secondary);border:1px solid var(--color-border-default);opacity:.5;cursor:not-allowed">Vô hiệu</button>
+</div>
+
+<div class="row"><span class="lbl">Input</span>
+  <span class="chip" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default);cursor:default">Nguyễn Văn A<span class="chip-x">✕</span></span>
+  <span class="chip" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default);cursor:default">Trần Thị B<span class="chip-x">✕</span></span>
+  <span class="chip" style="background:var(--color-bg-hover);color:var(--color-text-secondary);border:1px solid var(--color-border-default);opacity:.5;cursor:default">Vô hiệu<span class="chip-x">✕</span></span>
+</div>
+
+<div class="row"><span class="lbl">Suggestion</span>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Kiểm tra BCTC quý này</button>
+  <button class="chip" style="background:var(--color-primary-200);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Hover</button>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-secondary);border:1px solid var(--color-border-default);opacity:.5;cursor:not-allowed">Vô hiệu</button>
+</div>
+
+<div class="row"><span class="lbl">Elevated</span>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:none;box-shadow:var(--shadow-sm)">Trên nền ảnh</button>
+</div>
+
+<div class="row"><span class="lbl">Size</span>
+  <button class="chip chip-sm" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Small 24</button>
+  <button class="chip" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Medium 32 (mặc định)</button>
+  <button class="chip chip-lg" style="background:var(--color-bg-hover);color:var(--color-text-primary);border:1px solid var(--color-border-default)">Large 40</button>
+</div>
+
+<div class="row"><span class="lbl">So sánh Badge</span>
+  <span class="b sm" style="background:var(--color-primary-100,#E8EAF6);color:var(--color-text-brand,#141ED2)"><span style="background:var(--color-text-brand,#141ED2);width:5px;height:5px;border-radius:50%"></span>Small</span>
+  <span class="b md" style="background:var(--color-primary-100,#E8EAF6);color:var(--color-text-brand,#141ED2)"><span style="background:var(--color-text-brand,#141ED2);width:6px;height:6px;border-radius:50%"></span>Medium</span>
+  <span class="b" style="background:var(--color-primary-100,#E8EAF6);color:var(--color-text-brand,#141ED2)"><span style="background:var(--color-text-brand,#141ED2);width:7px;height:7px;border-radius:50%"></span>Large</span>
+</div>
+
+</body></html>

@@ -19,6 +19,15 @@ export interface InputProps {
   readOnly?: boolean;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
+  /**
+   * Optional (added 2026-08-27) — field height, same S/M/L scale as `Button`:
+   * `small` = 32px, `medium` = 40px (default, unchanged), `large` = 48px.
+   * Horizontal padding stays constant across sizes — only height and font-size
+   * scale, matching `Button`'s own convention. See form-fields.md's "Sizes"
+   * section — this scale is shared across `Input`/`InputNumber`/`SearchInput`/
+   * `Select`.
+   */
+  size?: 'small' | 'medium' | 'large';
   id?: string;
   className?: string;
   style?: React.CSSProperties;

@@ -1,13 +1,23 @@
-<!-- @dsCard group="Components" viewport="700x80" name="Badge" subtitle="Status badges and tag chips" -->
+<!-- @dsCard group="Components" viewport="700x110" name="Badge" subtitle="Status badges and tag chips — default size is now large (2026-08-24)" -->
 <!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
-<style>body{margin:0;padding:16px 20px;background:#fff;font-family:var(--font-family-body);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.b{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:600}
-.b::before{content:'';width:6px;height:6px;border-radius:50%}
+<style>body{margin:0;padding:16px 20px;background:#fff;font-family:var(--font-family-body);display:flex;flex-direction:column;gap:10px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.b{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:9999px;font-size:12px;font-weight:600}
+.b.sm{gap:4px;padding:2px 8px;font-size:10px}
+.b.md{gap:5px;padding:3px 10px;font-size:11px}
 </style></head><body>
-<span class="b" style="background:#E8EAF6;color:#141ED2"><span style="background:#141ED2;width:6px;height:6px;border-radius:50%"></span>Đang làm</span>
-<span class="b" style="background:#FFF9EF;color:#946200"><span style="background:#F4B740;width:6px;height:6px;border-radius:50%"></span>Chờ duyệt</span>
-<span class="b" style="background:#F2FFFB;color:#00966D"><span style="background:#00BA88;width:6px;height:6px;border-radius:50%"></span>Hoàn thành</span>
-<span class="b" style="background:#FFF3F8;color:#C30052"><span style="background:#EB2D4B;width:6px;height:6px;border-radius:50%"></span>Lỗi</span>
-<span class="b" style="background:#EEDFFF;color:#5500CC"><span style="background:#7B61FF;width:6px;height:6px;border-radius:50%"></span>Thử việc</span>
-<span class="b" style="background:#F4F6FA;color:#6E7191;cursor:pointer">Phó phòng ✕</span>
+<!-- size="large" — default -->
+<div class="row">
+<span class="b" style="background:var(--color-primary-100,#E8EAF6);color:var(--color-text-brand,#141ED2)"><span style="background:var(--color-text-brand,#141ED2);width:7px;height:7px;border-radius:50%"></span>Đang làm</span>
+<span class="b" style="background:var(--color-bg-warning,#FFF9EF);color:var(--color-text-warning,#946200)"><span style="background:var(--color-warning-500,#F4B740);width:7px;height:7px;border-radius:50%"></span>Chờ duyệt</span>
+<span class="b" style="background:var(--color-bg-success,#F2FFFB);color:var(--color-text-success,#00966D)"><span style="background:var(--color-bg-success-solid,#00BA88);width:7px;height:7px;border-radius:50%"></span>Hoàn thành</span>
+<span class="b" style="background:var(--color-bg-error,#FFF3F8);color:var(--color-text-error,#C30052)"><span style="background:var(--color-bg-error-solid,#EB2D4B);width:7px;height:7px;border-radius:50%"></span>Lỗi</span>
+<span class="b" style="background:var(--color-accent-100,#EEDFFF);color:var(--color-accent-700,#5500CC)"><span style="background:var(--color-accent-500,#7B61FF);width:7px;height:7px;border-radius:50%"></span>Thử việc</span>
+<span class="b" style="background:var(--color-neutral-100,#F4F6FA);color:var(--color-text-secondary,#6E7191);cursor:pointer">Phó phòng ✕</span>
+</div>
+<!-- size="medium" / size="small" — opt-in via prop, no longer the default -->
+<div class="row">
+<span class="b md" style="background:var(--color-primary-100,#E8EAF6);color:var(--color-text-brand,#141ED2)"><span style="background:var(--color-text-brand,#141ED2);width:6px;height:6px;border-radius:50%"></span>Đang làm (medium)</span>
+<span class="b sm" style="background:var(--color-primary-100,#E8EAF6);color:var(--color-text-brand,#141ED2)"><span style="background:var(--color-text-brand,#141ED2);width:5px;height:5px;border-radius:50%"></span>Đang làm (small)</span>
+</div>
 </body></html>

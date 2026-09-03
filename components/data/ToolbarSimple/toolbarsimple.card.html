@@ -1,4 +1,4 @@
-<!-- @dsCard group="Components" viewport="700x150" name="ToolbarSimple" subtitle="Single-line search bar above a list/table — collapses into FilterCard, or into a bulk-selection bar, on demand" -->
+<!-- @dsCard group="Components" viewport="700x260" name="ToolbarSimple" subtitle="Single-line search bar above a list/table — collapses into FilterCard, or into a bulk-selection bar, on demand · sizes S/M/L (added 2026-08-27)" -->
 <!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
 <style>
@@ -124,6 +124,38 @@ body{margin:0;padding:12px;background:#F4F6FA;font-family:var(--font-family-body
       <span class="msym" style="font-size:19px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24">settings</span>
     </button>
   </div>
+</div>
+
+<!-- Sizes (size prop, added 2026-08-27) — same S/M/L scale as Input/Button.
+     HARD RULE: the search input and both buttons are always the SAME size as
+     each other — never mixed. See toolbarsimple.md's "Sizes" section. -->
+<div class="tbs">
+  <div class="tbs-search" style="width:220px">
+    <span class="msym" style="font-size:14px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+    <input placeholder="Small (32px)" style="height:32px;font-size:13px" />
+  </div>
+  <button class="btn btn-primary" style="height:32px;font-size:14px">
+    <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+    Tìm kiếm
+  </button>
+  <button class="btn btn-outline" style="height:32px;font-size:14px">
+    <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">tune</span>
+    Tìm kiếm nâng cao
+  </button>
+</div>
+<div class="tbs">
+  <div class="tbs-search" style="width:260px">
+    <span class="msym" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+    <input placeholder="Large (48px)" style="height:48px;font-size:14px" />
+  </div>
+  <button class="btn btn-primary" style="height:48px;font-size:16px">
+    <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span>
+    Tìm kiếm
+  </button>
+  <button class="btn btn-outline" style="height:48px;font-size:16px">
+    <span class="msym" style="font-size:16px;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">tune</span>
+    Tìm kiếm nâng cao
+  </button>
 </div>
 
 </body></html>

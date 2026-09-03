@@ -3,12 +3,12 @@ import React from 'react';
 export function Tag({ children, color = 'default', icon, onClose,
   className = '', style = {}, ...rest }) {
   const colorMap = {
-    default:  { bg: '#F4F6FA',  text: '#6E7191',  border: '#D9DBE9' },
-    blue:     { bg: '#E8EAF6',  text: '#141ED2',  border: '#C4C6F7' },
-    green:    { bg: '#F2FFFB',  text: '#00966D',  border: '#00BA88' },
-    orange:   { bg: '#FFF9EF',  text: '#946200',  border: '#F4B740' },
-    red:      { bg: '#FFF3F8',  text: '#C30052',  border: '#EB2D4B' },
-    purple:   { bg: '#EEDFFF',  text: '#5500CC',  border: '#BC80FF' },
+    default:  { bg: 'var(--color-neutral-100, #F4F6FA)',  text: 'var(--color-text-secondary, #6E7191)',  border: 'var(--color-border-default, #D9DBE9)' },
+    blue:     { bg: 'var(--color-primary-100, #E8EAF6)',  text: 'var(--color-text-brand, #141ED2)',  border: 'var(--color-primary-200, #C4C6F7)' },
+    green:    { bg: 'var(--color-bg-success, #F2FFFB)',  text: 'var(--color-text-success, #00966D)',  border: 'var(--color-border-success, #00BA88)' },
+    orange:   { bg: 'var(--color-bg-warning, #FFF9EF)',  text: 'var(--color-text-warning, #946200)',  border: 'var(--color-border-warning, #F4B740)' },
+    red:      { bg: 'var(--color-bg-error, #FFF3F8)',  text: 'var(--color-text-error, #C30052)',  border: 'var(--color-border-error, #EB2D4B)' },
+    purple:   { bg: 'var(--color-accent-100, #EEDFFF)',  text: 'var(--color-accent-700, #5500CC)',  border: 'var(--color-accent-200, #BC80FF)' },
   };
   const c = colorMap[color] || colorMap.default;
   return (

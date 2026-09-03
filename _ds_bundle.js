@@ -1446,7 +1446,7 @@ Object.assign(__ds_scope, { Table });
 // components/display/Avatar/Avatar.jsx
 try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
-const COLORS = ['#141ED2', '#7B61FF', '#00BA88', '#F4B740', '#EB2D4B', '#00966D', '#0E15A8', '#946200'];
+const COLORS = ['var(--color-primary-500, #141ED2)', 'var(--color-accent-500, #7B61FF)', 'var(--color-success-500, #00BA88)', 'var(--color-warning-500, #F4B740)', 'var(--color-error-500, #EB2D4B)', 'var(--color-success-700, #00966D)', 'var(--color-primary-700, #0E15A8)', 'var(--color-warning-700, #946200)'];
 function initials(name = '') {
   return name.split(' ').map(w => w[0]).filter(Boolean).slice(-2).join('').toUpperCase();
 }
@@ -1475,7 +1475,7 @@ function Avatar({
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       fontWeight: 700,
       fontSize: Math.round(size * 0.35),
-      color: '#fff',
+      color: 'var(--color-text-inverse, #fff)',
       userSelect: 'none',
       ...style
     }
@@ -1497,33 +1497,54 @@ try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 const variantStyles = {
   default: {
-    background: '#E8EAF6',
-    color: '#141ED2'
+    background: 'var(--color-primary-100, #E8EAF6)',
+    color: 'var(--color-text-brand, #141ED2)'
   },
   success: {
-    background: '#F2FFFB',
-    color: '#00966D'
+    background: 'var(--color-bg-success, #F2FFFB)',
+    color: 'var(--color-text-success, #00966D)'
   },
   warning: {
-    background: '#FFF9EF',
-    color: '#946200'
+    background: 'var(--color-bg-warning, #FFF9EF)',
+    color: 'var(--color-text-warning, #946200)'
   },
   error: {
-    background: '#FFF3F8',
-    color: '#C30052'
+    background: 'var(--color-bg-error, #FFF3F8)',
+    color: 'var(--color-text-error, #C30052)'
   },
   neutral: {
-    background: '#F4F6FA',
-    color: '#6E7191'
+    background: 'var(--color-neutral-100, #F4F6FA)',
+    color: 'var(--color-text-secondary, #6E7191)'
   },
   purple: {
-    background: '#EEDFFF',
-    color: '#5500CC'
+    background: 'var(--color-accent-100, #EEDFFF)',
+    color: 'var(--color-accent-700, #5500CC)'
+  }
+};
+const sizes = {
+  small: {
+    padding: '2px 8px',
+    fontSize: 10,
+    dotSize: 5,
+    gap: 4
+  },
+  medium: {
+    padding: '3px 10px',
+    fontSize: 11,
+    dotSize: 6,
+    gap: 5
+  },
+  large: {
+    padding: '4px 12px',
+    fontSize: 12,
+    dotSize: 7,
+    gap: 6
   }
 };
 function Badge({
   children,
   variant = 'default',
+  size = 'large',
   dot = false,
   onClose,
   className = '',
@@ -1531,16 +1552,17 @@ function Badge({
   ...rest
 }) {
   const v = variantStyles[variant] || variantStyles.default;
+  const s = sizes[size] || sizes.large;
   return /*#__PURE__*/React.createElement("span", _extends({
     className: className,
     style: {
       display: 'inline-flex',
       alignItems: 'center',
-      gap: dot ? 5 : 4,
-      padding: '3px 10px',
+      gap: dot ? s.gap : s.gap - 1,
+      padding: s.padding,
       borderRadius: 9999,
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
-      fontSize: 11,
+      fontSize: s.fontSize,
       fontWeight: 600,
       lineHeight: 1.4,
       whiteSpace: 'nowrap',
@@ -1549,8 +1571,8 @@ function Badge({
     }
   }, rest), dot && /*#__PURE__*/React.createElement("span", {
     style: {
-      width: 6,
-      height: 6,
+      width: s.dotSize,
+      height: s.dotSize,
       borderRadius: '50%',
       background: 'currentColor',
       flexShrink: 0
@@ -1653,24 +1675,24 @@ function DataCard({
   change,
   changeType = 'neutral',
   icon,
-  iconBg = '#E8EAF6',
-  color = '#141ED2',
+  iconBg = 'var(--color-primary-100, #E8EAF6)',
+  color = 'var(--color-text-brand, #141ED2)',
   className = '',
   style = {},
   onClick,
   ...rest
 }) {
   const changeColors = {
-    positive: '#00966D',
-    negative: '#EB2D4B',
-    neutral: '#6E7191',
-    warning: '#946200'
+    positive: 'var(--color-text-success, #00966D)',
+    negative: 'var(--color-error-500, #EB2D4B)',
+    neutral: 'var(--color-text-secondary, #6E7191)',
+    warning: 'var(--color-text-warning, #946200)'
   };
   return /*#__PURE__*/React.createElement("div", _extends({
     className: className,
     onClick: onClick,
     style: {
-      background: '#fff',
+      background: 'var(--color-bg-surface, #fff)',
       borderRadius: 12,
       padding: 20,
       boxShadow: '0 2px 8px rgba(75,99,226,0.08)',
@@ -1695,7 +1717,7 @@ function DataCard({
     style: {
       fontSize: 12,
       fontWeight: 500,
-      color: '#6E7191',
+      color: 'var(--color-text-secondary, #6E7191)',
       marginBottom: 6
     }
   }, label), /*#__PURE__*/React.createElement("div", {
@@ -1745,25 +1767,25 @@ function Empty({
       width: 64,
       height: 64,
       borderRadius: 16,
-      background: '#F4F6FA',
+      background: 'var(--color-neutral-100, #F4F6FA)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       fontSize: 32,
       marginBottom: 16,
-      color: '#A0A3BD'
+      color: 'var(--color-text-muted, #A0A3BD)'
     }
   }, "\uD83D\uDCCB"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 15,
       fontWeight: 700,
-      color: '#14142A',
+      color: 'var(--color-text-primary, #14142A)',
       marginBottom: 6
     }
   }, title), description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 13,
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       lineHeight: 1.6,
       maxWidth: 280,
       marginBottom: action ? 20 : 0
@@ -1788,7 +1810,7 @@ function Tabs({
     className: className,
     style: {
       display: 'flex',
-      borderBottom: '2px solid #EDF2F7',
+      borderBottom: '2px solid var(--color-neutral-200, #EDF2F7)',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       ...style
     }
@@ -1799,10 +1821,10 @@ function Tabs({
       padding: '10px 20px',
       fontSize: 13,
       fontWeight: activeIndex === i ? 700 : 500,
-      color: activeIndex === i ? '#141ED2' : '#6E7191',
+      color: activeIndex === i ? 'var(--color-text-brand, #141ED2)' : 'var(--color-text-secondary, #6E7191)',
       background: 'none',
       border: 'none',
-      borderBottom: `2px solid ${activeIndex === i ? '#141ED2' : 'transparent'}`,
+      borderBottom: `2px solid ${activeIndex === i ? 'var(--color-primary-500, #141ED2)' : 'transparent'}`,
       marginBottom: -2,
       cursor: 'pointer',
       transition: 'color 0.15s',
@@ -1812,8 +1834,8 @@ function Tabs({
   }, item.label, item.badge != null && /*#__PURE__*/React.createElement("span", {
     style: {
       marginLeft: 6,
-      background: activeIndex === i ? '#141ED2' : '#F4B740',
-      color: '#fff',
+      background: activeIndex === i ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-bg-warning-solid, #F4B740)',
+      color: 'var(--color-text-inverse, #fff)',
       borderRadius: 9999,
       fontSize: 10,
       fontWeight: 700,
@@ -1838,34 +1860,34 @@ function Tag({
 }) {
   const colorMap = {
     default: {
-      bg: '#F4F6FA',
-      text: '#6E7191',
-      border: '#D9DBE9'
+      bg: 'var(--color-neutral-100, #F4F6FA)',
+      text: 'var(--color-text-secondary, #6E7191)',
+      border: 'var(--color-border-default, #D9DBE9)'
     },
     blue: {
-      bg: '#E8EAF6',
-      text: '#141ED2',
-      border: '#C4C6F7'
+      bg: 'var(--color-primary-100, #E8EAF6)',
+      text: 'var(--color-text-brand, #141ED2)',
+      border: 'var(--color-primary-200, #C4C6F7)'
     },
     green: {
-      bg: '#F2FFFB',
-      text: '#00966D',
-      border: '#00BA88'
+      bg: 'var(--color-bg-success, #F2FFFB)',
+      text: 'var(--color-text-success, #00966D)',
+      border: 'var(--color-border-success, #00BA88)'
     },
     orange: {
-      bg: '#FFF9EF',
-      text: '#946200',
-      border: '#F4B740'
+      bg: 'var(--color-bg-warning, #FFF9EF)',
+      text: 'var(--color-text-warning, #946200)',
+      border: 'var(--color-border-warning, #F4B740)'
     },
     red: {
-      bg: '#FFF3F8',
-      text: '#C30052',
-      border: '#EB2D4B'
+      bg: 'var(--color-bg-error, #FFF3F8)',
+      text: 'var(--color-text-error, #C30052)',
+      border: 'var(--color-border-error, #EB2D4B)'
     },
     purple: {
-      bg: '#EEDFFF',
-      text: '#5500CC',
-      border: '#BC80FF'
+      bg: 'var(--color-accent-100, #EEDFFF)',
+      text: 'var(--color-accent-700, #5500CC)',
+      border: 'var(--color-accent-200, #BC80FF)'
     }
   };
   const c = colorMap[color] || colorMap.default;
@@ -1915,39 +1937,39 @@ try { (() => {
 function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
 const configs = {
   success: {
-    bg: '#F2FFFB',
-    border: '#00BA88',
+    bg: 'var(--color-bg-success, #F2FFFB)',
+    border: 'var(--color-border-success, #00BA88)',
     icon: '✓',
-    iconBg: '#00BA88',
-    titleColor: '#00966D'
+    iconBg: 'var(--color-bg-success-solid, #00BA88)',
+    titleColor: 'var(--color-text-success, #00966D)'
   },
   warning: {
-    bg: '#FFF9EF',
-    border: '#F4B740',
+    bg: 'var(--color-bg-warning, #FFF9EF)',
+    border: 'var(--color-border-warning, #F4B740)',
     icon: '⚠',
-    iconBg: '#F4B740',
-    titleColor: '#946200'
+    iconBg: 'var(--color-bg-warning-solid, #F4B740)',
+    titleColor: 'var(--color-text-warning, #946200)'
   },
   error: {
-    bg: '#FFF3F8',
-    border: '#EB2D4B',
+    bg: 'var(--color-bg-error, #FFF3F8)',
+    border: 'var(--color-border-error, #EB2D4B)',
     icon: '✕',
-    iconBg: '#EB2D4B',
-    titleColor: '#C30052'
+    iconBg: 'var(--color-bg-error-solid, #EB2D4B)',
+    titleColor: 'var(--color-text-error, #C30052)'
   },
   informational: {
-    bg: '#E8EAF6',
-    border: '#141ED2',
+    bg: 'var(--color-primary-100, #E8EAF6)',
+    border: 'var(--color-border-focus, #141ED2)',
     icon: 'i',
-    iconBg: '#141ED2',
-    titleColor: '#141ED2'
+    iconBg: 'var(--color-bg-brand, #141ED2)',
+    titleColor: 'var(--color-text-brand, #141ED2)'
   },
   info: {
-    bg: '#E8EAF6',
-    border: '#141ED2',
+    bg: 'var(--color-primary-100, #E8EAF6)',
+    border: 'var(--color-border-focus, #141ED2)',
     icon: 'i',
-    iconBg: '#141ED2',
-    titleColor: '#141ED2'
+    iconBg: 'var(--color-bg-brand, #141ED2)',
+    titleColor: 'var(--color-text-brand, #141ED2)'
   }
 };
 function Alert({
@@ -1979,7 +2001,7 @@ function Alert({
       height: 22,
       borderRadius: '50%',
       background: c.iconBg,
-      color: '#fff',
+      color: 'var(--color-text-inverse, #fff)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -2002,7 +2024,7 @@ function Alert({
   }, title), description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
-      color: '#6E7191',
+      color: 'var(--color-text-secondary, #6E7191)',
       lineHeight: 1.5
     }
   }, description)), onClose && /*#__PURE__*/React.createElement("button", {
@@ -2011,7 +2033,7 @@ function Alert({
       background: 'none',
       border: 'none',
       cursor: 'pointer',
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontSize: 16,
       padding: 0,
       lineHeight: 1
@@ -2047,39 +2069,39 @@ function Notification({
   if (!visible) return null;
   const cfg = {
     success: {
-      bg: '#F2FFFB',
-      border: '#00BA88',
+      bg: 'var(--color-bg-success, #F2FFFB)',
+      border: 'var(--color-border-success, #00BA88)',
       icon: '✓',
-      iconBg: '#00BA88',
-      titleColor: '#00966D'
+      iconBg: 'var(--color-bg-success-solid, #00BA88)',
+      titleColor: 'var(--color-text-success, #00966D)'
     },
     warning: {
-      bg: '#FFF9EF',
-      border: '#F4B740',
+      bg: 'var(--color-bg-warning, #FFF9EF)',
+      border: 'var(--color-border-warning, #F4B740)',
       icon: '⚠',
-      iconBg: '#F4B740',
-      titleColor: '#946200'
+      iconBg: 'var(--color-bg-warning-solid, #F4B740)',
+      titleColor: 'var(--color-text-warning, #946200)'
     },
     error: {
-      bg: '#FFF3F8',
-      border: '#EB2D4B',
+      bg: 'var(--color-bg-error, #FFF3F8)',
+      border: 'var(--color-border-error, #EB2D4B)',
       icon: '✕',
-      iconBg: '#EB2D4B',
-      titleColor: '#C30052'
+      iconBg: 'var(--color-bg-error-solid, #EB2D4B)',
+      titleColor: 'var(--color-text-error, #C30052)'
     },
     info: {
-      bg: '#E8EAF6',
-      border: '#141ED2',
+      bg: 'var(--color-primary-100, #E8EAF6)',
+      border: 'var(--color-border-focus, #141ED2)',
       icon: 'i',
-      iconBg: '#141ED2',
-      titleColor: '#141ED2'
+      iconBg: 'var(--color-bg-brand, #141ED2)',
+      titleColor: 'var(--color-text-brand, #141ED2)'
     }
   }[status] || {
-    bg: '#E8EAF6',
-    border: '#141ED2',
+    bg: 'var(--color-primary-100, #E8EAF6)',
+    border: 'var(--color-border-focus, #141ED2)',
     icon: 'i',
-    iconBg: '#141ED2',
-    titleColor: '#141ED2'
+    iconBg: 'var(--color-bg-brand, #141ED2)',
+    titleColor: 'var(--color-text-brand, #141ED2)'
   };
   return /*#__PURE__*/React.createElement("div", _extends({
     className: className,
@@ -2103,7 +2125,7 @@ function Notification({
       height: 24,
       borderRadius: '50%',
       background: cfg.iconBg,
-      color: '#fff',
+      color: 'var(--color-text-inverse, #fff)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -2125,7 +2147,7 @@ function Notification({
   }, title), description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
-      color: '#6E7191',
+      color: 'var(--color-text-secondary, #6E7191)',
       lineHeight: 1.5
     }
   }, description)), onClose && /*#__PURE__*/React.createElement("button", {
@@ -2137,7 +2159,7 @@ function Notification({
       background: 'none',
       border: 'none',
       cursor: 'pointer',
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontSize: 16,
       padding: 0,
       lineHeight: 1
@@ -2153,7 +2175,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function Progress({
   value = 0,
   max = 100,
-  color = '#141ED2',
+  color = 'var(--color-bg-brand, #141ED2)',
   showLabel = false,
   size = 'medium',
   className = '',
@@ -2180,7 +2202,7 @@ function Progress({
       flex: 1,
       height: h,
       borderRadius: h,
-      background: '#EDF2F7',
+      background: 'var(--color-neutral-200, #EDF2F7)',
       overflow: 'hidden'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -2195,7 +2217,7 @@ function Progress({
     style: {
       fontSize: 12,
       fontWeight: 600,
-      color: '#6E7191',
+      color: 'var(--color-text-secondary, #6E7191)',
       minWidth: 36,
       textAlign: 'right',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)'
@@ -2276,19 +2298,19 @@ function Steps({
         justifyContent: 'center',
         fontSize: 12,
         fontWeight: 700,
-        background: done ? '#00BA88' : active ? '#141ED2' : '#EDF2F7',
-        color: done || active ? '#fff' : '#A0A3BD'
+        background: done ? 'var(--color-bg-success-solid, #00BA88)' : active ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-neutral-200, #EDF2F7)',
+        color: done || active ? 'var(--color-text-inverse, #fff)' : 'var(--color-text-muted, #A0A3BD)'
       }
     }, done ? '✓' : i + 1), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 12,
         fontWeight: active ? 700 : 500,
-        color: active ? '#141ED2' : done ? '#14142A' : '#A0A3BD'
+        color: active ? 'var(--color-text-brand, #141ED2)' : done ? 'var(--color-text-primary, #14142A)' : 'var(--color-text-muted, #A0A3BD)'
       }
     }, step.title), step.description && /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 11,
-        color: '#A0A3BD',
+        color: 'var(--color-text-muted, #A0A3BD)',
         marginTop: 1
       }
     }, step.description))), i < steps.length - 1 && /*#__PURE__*/React.createElement("div", {
@@ -2296,7 +2318,7 @@ function Steps({
         flex: 1,
         height: 2,
         margin: '0 12px',
-        background: i < current ? '#00BA88' : '#EDF2F7',
+        background: i < current ? 'var(--color-bg-success-solid, #00BA88)' : 'var(--color-neutral-200, #EDF2F7)',
         minWidth: 24
       }
     }));
@@ -2356,8 +2378,8 @@ function Tooltip({
     style: {
       position: 'absolute',
       ...pos,
-      background: '#14142A',
-      color: '#fff',
+      background: 'var(--color-neutral-900, #14142A)',
+      color: 'var(--color-text-inverse, #fff)',
       fontSize: 11,
       fontWeight: 500,
       padding: '5px 10px',
@@ -2507,7 +2529,7 @@ function Checkbox({
       cursor: disabled ? 'not-allowed' : 'pointer',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       fontSize: 13,
-      color: disabled ? '#A0A3BD' : '#4E4B66',
+      color: disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
       userSelect: 'none',
       ...style
     }
@@ -2539,8 +2561,8 @@ function Checkbox({
       width: 18,
       height: 18,
       borderRadius: 4,
-      border: `2px solid ${checked || indeterminate ? '#141ED2' : disabled ? '#D9DBE9' : '#A0A3BD'}`,
-      background: checked || indeterminate ? '#141ED2' : '#fff',
+      border: `2px solid ${checked || indeterminate ? 'var(--color-border-focus, #141ED2)' : disabled ? 'var(--color-border-default, #D9DBE9)' : 'var(--color-neutral-500, #A0A3BD)'}`,
+      background: checked || indeterminate ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-bg-surface, #fff)',
       transition: 'all 0.15s'
     }
   }, checked && !indeterminate && /*#__PURE__*/React.createElement("svg", {
@@ -2550,7 +2572,7 @@ function Checkbox({
     fill: "none"
   }, /*#__PURE__*/React.createElement("path", {
     d: "M1 4L3.5 6.5L9 1",
-    stroke: "#fff",
+    stroke: "var(--color-icon-inverse, #fff)",
     strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round"
@@ -2558,7 +2580,7 @@ function Checkbox({
     style: {
       width: 8,
       height: 2,
-      background: '#fff',
+      background: 'var(--color-icon-inverse, #fff)',
       borderRadius: 1
     }
   }))), label && /*#__PURE__*/React.createElement("span", null, label));
@@ -2589,9 +2611,9 @@ function Input({
   ...rest
 }) {
   const [focused, setFocused] = React.useState(false);
-  const borderColor = state === 'error' || feedbackType === 'error' && feedback ? '#EB2D4B' : state === 'success' ? '#00BA88' : state === 'warning' ? '#F4B740' : focused ? '#141ED2' : '#D9DBE9';
+  const borderColor = state === 'error' || feedbackType === 'error' && feedback ? 'var(--color-border-error, #EB2D4B)' : state === 'success' ? 'var(--color-border-success, #00BA88)' : state === 'warning' ? 'var(--color-border-warning, #F4B740)' : focused ? 'var(--color-border-focus, #141ED2)' : 'var(--color-border-default, #D9DBE9)';
   const shadow = focused ? `0 0 0 3px rgba(20,30,210,0.08)` : 'none';
-  const feedbackColor = feedbackType === 'error' ? '#EB2D4B' : feedbackType === 'success' ? '#00BA88' : feedbackType === 'warning' ? '#946200' : '#6E7191';
+  const feedbackColor = feedbackType === 'error' ? 'var(--color-error-500, #EB2D4B)' : feedbackType === 'success' ? 'var(--color-success-500, #00BA88)' : feedbackType === 'warning' ? 'var(--color-text-warning, #946200)' : 'var(--color-text-secondary, #6E7191)';
   return /*#__PURE__*/React.createElement("div", {
     className: className,
     style: {
@@ -2605,7 +2627,7 @@ function Input({
     style: {
       fontSize: 12,
       fontWeight: 600,
-      color: '#4E4B66',
+      color: 'var(--color-text-body, #4E4B66)',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)'
     }
   }, label), /*#__PURE__*/React.createElement("div", {
@@ -2618,7 +2640,7 @@ function Input({
     style: {
       position: 'absolute',
       left: 10,
-      color: '#A0A3BD',
+      color: 'var(--color-icon-muted, #A0A3BD)',
       display: 'flex',
       pointerEvents: 'none'
     }
@@ -2640,8 +2662,8 @@ function Input({
       boxShadow: shadow,
       padding: iconLeft ? '0 12px 0 34px' : iconRight ? '0 34px 0 12px' : '0 12px',
       fontSize: 13,
-      color: disabled ? '#A0A3BD' : '#4E4B66',
-      background: disabled || readOnly ? '#F4F6FA' : '#fff',
+      color: disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
+      background: disabled || readOnly ? 'var(--color-bg-page, #F4F6FA)' : 'var(--color-bg-surface, #fff)',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       outline: 'none',
       transition: 'border-color 0.15s, box-shadow 0.15s',
@@ -2652,7 +2674,7 @@ function Input({
     style: {
       position: 'absolute',
       right: 10,
-      color: '#A0A3BD',
+      color: 'var(--color-icon-muted, #A0A3BD)',
       display: 'flex',
       pointerEvents: 'none'
     }
@@ -2665,7 +2687,7 @@ function Input({
   }, feedback), hint && !feedback && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontFamily: 'var(--font-family-body, sans-serif)'
     }
   }, hint));
@@ -2693,7 +2715,7 @@ function InputNumber({
   ...rest
 }) {
   const [focused, setFocused] = React.useState(false);
-  const borderColor = feedbackType === 'error' && feedback ? '#EB2D4B' : focused ? '#141ED2' : '#D9DBE9';
+  const borderColor = feedbackType === 'error' && feedback ? 'var(--color-border-error, #EB2D4B)' : focused ? 'var(--color-border-focus, #141ED2)' : 'var(--color-border-default, #D9DBE9)';
   const handleChange = e => {
     const v = e.target.value === '' ? '' : Number(e.target.value);
     onChange && onChange(v, e);
@@ -2711,7 +2733,7 @@ function InputNumber({
     style: {
       fontSize: 12,
       fontWeight: 600,
-      color: '#4E4B66',
+      color: 'var(--color-text-body, #4E4B66)',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)'
     }
   }, label), /*#__PURE__*/React.createElement("input", _extends({
@@ -2733,8 +2755,8 @@ function InputNumber({
       padding: '0 12px',
       fontSize: 13,
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
-      color: disabled ? '#A0A3BD' : '#4E4B66',
-      background: disabled ? '#F4F6FA' : '#fff',
+      color: disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
+      background: disabled ? 'var(--color-bg-page, #F4F6FA)' : 'var(--color-bg-surface, #fff)',
       outline: 'none',
       width: '100%',
       boxSizing: 'border-box',
@@ -2743,13 +2765,13 @@ function InputNumber({
   }, rest)), feedback && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: '#EB2D4B',
+      color: 'var(--color-error-500, #EB2D4B)',
       fontFamily: 'inherit'
     }
   }, feedback), hint && !feedback && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontFamily: 'inherit'
     }
   }, hint));
@@ -2781,8 +2803,8 @@ function MCheckbox({
     if (ref.current) ref.current.indeterminate = indeterminate;
   }, [indeterminate]);
   const active = checked || indeterminate;
-  const borderColor = active ? '#141ED2' : hovered ? '#141ED2' : disable ? '#D9DBE9' : '#A0A3BD';
-  const bg = active ? '#141ED2' : '#fff';
+  const borderColor = active ? 'var(--color-border-focus, #141ED2)' : hovered ? 'var(--color-border-focus, #141ED2)' : disable ? 'var(--color-border-default, #D9DBE9)' : 'var(--color-neutral-500, #A0A3BD)';
+  const bg = active ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-bg-surface, #fff)';
   return /*#__PURE__*/React.createElement("label", {
     className: className,
     onMouseEnter: () => setHovered(true),
@@ -2794,7 +2816,7 @@ function MCheckbox({
       cursor: disable ? 'not-allowed' : 'pointer',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       fontSize: 13,
-      color: disable ? '#A0A3BD' : '#4E4B66',
+      color: disable ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
       userSelect: 'none',
       opacity: disable ? 0.5 : 1,
       ...style
@@ -2838,7 +2860,7 @@ function MCheckbox({
     fill: "none"
   }, /*#__PURE__*/React.createElement("path", {
     d: "M1 4L3.5 6.5L9 1",
-    stroke: "#fff",
+    stroke: "var(--color-icon-inverse, #fff)",
     strokeWidth: "2",
     strokeLinecap: "round",
     strokeLinejoin: "round"
@@ -2846,7 +2868,7 @@ function MCheckbox({
     style: {
       width: 8,
       height: 2,
-      background: '#fff',
+      background: 'var(--color-icon-inverse, #fff)',
       borderRadius: 1
     }
   }))), text1);
@@ -2878,7 +2900,7 @@ function Radio({
       cursor: disabled ? 'not-allowed' : 'pointer',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       fontSize: 13,
-      color: disabled ? '#A0A3BD' : '#4E4B66',
+      color: disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
       userSelect: 'none',
       ...style
     }
@@ -2911,8 +2933,8 @@ function Radio({
       width: 18,
       height: 18,
       borderRadius: '50%',
-      border: `2px solid ${checked ? '#141ED2' : disabled ? '#D9DBE9' : '#A0A3BD'}`,
-      background: '#fff',
+      border: `2px solid ${checked ? 'var(--color-border-focus, #141ED2)' : disabled ? 'var(--color-border-default, #D9DBE9)' : 'var(--color-neutral-500, #A0A3BD)'}`,
+      background: 'var(--color-bg-surface, #fff)',
       transition: 'all 0.15s'
     }
   }, checked && /*#__PURE__*/React.createElement("span", {
@@ -2920,7 +2942,7 @@ function Radio({
       width: 8,
       height: 8,
       borderRadius: '50%',
-      background: '#141ED2'
+      background: 'var(--color-bg-brand, #141ED2)'
     }
   }))), label && /*#__PURE__*/React.createElement("span", null, label));
 }
@@ -2954,7 +2976,7 @@ function SearchInput({
     style: {
       position: 'absolute',
       left: 10,
-      color: '#A0A3BD',
+      color: 'var(--color-icon-muted, #A0A3BD)',
       pointerEvents: 'none',
       flexShrink: 0
     },
@@ -2976,12 +2998,12 @@ function SearchInput({
       width: '100%',
       height: 36,
       borderRadius: 8,
-      border: `1px solid ${focused ? '#141ED2' : '#D9DBE9'}`,
-      background: focused ? '#fff' : '#F4F6FA',
+      border: `1px solid ${focused ? 'var(--color-border-focus, #141ED2)' : 'var(--color-border-default, #D9DBE9)'}`,
+      background: focused ? 'var(--color-bg-surface, #fff)' : 'var(--color-neutral-100, #F4F6FA)',
       padding: '0 12px 0 34px',
       fontSize: 13,
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
-      color: '#4E4B66',
+      color: 'var(--color-text-body, #4E4B66)',
       outline: 'none',
       boxShadow: focused ? '0 0 0 3px rgba(20,30,210,0.08)' : 'none',
       transition: 'border-color 0.15s, background 0.15s'
@@ -3010,7 +3032,7 @@ function Select({
   ...rest
 }) {
   const [focused, setFocused] = React.useState(false);
-  const borderColor = feedbackType === 'error' && feedback ? '#EB2D4B' : focused ? '#141ED2' : '#D9DBE9';
+  const borderColor = feedbackType === 'error' && feedback ? 'var(--color-border-error, #EB2D4B)' : focused ? 'var(--color-border-focus, #141ED2)' : 'var(--color-border-default, #D9DBE9)';
   return /*#__PURE__*/React.createElement("div", {
     className: className,
     style: {
@@ -3024,7 +3046,7 @@ function Select({
     style: {
       fontSize: 12,
       fontWeight: 600,
-      color: '#4E4B66',
+      color: 'var(--color-text-body, #4E4B66)',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)'
     }
   }, label), /*#__PURE__*/React.createElement("div", {
@@ -3046,8 +3068,8 @@ function Select({
       boxShadow: focused ? '0 0 0 3px rgba(20,30,210,0.08)' : 'none',
       padding: '0 32px 0 12px',
       fontSize: 13,
-      color: value ? '#4E4B66' : '#A0A3BD',
-      background: disabled ? '#F4F6FA' : '#fff',
+      color: value ? 'var(--color-text-body, #4E4B66)' : 'var(--color-text-muted, #A0A3BD)',
+      background: disabled ? 'var(--color-neutral-100, #F4F6FA)' : 'var(--color-bg-surface, #fff)',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       outline: 'none',
       cursor: disabled ? 'not-allowed' : 'pointer',
@@ -3068,20 +3090,20 @@ function Select({
       right: 10,
       top: '50%',
       transform: 'translateY(-50%)',
-      color: '#A0A3BD',
+      color: 'var(--color-icon-muted, #A0A3BD)',
       pointerEvents: 'none',
       fontSize: 12
     }
   }, "\u25BE")), feedback && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: feedbackType === 'error' ? '#EB2D4B' : '#6E7191',
+      color: feedbackType === 'error' ? 'var(--color-error-500, #EB2D4B)' : 'var(--color-text-secondary, #6E7191)',
       fontFamily: 'var(--font-family-body, sans-serif)'
     }
   }, feedback), hint && !feedback && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontFamily: 'var(--font-family-body, sans-serif)'
     }
   }, hint));
@@ -3110,7 +3132,7 @@ function Textarea({
   ...rest
 }) {
   const [focused, setFocused] = React.useState(false);
-  const borderColor = state === 'error' || feedbackType === 'error' && feedback ? '#EB2D4B' : state === 'success' ? '#00BA88' : focused ? '#141ED2' : '#D9DBE9';
+  const borderColor = state === 'error' || feedbackType === 'error' && feedback ? 'var(--color-border-error, #EB2D4B)' : state === 'success' ? 'var(--color-border-success, #00BA88)' : focused ? 'var(--color-border-focus, #141ED2)' : 'var(--color-border-default, #D9DBE9)';
   return /*#__PURE__*/React.createElement("div", {
     className: className,
     style: {
@@ -3124,7 +3146,7 @@ function Textarea({
     style: {
       fontSize: 12,
       fontWeight: 600,
-      color: '#4E4B66',
+      color: 'var(--color-text-body, #4E4B66)',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)'
     }
   }, label), /*#__PURE__*/React.createElement("textarea", _extends({
@@ -3143,8 +3165,8 @@ function Textarea({
       padding: '10px 12px',
       fontSize: 13,
       lineHeight: 1.6,
-      color: disabled ? '#A0A3BD' : '#4E4B66',
-      background: disabled || readOnly ? '#F4F6FA' : '#fff',
+      color: disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
+      background: disabled || readOnly ? 'var(--color-neutral-100, #F4F6FA)' : 'var(--color-bg-surface, #fff)',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       outline: 'none',
       resize: 'vertical',
@@ -3157,13 +3179,13 @@ function Textarea({
   }, rest)), feedback && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: feedbackType === 'error' ? '#EB2D4B' : '#6E7191',
+      color: feedbackType === 'error' ? 'var(--color-error-500, #EB2D4B)' : 'var(--color-text-secondary, #6E7191)',
       fontFamily: 'var(--font-family-body, sans-serif)'
     }
   }, feedback), hint && !feedback && /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11,
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontFamily: 'var(--font-family-body, sans-serif)'
     }
   }, hint));
@@ -3192,7 +3214,7 @@ function Toggle({
       cursor: disabled ? 'not-allowed' : 'pointer',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       fontSize: 13,
-      color: disabled ? '#A0A3BD' : '#4E4B66',
+      color: disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
       userSelect: 'none',
       ...style
     }
@@ -3220,7 +3242,7 @@ function Toggle({
       width: 36,
       height: 20,
       borderRadius: 10,
-      background: checked ? '#141ED2' : '#D9DBE9',
+      background: checked ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-neutral-300, #D9DBE9)',
       opacity: disabled ? 0.5 : 1,
       transition: 'background 0.2s'
     }
@@ -3232,7 +3254,7 @@ function Toggle({
       width: 16,
       height: 16,
       borderRadius: '50%',
-      background: '#fff',
+      background: 'var(--color-bg-surface, #fff)',
       boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
       transition: 'left 0.2s'
     }
@@ -108747,7 +108769,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function Divider({
   orientation = 'horizontal',
   label,
-  color = '#EDF2F7',
+  color = 'var(--color-neutral-200, #EDF2F7)',
   spacing = 16,
   className = '',
   style = {},
@@ -108786,7 +108808,7 @@ function Divider({
       style: {
         fontSize: 12,
         fontWeight: 600,
-        color: '#A0A3BD',
+        color: 'var(--color-text-muted, #A0A3BD)',
         whiteSpace: 'nowrap',
         fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)'
       }
@@ -108912,8 +108934,8 @@ function AppHeader({
     className: className,
     style: {
       height: 64,
-      background: '#fff',
-      borderBottom: '1px solid #D9DBE9',
+      background: 'var(--color-bg-surface, #fff)',
+      borderBottom: '1px solid var(--color-border-default, #D9DBE9)',
       display: 'flex',
       alignItems: 'center',
       padding: '0 24px',
@@ -108934,7 +108956,7 @@ function AppHeader({
     style: {
       position: 'absolute',
       left: 10,
-      color: '#A0A3BD',
+      color: 'var(--color-icon-muted, #A0A3BD)',
       pointerEvents: 'none'
     },
     width: "16",
@@ -108954,12 +108976,12 @@ function AppHeader({
       width: '100%',
       height: 36,
       borderRadius: 8,
-      border: '1px solid #D9DBE9',
-      background: '#F4F6FA',
+      border: '1px solid var(--color-border-default, #D9DBE9)',
+      background: 'var(--color-neutral-100, #F4F6FA)',
       padding: '0 12px 0 34px',
       fontSize: 13,
       fontFamily: 'inherit',
-      color: '#4E4B66',
+      color: 'var(--color-text-body, #4E4B66)',
       outline: 'none'
     }
   })), /*#__PURE__*/React.createElement("div", {
@@ -108982,7 +109004,7 @@ function AppHeader({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: '#6E7191'
+      color: 'var(--color-icon-default, #6E7191)'
     }
   }, /*#__PURE__*/React.createElement("svg", {
     width: "20",
@@ -108998,12 +109020,12 @@ function AppHeader({
       right: 4,
       minWidth: 16,
       height: 16,
-      background: '#EB2D4B',
+      background: 'var(--color-bg-error-solid, #EB2D4B)',
       borderRadius: 8,
-      border: '2px solid #fff',
+      border: '2px solid var(--color-neutral-0, #fff)',
       fontSize: 9,
       fontWeight: 700,
-      color: '#fff',
+      color: 'var(--color-text-inverse, #fff)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -109014,13 +109036,13 @@ function AppHeader({
       width: 36,
       height: 36,
       borderRadius: '50%',
-      background: '#141ED2',
+      background: 'var(--color-bg-brand, #141ED2)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       fontSize: 13,
       fontWeight: 700,
-      color: '#fff',
+      color: 'var(--color-text-inverse, #fff)',
       cursor: 'pointer'
     }
   }, typeof user === 'string' ? user.split(' ').map(w => w[0]).slice(-2).join('').toUpperCase() : user)));
@@ -109087,7 +109109,7 @@ function AppSidebar({
     const isActive = node.key === activeKey;
     const iconName = !hasChildren ? 'fiber_manual_record' : nodeOpen ? 'remove' : 'add';
     const iconSz = !hasChildren ? 9 : depth > 0 ? 14 : 16;
-    const color = isActive ? '#fff' : !hasChildren ? '#8B8FBD' : '#CBD0E8';
+    const color = isActive ? 'var(--color-text-inverse, #fff)' : !hasChildren ? '#8B8FBD' : '#CBD0E8';
     const [rowHov, setRowHov] = React.useState ? [false, () => {}] : [false, () => {}];
     return React.createElement('div', {
       key: node.key
@@ -109149,7 +109171,7 @@ function AppSidebar({
         padding: '10px',
         borderRadius: 8,
         cursor: 'pointer',
-        color: isActive ? '#fff' : nh ? '#fff' : '#CBD0E8',
+        color: isActive ? 'var(--color-text-inverse, #fff)' : nh ? 'var(--color-text-inverse, #fff)' : '#CBD0E8',
         background: isActive ? 'rgba(255,255,255,0.10)' : nh ? 'rgba(255,255,255,0.07)' : 'transparent',
         fontFamily: "var(--font-family-body,'Plus Jakarta Sans',sans-serif)",
         fontSize: 13,
@@ -109226,7 +109248,7 @@ function AppSidebar({
     fill: '#E5052A'
   })), expanded && React.createElement('span', {
     style: {
-      color: '#fff',
+      color: 'var(--color-text-inverse, #fff)',
       fontSize: 15,
       fontWeight: 700,
       whiteSpace: 'nowrap'
@@ -109311,19 +109333,19 @@ function Breadcrumb({
       key: i
     }, i > 0 && /*#__PURE__*/React.createElement("span", {
       style: {
-        color: '#D9DBE9',
+        color: 'var(--color-neutral-300, #D9DBE9)',
         userSelect: 'none'
       }
     }, separator), isLast ? /*#__PURE__*/React.createElement("span", {
       style: {
-        color: '#6E7191',
+        color: 'var(--color-text-secondary, #6E7191)',
         fontWeight: 500
       }
     }, item.label) : /*#__PURE__*/React.createElement("a", {
       href: item.href || '#',
       onClick: item.onClick,
       style: {
-        color: '#141ED2',
+        color: 'var(--color-text-link, #141ED2)',
         textDecoration: 'none',
         fontWeight: 500,
         cursor: 'pointer'
@@ -109407,7 +109429,7 @@ function MenuItem({
         padding: '10px',
         borderRadius: 8,
         cursor: 'pointer',
-        color: active ? '#fff' : hovered ? '#fff' : '#CBD0E8',
+        color: active ? 'var(--color-text-inverse, #fff)' : hovered ? 'var(--color-text-inverse, #fff)' : '#CBD0E8',
         background: active ? 'rgba(255,255,255,0.10)' : hovered ? 'rgba(255,255,255,0.07)' : 'transparent',
         fontSize: 13,
         fontWeight: active ? 600 : 500,
@@ -109427,7 +109449,7 @@ function MenuItem({
   if (variant === 'tree') {
     const iconName = leaf ? 'fiber_manual_record' : expanded ? 'remove' : 'add';
     const iconSz = leaf ? 9 : depth > 0 ? 14 : 16;
-    const color = active ? '#fff' : leaf ? '#8B8FBD' : '#CBD0E8';
+    const color = active ? 'var(--color-text-inverse, #fff)' : leaf ? '#8B8FBD' : '#CBD0E8';
     return /*#__PURE__*/React.createElement("div", _extends({
       role: "button",
       tabIndex: 0,
@@ -109475,9 +109497,9 @@ function MenuItem({
       textAlign: 'left',
       borderRadius: 6,
       position: 'relative',
-      background: active ? 'rgba(20,30,210,0.08)' : hovered && !disabled ? '#F4F5FF' : 'transparent',
+      background: active ? 'rgba(20,30,210,0.08)' : hovered && !disabled ? 'var(--color-bg-hover, #F4F5FF)' : 'transparent',
       cursor: disabled ? 'not-allowed' : 'pointer',
-      color: danger ? '#EB2D4B' : disabled ? '#A0A3BD' : active ? '#141ED2' : '#4E4B66',
+      color: danger ? 'var(--color-error-500, #EB2D4B)' : disabled ? 'var(--color-text-muted, #A0A3BD)' : active ? 'var(--color-text-brand, #141ED2)' : 'var(--color-text-body, #4E4B66)',
       fontSize: 13,
       fontWeight: active ? 600 : 500,
       transition: 'background 150ms',
@@ -109490,7 +109512,7 @@ function MenuItem({
       top: 4,
       bottom: 4,
       width: 3,
-      background: '#141ED2',
+      background: 'var(--color-bg-brand, #141ED2)',
       borderRadius: '0 3px 3px 0'
     }
   }), icon && /*#__PURE__*/React.createElement(MSym, {
@@ -109504,7 +109526,7 @@ function MenuItem({
     }
   }, label), arrow && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontSize: 14,
       lineHeight: 1
     }
@@ -109538,9 +109560,9 @@ function Pagination({
       width: 32,
       height: 32,
       borderRadius: 6,
-      border: `1px solid ${target === page ? '#141ED2' : '#D9DBE9'}`,
-      background: target === page ? '#141ED2' : '#fff',
-      color: target === page ? '#fff' : disabled ? '#D9DBE9' : '#4E4B66',
+      border: `1px solid ${target === page ? 'var(--color-border-focus, #141ED2)' : 'var(--color-border-default, #D9DBE9)'}`,
+      background: target === page ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-bg-surface, #fff)',
+      color: target === page ? 'var(--color-text-inverse, #fff)' : disabled ? 'var(--color-neutral-300, #D9DBE9)' : 'var(--color-text-body, #4E4B66)',
       fontSize: 13,
       cursor: disabled || typeof target !== 'number' ? 'default' : 'pointer',
       display: 'flex',
@@ -109563,7 +109585,7 @@ function Pagination({
     style: {
       width: 32,
       textAlign: 'center',
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontSize: 13
     }
   }, "\u2026") : btn(p, p)), btn('›', page + 1, page >= totalPages));
@@ -109612,11 +109634,11 @@ function Dropdown({
       position: 'absolute',
       ...pos,
       marginTop: 4,
-      background: '#fff',
+      background: 'var(--color-bg-surface, #fff)',
       borderRadius: 8,
       zIndex: 100,
       boxShadow: '0 8px 24px rgba(75,99,226,0.15)',
-      border: '1px solid #EDF2F7',
+      border: '1px solid var(--color-neutral-200, #EDF2F7)',
       minWidth: 160,
       overflow: 'hidden',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
@@ -109626,7 +109648,7 @@ function Dropdown({
     key: i,
     style: {
       height: 1,
-      background: '#EDF2F7',
+      background: 'var(--color-neutral-200, #EDF2F7)',
       margin: '4px 0'
     }
   }) : /*#__PURE__*/React.createElement("button", {
@@ -109647,12 +109669,12 @@ function Dropdown({
       textAlign: 'left',
       fontSize: 13,
       cursor: item.disabled ? 'not-allowed' : 'pointer',
-      color: item.danger ? '#EB2D4B' : item.disabled ? '#A0A3BD' : '#4E4B66',
+      color: item.danger ? 'var(--color-error-500, #EB2D4B)' : item.disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
       fontFamily: 'inherit',
       fontWeight: 500
     },
     onMouseEnter: e => {
-      if (!item.disabled) e.currentTarget.style.background = '#F4F5FF';
+      if (!item.disabled) e.currentTarget.style.background = 'var(--color-bg-hover, #F4F5FF)';
     },
     onMouseLeave: e => {
       e.currentTarget.style.background = 'none';
@@ -109691,8 +109713,8 @@ function DropdownMenuItem({
   ...rest
 }) {
   const [hovered, setHovered] = React.useState(hover);
-  const fg = danger ? '#EB2D4B' : disabled ? '#A0A3BD' : selected ? '#141ED2' : '#4E4B66';
-  const bg = selected ? 'rgba(20,30,210,0.08)' : hovered && !disabled ? '#F4F5FF' : 'transparent';
+  const fg = danger ? 'var(--color-error-500, #EB2D4B)' : disabled ? 'var(--color-text-muted, #A0A3BD)' : selected ? 'var(--color-text-brand, #141ED2)' : 'var(--color-text-body, #4E4B66)';
+  const bg = selected ? 'rgba(20,30,210,0.08)' : hovered && !disabled ? 'var(--color-bg-hover, #F4F5FF)' : 'transparent';
   return /*#__PURE__*/React.createElement("button", _extends({
     disabled: disabled,
     onClick: onClick,
@@ -109721,8 +109743,8 @@ function DropdownMenuItem({
       width: multiSelect ? 16 : 16,
       height: 16,
       borderRadius: multiSelect ? 3 : '50%',
-      border: `2px solid ${checked ? '#141ED2' : '#D9DBE9'}`,
-      background: checked ? '#141ED2' : '#fff',
+      border: `2px solid ${checked ? 'var(--color-border-focus, #141ED2)' : 'var(--color-border-default, #D9DBE9)'}`,
+      background: checked ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-neutral-0, #fff)',
       flexShrink: 0,
       display: 'flex',
       alignItems: 'center',
@@ -109732,7 +109754,7 @@ function DropdownMenuItem({
     style: {
       width: multiSelect ? 8 : 6,
       height: multiSelect ? 2 : 6,
-      background: '#fff',
+      background: 'var(--color-neutral-0, #fff)',
       borderRadius: multiSelect ? 1 : '50%',
       display: 'block'
     }
@@ -109748,7 +109770,7 @@ function DropdownMenuItem({
     }
   }, label), arrow && /*#__PURE__*/React.createElement("span", {
     style: {
-      color: '#A0A3BD',
+      color: 'var(--color-text-muted, #A0A3BD)',
       fontSize: 12,
       flexShrink: 0
     }
@@ -109789,7 +109811,7 @@ function Modal({
     role: "dialog",
     "aria-modal": "true",
     style: {
-      background: '#fff',
+      background: 'var(--color-bg-surface, #fff)',
       borderRadius: 12,
       boxShadow: '0 16px 40px rgba(20,20,42,0.18)',
       width,
@@ -109803,7 +109825,7 @@ function Modal({
   }, rest), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '20px 24px',
-      borderBottom: '1px solid #EDF2F7',
+      borderBottom: '1px solid var(--color-neutral-200, #EDF2F7)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -109813,7 +109835,7 @@ function Modal({
     style: {
       fontSize: 16,
       fontWeight: 700,
-      color: '#14142A'
+      color: 'var(--color-text-primary, #14142A)'
     }
   }, title), onClose && /*#__PURE__*/React.createElement("button", {
     onClick: onClose,
@@ -109824,7 +109846,7 @@ function Modal({
       border: 'none',
       background: 'transparent',
       cursor: 'pointer',
-      color: '#6E7191',
+      color: 'var(--color-text-secondary, #6E7191)',
       fontSize: 18,
       display: 'flex',
       alignItems: 'center',
@@ -109839,7 +109861,7 @@ function Modal({
   }, children), footer && /*#__PURE__*/React.createElement("div", {
     style: {
       padding: '16px 24px',
-      borderTop: '1px solid #EDF2F7',
+      borderTop: '1px solid var(--color-neutral-200, #EDF2F7)',
       display: 'flex',
       gap: 8,
       justifyContent: 'flex-end',
@@ -109888,12 +109910,12 @@ function Popconfirm({
     style: {
       position: 'absolute',
       ...pos,
-      background: '#fff',
+      background: 'var(--color-bg-surface, #fff)',
       borderRadius: 8,
       padding: 16,
       zIndex: 500,
       boxShadow: '0 8px 24px rgba(75,99,226,0.15)',
-      border: '1px solid #EDF2F7',
+      border: '1px solid var(--color-neutral-200, #EDF2F7)',
       width: 260,
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
       ...style
@@ -109902,13 +109924,13 @@ function Popconfirm({
     style: {
       fontSize: 13,
       fontWeight: 700,
-      color: '#14142A',
+      color: 'var(--color-text-primary, #14142A)',
       marginBottom: description ? 6 : 12
     }
   }, title), description && /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
-      color: '#6E7191',
+      color: 'var(--color-text-secondary, #6E7191)',
       marginBottom: 12,
       lineHeight: 1.5
     }
@@ -109926,9 +109948,9 @@ function Popconfirm({
     style: {
       padding: '6px 14px',
       borderRadius: 6,
-      border: '1px solid #D9DBE9',
-      background: '#fff',
-      color: '#6E7191',
+      border: '1px solid var(--color-border-default, #D9DBE9)',
+      background: 'var(--color-bg-surface, #fff)',
+      color: 'var(--color-text-secondary, #6E7191)',
       fontSize: 12,
       fontWeight: 600,
       cursor: 'pointer',
@@ -109943,8 +109965,8 @@ function Popconfirm({
       padding: '6px 14px',
       borderRadius: 6,
       border: 'none',
-      background: '#EB2D4B',
-      color: '#fff',
+      background: 'var(--color-bg-error-solid, #EB2D4B)',
+      color: 'var(--color-text-inverse, #fff)',
       fontSize: 12,
       fontWeight: 600,
       cursor: 'pointer',

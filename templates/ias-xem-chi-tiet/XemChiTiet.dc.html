@@ -82,6 +82,19 @@ body{font-family:'Plus Jakarta Sans',sans-serif}
 .btn-outline:hover{border-color:var(--color-border-focus,#141ED2)}
 .btn-icon{width:40px;height:40px;padding:0;border-radius:8px;border:1px solid var(--color-primary-200,#C4C6F7);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-primary,#14142A)}
 .btn-icon:hover{border-color:var(--color-border-focus,#141ED2)}
+.btn-primary{border:none;background:var(--color-bg-brand,#141ED2);color:var(--color-text-inverse,#fff)}
+.btn-sm{height:32px;padding:0 12px;font-size:13px}
+.btn-icon-sm{width:32px;height:32px}
+
+/* ── DCard table-section toolbar (components/data/ToolbarSimple) — sits above a table
+   inside d-card-body, same search+"Tìm kiếm"+"Tìm kiếm nâng cao"+cài đặt bảng anatomy
+   as the page-level ToolbarSimple, at .btn-sm/.btn-icon-sm scale to fit a card section
+   rather than a full page toolbar. See references/components/display/dcard.md's
+   "Table section toolbar" rule. ── */
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.tb-search{position:relative;display:flex;align-items:center;width:220px;flex-shrink:0}
+.tb-search .msym{position:absolute;left:10px;color:var(--color-icon-muted,#A0A3BD);font-size:15px;pointer-events:none}
+.tb-search input{width:100%;height:32px;border:1px solid var(--color-border-default,#D9DBE9);border-radius:8px;background:var(--color-bg-surface,#fff);padding:0 10px 0 30px;font-size:13px;font-family:inherit;color:var(--color-text-body,#4E4B66);outline:none}
 
 /* ── Overflow menu (Dropdown / DropdownMenuItem — behind the header's more_vert trigger) ── */
 .of-menu-wrap{position:relative;display:inline-block}
@@ -90,10 +103,16 @@ body{font-family:'Plus Jakarta Sans',sans-serif}
 .of-menu .mi{display:flex;align-items:center;gap:8px;padding:8px 10px;font-size:13px;font-weight:500;color:var(--color-text-body,#4E4B66);cursor:pointer;border-radius:6px;white-space:nowrap}
 .of-menu .mi:hover{background:var(--color-bg-hover,#F4F5FF)}
 
-/* ── Status pill (dot + pill, reused for "Đã phê duyệt" and risk-level cells —
-     Table/Badge-internal convention, matches DanhSachChuongTrinh.dc.html's own .status exactly) ── */
-.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;white-space:nowrap;padding:3px 10px;border-radius:9999px}
+/* ── Status pill (dot + pill, reused for "Đã phê duyệt" and risk-level cells — Table/Badge-internal
+     convention, base size matches DanhSachChuongTrinh.dc.html's own .status exactly). Sized per
+     references/components/display/badge-tag.md's "Size by placement" rule (updated 2026-08-24):
+     base .status = Badge size="medium" (table/history cells, e.g. the Lịch sử thay đổi table below);
+     .status-lg = Badge size="large" (the header title-row badge right after .detail-title, mirroring
+     PageHeader's badge prop — these two placements are no longer the same size). ── */
+.status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;white-space:nowrap;padding:3px 10px;border-radius:9999px}
 .status::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.status.status-lg{gap:6px;font-size:12px;padding:4px 12px}
+.status.status-lg::before{width:7px;height:7px}
 .status.st-success{background:var(--color-bg-success,#F2FFFB);color:var(--color-text-success,#00966D)}
 .status.st-success::before{background:var(--color-bg-success-solid,#00BA88)}
 .status.st-warning{background:var(--color-bg-warning,#FFF9EF);color:var(--color-text-warning,#946200)}
@@ -143,7 +162,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif}
 .table-wrap{background:var(--color-bg-surface,#fff);border-radius:0;overflow:hidden}
 .table-inner{overflow:auto;max-height:420px}
 table{width:100%;border-collapse:collapse;min-width:900px}
-thead th{background:var(--color-bg-page,#F4F6FA);padding:11px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--color-text-secondary,#6E7191);letter-spacing:.4px;text-transform:uppercase;border:none;white-space:nowrap}
+thead th{background:var(--color-bg-page,#F4F6FA);padding:11px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--color-text-secondary,#6E7191);border:none;white-space:nowrap}
 td{padding:12px 14px;font-size:13px;color:var(--color-text-body,#4E4B66);border:0.5px solid var(--color-border-default,#D9DBE9);vertical-align:middle;white-space:nowrap}
 tbody tr:hover{background:var(--color-bg-hover,#F4F5FF)}
 
@@ -271,7 +290,7 @@ tbody tr:hover{background:var(--color-bg-hover,#F4F5FF)}
             <span class="msym" style="font-size:22px">arrow_back</span>
           </button>
           <h1 class="detail-title">Xem chi tiết {{ ccxp.maP }}</h1>
-          <span class="status st-success" style="flex-shrink:0">Đã duyệt</span>
+          <span class="status status-lg st-success" style="flex-shrink:0">Đã duyệt</span>
         </div>
         <div class="detail-actions">
           <div class="of-menu-wrap">
@@ -335,6 +354,13 @@ tbody tr:hover{background:var(--color-bg-hover,#F4F5FF)}
           <button class="d-card-toggle"><span class="msym" style="font-size:20px">{{ historyToggleIcon }}</span></button>
         </div>
         <sc-if value="{{ historyOpen }}" hint-placeholder-val="{{ true }}">
+        <div class="d-card-body">
+        <div class="toolbar">
+          <div class="tb-search"><span class="msym" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span><input placeholder="Nhập người cập nhật"></div>
+          <button class="btn btn-primary btn-sm"><span class="msym" style="font-size:15px">search</span>Tìm kiếm</button>
+          <button class="btn btn-outline btn-sm"><span class="msym" style="font-size:15px">tune</span>Tìm kiếm nâng cao</button>
+          <button class="btn-icon btn-icon-sm" title="Cài đặt bảng"><span class="msym" style="font-size:18px">settings</span></button>
+        </div>
         <div class="table-wrap">
           <div class="table-inner">
             <table>
@@ -360,6 +386,7 @@ tbody tr:hover{background:var(--color-bg-hover,#F4F5FF)}
               </tbody>
             </table>
           </div>
+        </div>
         </div>
         </sc-if>
       </div>

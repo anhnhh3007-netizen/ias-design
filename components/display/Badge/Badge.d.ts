@@ -3,6 +3,8 @@ import * as React from 'react';
 export interface BadgeProps {
   children?: React.ReactNode;
   variant?: 'default' | 'success' | 'warning' | 'error' | 'neutral' | 'purple';
+  /** Default 'large' (updated 2026-08-24, was 'medium') */
+  size?: 'small' | 'medium' | 'large';
   /** Show a colored dot before label */
   dot?: boolean;
   /** Show a close button */

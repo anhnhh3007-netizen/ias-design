@@ -7,7 +7,7 @@ import React from 'react';
  * events and opacity gate interaction while closed instead.
  */
 
-export function Drawer({ open = false, title, children, footer, onClose, onExpand,
+export function Drawer({ open = false, title, badge, children, footer, onClose, onExpand,
   width = '50vw', className = '', style = {}, ...rest }) {
   return (
     <div
@@ -35,8 +35,11 @@ export function Drawer({ open = false, title, children, footer, onClose, onExpan
           padding: '20px 24px', borderBottom: '1px solid var(--color-neutral-200, #EDF2F7)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0,
         }}>
-          <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--color-text-primary, #14142A)' }}>{title}</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+            <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--color-text-primary, #14142A)' }}>{title}</span>
+            {badge && <div style={{ flexShrink: 0 }}>{badge}</div>}
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
             {onExpand && (
               <button type="button" onClick={onExpand} title="Mở rộng" style={{
                 width: 32, height: 32, borderRadius: 6, border: 'none',

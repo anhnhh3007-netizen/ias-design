@@ -7,7 +7,7 @@ export function Radio({ checked = false, disabled = false, label, onChange,
       display: 'inline-flex', alignItems: 'center', gap: 8,
       cursor: disabled ? 'not-allowed' : 'pointer',
       fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
-      fontSize: 13, color: disabled ? '#A0A3BD' : '#4E4B66',
+      fontSize: 13, color: disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
       userSelect: 'none', ...style,
     }}>
       <span style={{ position: 'relative', width: 18, height: 18, flexShrink: 0 }}>
@@ -17,10 +17,10 @@ export function Radio({ checked = false, disabled = false, label, onChange,
         <span style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           width: 18, height: 18, borderRadius: '50%',
-          border: `2px solid ${checked ? '#141ED2' : disabled ? '#D9DBE9' : '#A0A3BD'}`,
-          background: '#fff', transition: 'all 0.15s',
+          border: `2px solid ${checked ? 'var(--color-border-focus, #141ED2)' : disabled ? 'var(--color-border-default, #D9DBE9)' : 'var(--color-neutral-500, #A0A3BD)'}`,
+          background: 'var(--color-bg-surface, #fff)', transition: 'all 0.15s',
         }}>
-          {checked && <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#141ED2' }} />}
+          {checked && <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--color-bg-brand, #141ED2)' }} />}
         </span>
       </span>
       {label && <span>{label}</span>}

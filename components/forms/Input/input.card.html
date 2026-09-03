@@ -1,4 +1,4 @@
-<!-- @dsCard group="Components" viewport="700x200" name="Input" subtitle="default · focused · error · success · disabled" -->
+<!-- @dsCard group="Components" viewport="700x280" name="Input" subtitle="default · focused · error · success · disabled · sizes S/M/L (added 2026-08-27)" -->
 <!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
 <style>
   body { margin:0; padding:16px 20px; background:#fff; font-family:var(--font-family-body); }
@@ -17,5 +17,13 @@
   <div class="fg"><label>Lỗi</label><input style="border:2px solid #EB2D4B;background:#fff" placeholder="Email" /><span class="hint" style="color:#EB2D4B">Email không hợp lệ</span></div>
   <div class="fg"><label>Thành công</label><input style="border:2px solid #00BA88;background:#fff" value="nhanvien@mb.com.vn" /><span class="hint" style="color:#00BA88">Email hợp lệ</span></div>
   <div class="fg"><label>Vô hiệu</label><input style="border:1px solid #D9DBE9;background:#F4F6FA;color:#A0A3BD;cursor:not-allowed" placeholder="Chỉ xem" disabled /></div>
+</div>
+<!-- Sizes (size prop, added 2026-08-27) — same S/M/L scale as Button: 32/40/48.
+     small+medium share fontSize (13px), only large steps up (14px) — see
+     form-fields.md's "Sizes" section. -->
+<div class="row" style="margin-top:12px;align-items:flex-end">
+  <div class="fg"><label>Small (32px)</label><input style="height:32px;font-size:13px;border:1px solid #D9DBE9;background:#fff" placeholder="Nhập văn bản..." /></div>
+  <div class="fg"><label>Medium (40px, mặc định)</label><input style="height:40px;font-size:13px;border:1px solid #D9DBE9;background:#fff" placeholder="Nhập văn bản..." /></div>
+  <div class="fg"><label>Large (48px)</label><input style="height:48px;font-size:14px;border:1px solid #D9DBE9;background:#fff" placeholder="Nhập văn bản..." /></div>
 </div>
 </body></html>

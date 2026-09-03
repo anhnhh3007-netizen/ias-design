@@ -1,12 +1,22 @@
-<!-- @dsCard group="Components" viewport="700x80" name="InputNumber" subtitle="Numeric input with constraints" -->
+<!-- @dsCard group="Components" viewport="700x160" name="InputNumber" subtitle="Numeric input with constraints · sizes S/M/L (added 2026-08-27)" -->
 <!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
-<style>body{margin:0;padding:16px 20px;background:#fff;font-family:var(--font-family-body);display:flex;gap:16px;align-items:flex-end}
+<style>body{margin:0;padding:16px 20px;background:#fff;font-family:var(--font-family-body);display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:16px;align-items:flex-end}
 .fg{display:flex;flex-direction:column;gap:6px;min-width:160px}
 label{font-size:12px;font-weight:600;color:#4E4B66}
 input{height:40px;border-radius:8px;padding:0 12px;font-size:13px;font-family:inherit;outline:none;width:100%;box-sizing:border-box}
 </style></head><body>
+<div class="row">
 <div class="fg"><label>Số lượng (SL)</label><input type="number" value="2" style="border:1px solid #D9DBE9;color:#4E4B66" min="0" /></div>
 <div class="fg"><label>Trước Đ/c</label><input type="number" value="1" style="border:2px solid #141ED2;box-shadow:0 0 0 3px rgba(20,30,210,.08);color:#4E4B66" /></div>
 <div class="fg"><label>Sau Đ/c</label><input type="number" placeholder="0" style="border:1px solid #D9DBE9;color:#A0A3BD" /></div>
 <div class="fg"><label>Vô hiệu</label><input type="number" value="5" style="border:1px solid #D9DBE9;background:#F4F6FA;color:#A0A3BD;cursor:not-allowed" disabled /></div>
+</div>
+<!-- Sizes (size prop, added 2026-08-27) — same S/M/L scale as Input/Button:
+     32/40/48. See form-fields.md's "Sizes" section. -->
+<div class="row">
+<div class="fg"><label>Small (32px)</label><input type="number" value="2" style="height:32px;font-size:13px;border:1px solid #D9DBE9;color:#4E4B66" /></div>
+<div class="fg"><label>Medium (40px, mặc định)</label><input type="number" value="2" style="height:40px;font-size:13px;border:1px solid #D9DBE9;color:#4E4B66" /></div>
+<div class="fg"><label>Large (48px)</label><input type="number" value="2" style="height:48px;font-size:14px;border:1px solid #D9DBE9;color:#4E4B66" /></div>
+</div>
 </body></html>

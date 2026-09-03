@@ -6,16 +6,37 @@ import React from 'react';
  * `primary`, "Tìm kiếm nâng cao" is `outline` (not the old `ghost`), both
  * at medium height (40px), matching the FilterCard action row and every
  * other synced template (see DanhSachChuongTrinh.dc.html).
+ *
+ * Sizes (size prop, added 2026-08-27) — same S/M/L scale as Button/Input/
+ * SearchInput/Select (form-fields.md's "Sizes" section): small=32, medium=40
+ * (default, unchanged), large=48. Hard rule, not just a convention: the search
+ * input and both buttons this component renders ("Tìm kiếm", "Tìm kiếm nâng
+ * cao") must always be the SAME size as each other — a toolbar with a small
+ * input next to medium buttons (or vice versa) reads as visually broken, the
+ * two controls look like they don't belong to the same row. Enforced
+ * structurally here by deriving every height/fontSize from one shared `s`
+ * lookup rather than three independent hardcoded values — there is no code
+ * path that can set the input and buttons to different sizes. See
+ * toolbarsimple.md's "Sizes" section for the same rule applied to
+ * caller-supplied `extraActions`/`selectionActions`, which this component
+ * can't enforce itself (they're already-rendered nodes, not something
+ * ToolbarSimple can inject a size into).
  */
+const SIZES = {
+  small: { height: 32, inputFontSize: 13, btnFontSize: 14 },
+  medium: { height: 40, inputFontSize: 13, btnFontSize: 14 },
+  large: { height: 48, inputFontSize: 14, btnFontSize: 16 },
+};
 
 export function ToolbarSimple({
   searchValue = '', searchPlaceholder = 'Tìm kiếm', onSearchChange, onSearch,
   onAdvancedSearch, advancedSearchLabel = 'Tìm kiếm nâng cao',
-  loading = false, extraActions,
+  loading = false, extraActions, size = 'medium',
   selectedCount = 0, selectedLabel = (n) => `Đã chọn ${n}`, selectionActions,
   className = '', style = {}, ...rest
 }) {
   const selecting = selectedCount > 0;
+  const s = SIZES[size] || SIZES.medium;
 
   return (
     <div className={className} style={{
@@ -32,8 +53,8 @@ export function ToolbarSimple({
           placeholder={searchPlaceholder}
           onChange={(e) => onSearchChange && onSearchChange(e.target.value)}
           style={{
-            width: '100%', height: 40, border: '1px solid var(--color-border-default)', borderRadius: 8, background: 'var(--color-bg-surface)',
-            padding: '0 12px 0 34px', fontSize: 13, fontFamily: 'inherit', color: 'var(--color-text-body)', outline: 'none',
+            width: '100%', height: s.height, border: '1px solid var(--color-border-default)', borderRadius: 8, background: 'var(--color-bg-surface)',
+            padding: '0 12px 0 34px', fontSize: s.inputFontSize, fontFamily: 'inherit', color: 'var(--color-text-body)', outline: 'none',
             boxSizing: 'border-box',
           }}
         />
@@ -43,8 +64,8 @@ export function ToolbarSimple({
         disabled={loading}
         onClick={onSearch}
         style={{
-          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8, height: 40, padding: '0 16px',
-          borderRadius: 8, fontSize: 14, fontWeight: 'var(--font-weight-semibold, 600)', fontFamily: 'inherit', border: 'none',
+          display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8, height: s.height, padding: '0 16px',
+          borderRadius: 8, fontSize: s.btnFontSize, fontWeight: 'var(--font-weight-semibold, 600)', fontFamily: 'inherit', border: 'none',
           cursor: loading ? 'not-allowed' : 'pointer',
           background: loading ? 'var(--color-primary-200)' : 'var(--color-bg-brand)',
           color: loading ? 'var(--color-text-primary)' : 'var(--color-text-inverse)',
@@ -66,8 +87,8 @@ export function ToolbarSimple({
           type="button"
           onClick={onAdvancedSearch}
           style={{
-            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8, height: 40, padding: '0 16px',
-            borderRadius: 8, fontSize: 14, fontWeight: 'var(--font-weight-semibold, 600)', fontFamily: 'inherit',
+            display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8, height: s.height, padding: '0 16px',
+            borderRadius: 8, fontSize: s.btnFontSize, fontWeight: 'var(--font-weight-semibold, 600)', fontFamily: 'inherit',
             border: '1px solid var(--color-primary-200)', cursor: 'pointer', background: 'transparent', color: 'var(--color-text-primary)',
             whiteSpace: 'nowrap',
           }}

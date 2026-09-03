@@ -17,6 +17,28 @@ import * as React from 'react';
 export interface DrawerProps {
   open?: boolean;
   title?: React.ReactNode;
+  /**
+   * Optional status `Badge`, rendered immediately right of `title` in the same
+   * header row (added 2026-08-24, mirrors `PageHeader`'s own `badge` prop — see
+   * references/components/layout/pageheader.md). Same placement rule as that
+   * prop: pairs with a single-record detail view, e.g. `mapOpenDrawer`'s
+   * status badge next to the mapping code in `can-cu-xu-phat-ias-redesign.html`.
+   * Use `Badge`'s default `size="large"` here, same as `PageHeader` — see
+   * references/components/display/badge-tag.md's "Size by placement" section.
+   */
+  badge?: React.ReactNode;
+  /**
+   * A single-section body (just a 2-column `Field` grid of read-only record
+   * fields) renders with no title, directly. The moment a second section is
+   * added — a related/cross-reference table below the fields, or a second
+   * field-group — every section needs its own title, the first field-grid
+   * included (no title-less section next to a titled one). See the
+   * "Multi-section title rule" in references/components/overlay/drawer.md:
+   * one uniform title style for every section, table sections must use the
+   * real `Table` component (never bespoke `<table>` markup), and title text
+   * for a field-grid section follows `DCard`'s own inference rule
+   * ("Thông tin " + entity name).
+   */
   children?: React.ReactNode;
   /** Footer slot — typically a single "Đóng" button, or up to 2 following the secondary-left/primary-right order rule */
   footer?: React.ReactNode;

@@ -6,13 +6,16 @@
 @import './tokens/colors.css';
 @import './tokens/typography.css';
 @import './tokens/spacing.css';
-/* fig-tokens.css intentionally NOT imported here: it's a raw Figma Variables
-   export kept only for reference/reverse-lookup against the source .fig file.
-   It redeclares --color-neutral-100/-500/-900 and --color-primary-500 with
-   different values than colors.css (the canonical source); importing it here
-   silently overrode those tokens system-wide (e.g. page bg rendered #FFFFFF
-   instead of #F4F6FA). Load fig-tokens.css directly and standalone if you
-   need to inspect the raw Figma export. */
+/* tokens/fig-tokens.css and tokens/fig-typography.css (removed 2026-08-25): a raw
+   Figma Variables export that redeclared --color-neutral-100/-500/-900 and
+   --color-primary-500 with different values than colors.css (the canonical
+   source) — silently overrode those tokens system-wide wherever it was loaded
+   (e.g. page bg rendered #FFFFFF instead of #F4F6FA). It was never actually
+   needed: everything it uniquely defined (--components-stepper-*, --utilities-*,
+   etc.) had no consumer anywhere in this skill, and the handful of names it
+   duplicated from colors.css/typography.css are already covered by the three
+   imports above. Deleted rather than kept "for reference" — colors.css/
+   typography.css/spacing.css are the single canonical source now. */
 
 /* Body baseline */
 body {

@@ -10,12 +10,12 @@ export function Empty({ title = 'Không có dữ liệu', description, action,
       ...style,
     }} {...rest}>
       {icon ? icon : (
-        <div style={{ width: 64, height: 64, borderRadius: 16, background: '#F4F6FA',
+        <div style={{ width: 64, height: 64, borderRadius: 16, background: 'var(--color-neutral-100, #F4F6FA)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: 32, marginBottom: 16, color: '#A0A3BD' }}>📋</div>
+          fontSize: 32, marginBottom: 16, color: 'var(--color-text-muted, #A0A3BD)' }}>📋</div>
       )}
-      <div style={{ fontSize: 15, fontWeight: 700, color: '#14142A', marginBottom: 6 }}>{title}</div>
-      {description && <div style={{ fontSize: 13, color: '#A0A3BD', lineHeight: 1.6, maxWidth: 280, marginBottom: action ? 20 : 0 }}>{description}</div>}
+      <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-text-primary, #14142A)', marginBottom: 6 }}>{title}</div>
+      {description && <div style={{ fontSize: 13, color: 'var(--color-text-muted, #A0A3BD)', lineHeight: 1.6, maxWidth: 280, marginBottom: action ? 20 : 0 }}>{description}</div>}
       {action}
     </div>
   );

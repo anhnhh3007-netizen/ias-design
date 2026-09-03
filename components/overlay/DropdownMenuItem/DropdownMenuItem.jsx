@@ -11,8 +11,8 @@ export function DropdownMenuItem({
   onClick, className = '', style = {}, ...rest
 }) {
   const [hovered, setHovered] = React.useState(hover);
-  const fg = danger ? '#EB2D4B' : disabled ? '#A0A3BD' : selected ? '#141ED2' : '#4E4B66';
-  const bg = selected ? 'rgba(20,30,210,0.08)' : hovered && !disabled ? '#F4F5FF' : 'transparent';
+  const fg = danger ? 'var(--color-error-500, #EB2D4B)' : disabled ? 'var(--color-text-muted, #A0A3BD)' : selected ? 'var(--color-text-brand, #141ED2)' : 'var(--color-text-body, #4E4B66)';
+  const bg = selected ? 'rgba(20,30,210,0.08)' : hovered && !disabled ? 'var(--color-bg-hover, #F4F5FF)' : 'transparent';
   return (
     <button
       disabled={disabled} onClick={onClick}
@@ -30,16 +30,16 @@ export function DropdownMenuItem({
       {(checkable || multiSelect) && (
         <span style={{
           width: multiSelect ? 16 : 16, height: 16, borderRadius: multiSelect ? 3 : '50%',
-          border: `2px solid ${checked ? '#141ED2' : '#D9DBE9'}`,
-          background: checked ? '#141ED2' : '#fff', flexShrink: 0,
+          border: `2px solid ${checked ? 'var(--color-border-focus, #141ED2)' : 'var(--color-border-default, #D9DBE9)'}`,
+          background: checked ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-neutral-0, #fff)', flexShrink: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          {checked && <span style={{ width: multiSelect ? 8 : 6, height: multiSelect ? 2 : 6, background: '#fff', borderRadius: multiSelect ? 1 : '50%', display: 'block' }} />}
+          {checked && <span style={{ width: multiSelect ? 8 : 6, height: multiSelect ? 2 : 6, background: 'var(--color-neutral-0, #fff)', borderRadius: multiSelect ? 1 : '50%', display: 'block' }} />}
         </span>
       )}
       {icon && <span style={{ display: 'flex', color: 'currentColor', flexShrink: 0 }}>{icon}</span>}
       <span style={{ flex: 1 }}>{label}</span>
-      {arrow && <span style={{ color: '#A0A3BD', fontSize: 12, flexShrink: 0 }}>›</span>}
+      {arrow && <span style={{ color: 'var(--color-text-muted, #A0A3BD)', fontSize: 12, flexShrink: 0 }}>›</span>}
     </button>
   );
 }

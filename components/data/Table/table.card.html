@@ -6,8 +6,10 @@
   .wrap { background:var(--color-bg-surface); border:none; border-radius:0; overflow:hidden; }
   table { width:100%; border-collapse:collapse; }
   thead tr { background:var(--color-bg-page); }
-  /* Header row is Table's own documented exception: uppercase + letter-spacing, not mapped to the generic type scale (component-rules.md cross-cutting rule + table.md). No border (updated 2026-08-18) */
-  th { padding:10px 14px; text-align:left; font-size:11px; font-weight:700; color:var(--color-text-secondary); letter-spacing:.4px; text-transform:uppercase; border:none; }
+  /* Header row: sentence case, no text-transform/letter-spacing (updated 2026-08-21 — retired
+     Table's former uppercase exception, see component-rules.md cross-cutting rule + table.md).
+     Still not mapped to the generic type scale (11px has no declared scale). No border (2026-08-18) */
+  th { padding:10px 14px; text-align:left; font-size:11px; font-weight:700; color:var(--color-text-secondary); border:none; }
   /* Full grid: every cell bordered on all 4 sides at 0.5px (border-collapse merges shared edges into single lines) */
   td { padding:11px 14px; color:var(--color-text-body); border:0.5px solid var(--color-border-default); vertical-align:middle; }
   /* .av background/text mirrors Avatar.jsx's own internal COLORS palette — component-internal, exempt from token mapping (same exemption as Badge below) */
@@ -78,7 +80,7 @@
 | # | Text element | Rendered size / weight | Matched scale | Match | Class used? |
 |---|---|---|---|---|---|
 | 1 | Body cell text (name, department, title, action link) | 13px / 400 (inherited) | Body 2 (14px/400) | ⚠️ Nearest (size doesn't land exactly, weight matches) | ✅ `className="hcm-body2"` on `tbody` (inherits to every `td`) |
-| 2 | Table header text | 11px / 700, uppercase | *(excluded — documented exception)* | N/A | N/A — Table's own header style is a standing DS exception (component-rules.md cross-cutting rule: "the one exception is Table column headers"), not mapped to the generic scale |
+| 2 | Table header text | 11px / 700, sentence case (updated 2026-08-21 — no longer uppercase) | *(excluded — no declared 11px scale)* | N/A | N/A — Table's own header size/weight is component-internal (no matching `.hcm-*` scale at 11px), same exemption class as row 1; casing itself now follows the standard Sentence-case cross-cutting rule like everything else, no longer a documented exception |
 | 3 | Status pill text | 11px / 600 | *(excluded — component-internal)* | N/A | N/A — mirrors `Badge.jsx`'s hardcoded `fontSize:11, fontWeight:600` |
 | 4 | Avatar initials | 11px / 700 | *(excluded — component-internal)* | N/A | N/A — mirrors `Avatar.jsx`'s hardcoded `fontWeight:700` sizing formula |
 

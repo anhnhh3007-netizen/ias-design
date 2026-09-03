@@ -59,9 +59,16 @@ body{font-family:'Plus Jakarta Sans',sans-serif}
 .page-tab:hover{color:#14142A}
 .page-tab.on{color:#141ED2;font-weight:700;border-bottom-color:#141ED2}
 
+/* .content is the ONLY scroll region below the fixed header (flex:1 bounds it to
+   .main's remaining height, overflow:auto scrolls it). Everything inside — including
+   .list-panel and .table-wrap below — just hugs its own natural content height (no
+   flex:1/min-height:0 anywhere else), same as ListPanel's own sample
+   (components/data/ListPanel/listpanel.card.html has no nested scroll container).
+   Updated 2026-08-21: dropped the earlier nested double-scroll (table-wrap clipped to
+   its own box while pagination sat outside it) in favor of this single scroll unit. */
 .content{flex:1;overflow:auto;padding:20px 24px;display:flex;flex-direction:column;gap:16px}
 /* .list-panel — reference implementation for components/data/ListPanel/ (card surface: bg/border/radius/padding, standardized 2026-07-31) */
-.list-panel{display:flex;flex-direction:column;gap:16px;flex:1;min-height:0;background:#fff;border:1px solid #D9DBE9;border-radius:12px;padding:16px}
+.list-panel{display:flex;flex-direction:column;gap:16px;background:#fff;border:1px solid #D9DBE9;border-radius:12px;padding:16px}
 
 /* ── Toolbar ── */
 .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -84,7 +91,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif}
 .btn-icon:hover{border-color:var(--color-border-focus,#141ED2)}
 
 /* ── Advanced search (FilterCard — always 4-column grid, right-aligned action row) ── */
-.filter-card{background:#fff;border:1px solid #D9DBE9;border-radius:12px;padding:16px 20px;box-shadow:0 2px 8px rgba(75,99,226,.08)}
+.filter-card{background:#fff;border:1px solid #D9DBE9;border-radius:12px;padding:16px 20px}
 .frow{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:14px}
 .fg{display:flex;flex-direction:column;gap:6px;min-width:0}
 .fg label{font-size:12px;font-weight:600;color:#4E4B66}
@@ -94,18 +101,29 @@ body{font-family:'Plus Jakarta Sans',sans-serif}
 .filter-actions-row{display:flex;align-items:center;justify-content:flex-end;gap:8px}
 
 /* ── Table ── */
-.table-wrap{background:#fff;border-radius:0;overflow:hidden;display:flex;flex-direction:column;flex:1;min-height:0}
-.table-inner{overflow:auto;flex:1}
+.table-wrap{background:#fff;border-radius:0;overflow:hidden}
+.table-inner{overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:1200px}
 thead tr{background:#F4F6FA;position:sticky;top:0;z-index:1}
-th{padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:#6E7191;letter-spacing:.4px;text-transform:uppercase;border:none;white-space:nowrap}
+th{padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:#6E7191;border:none;white-space:nowrap}
 td{padding:13px 16px;font-size:13px;color:#4E4B66;border:0.5px solid #D9DBE9;vertical-align:middle;white-space:nowrap}
 tbody tr:hover{background:#F4F5FF}
 .td-truncate{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Truncated-cell tooltip (components/feedback/Tooltip + references/components/data/table.md's
+   documented exception) — same dark-navy bubble as Tooltip.jsx, but position:fixed (computed
+   from getBoundingClientRect on hover, see the script block below) instead of position:absolute,
+   since .table-inner's overflow-x:auto computes overflow-y as auto too and would clip an
+   absolutely-positioned bubble. No dashed-underline trigger (the ellipsis is the affordance),
+   content wraps instead of forcing one nowrap line (a truncated sentence can be long). */
+.td-tt-bubble{position:fixed;display:none;background:#14142A;color:#fff;font-size:11px;font-weight:500;line-height:1.4;padding:6px 10px;border-radius:6px;max-width:320px;white-space:normal;pointer-events:none;z-index:600;box-shadow:0 4px 12px rgba(0,0,0,.2);font-family:var(--font-family-body,'Plus Jakarta Sans',sans-serif)}
 .td-link{color:#141ED2;font-weight:600;text-decoration:none}
 .td-link:hover{text-decoration:underline}
 .td-num{text-align:right;font-variant-numeric:tabular-nums}
-.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;white-space:nowrap;padding:3px 10px;border-radius:9999px}
+/* Table status cell — Badge size="medium" per references/components/display/badge-tag.md's
+   "Size by placement" rule (updated 2026-08-24): table/dense-list contexts use medium, not
+   Badge's own large default (that default is sized for title-row placement — PageHeader/
+   DrSectionTitle — not a table row). */
+.status{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;white-space:nowrap;padding:3px 10px;border-radius:9999px}
 .status::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .status.st-purple{background:#EEDFFF;color:#5500CC}
 .status.st-purple::before{background:#7B61FF}
@@ -127,11 +145,16 @@ tbody tr:hover{background:#F4F5FF}
 .pg-btn.active{background:#141ED2;border-color:#141ED2;color:#fff;font-weight:700}
 .pg-btn.ellipsis{border:none;cursor:default;color:#A0A3BD}
 .pg-btn.ellipsis:hover{background:none;color:#A0A3BD}
+.pg-btn:disabled{cursor:not-allowed;opacity:.5}
 .pg-size{display:flex;align-items:center;gap:6px}
 .pg-size select{height:32px;border:1px solid #D9DBE9;border-radius:6px;padding:0 8px;font-size:13px;font-family:inherit;color:#4E4B66;background:#fff;outline:none;cursor:pointer}
 .pg-jump{display:flex;align-items:center;gap:6px;font-size:12px;color:#6E7191}
 .pg-jump input{width:64px;height:32px;border:1px solid #D9DBE9;border-radius:6px;padding:0 8px;font-size:13px;font-family:inherit;color:#4E4B66;outline:none}
 .pg-jump input:focus{border-color:#141ED2}
+/* Jump-confirm button — .btn-outline's colors at .pg-btn/.pg-jump input's 32px height
+   (this template has no .btn-sm elsewhere, so scope the height override here rather
+   than introducing an unused size variant) */
+.pg-jump .btn{height:32px;padding:0 10px}
 
 /* ── Row action: keyboard_double_arrow_right trigger → Drawer (component-rules.md Table section) ── */
 .row-expand-btn{width:28px;height:28px;border-radius:6px;border:none;background:transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:#6E7191}
@@ -465,7 +488,7 @@ tbody tr:hover{background:#F4F5FF}
       <div class="pagination-bar">
         <span class="pg-count">Đã hiển thị 1 - 8 trên 84 kết quả</span>
         <div class="pg-pages">
-          <button class="pg-btn"><span class="msym" style="font-size:16px">chevron_left</span></button>
+          <button class="pg-btn" disabled><span class="msym" style="font-size:16px">chevron_left</span></button>
           <button class="pg-btn active">1</button>
           <button class="pg-btn">2</button>
           <button class="pg-btn">3</button>
@@ -483,7 +506,8 @@ tbody tr:hover{background:#F4F5FF}
         </div>
         <div class="pg-jump">
           <span>Chuyển đến</span>
-          <input placeholder="Nhập" />
+          <input type="number" min="1" placeholder="Trang" />
+          <button class="btn btn-outline"><span class="msym" style="font-size:14px">arrow_forward</span></button>
         </div>
       </div>
 
@@ -530,6 +554,10 @@ tbody tr:hover{background:#F4F5FF}
 </div>
 </sc-if>
 
+<!-- Shared truncated-cell tooltip bubble (references/components/data/table.md) — one node,
+     repositioned/refilled on hover of any .td-truncate cell by the script block below. -->
+<div class="td-tt-bubble" id="tdTtBubble"></div>
+
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{
   &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 }
@@ -544,6 +572,25 @@ var CCXP_ROWS = {
   7: { maP:'XP.QĐ1234.3', maVB:'QĐ 1234', tenVB:'Quy định xử phạt VPHC trong lĩnh vực tiền tệ và ngân hàng', canCu:'Điều 20, Khoản 5', htXPBS:'—', mucMin:'80.000.000', mucMax:'150.000.000', ttHL:'Còn hiệu lực', trangThai:'Chờ duyệt hủy' },
   8: { maP:'XP.TT08.2', maVB:'TT 08/2023', tenVB:'Thông tư hướng dẫn xử phạt lĩnh vực ngoại hối', canCu:'Điều 15, Khoản 2', htXPBS:'—', mucMin:'25.000.000', mucMax:'45.000.000', ttHL:'Còn hiệu lực', trangThai:'Đã duyệt' },
 };
+
+/* Truncated-cell tooltip — delegated so it works for every .td-truncate cell without
+   per-cell listeners; only fires when the cell is actually clipped (scrollWidth >
+   clientWidth), and positions the shared bubble with getBoundingClientRect so it
+   escapes .table-inner's scroll clipping (see the CSS comment above .td-tt-bubble). */
+(function () {
+  var bubble = document.getElementById('tdTtBubble');
+  document.addEventListener('mouseover', function (e) {
+    var cell = e.target.closest && e.target.closest('.td-truncate');
+    if (!cell || cell.scrollWidth <= cell.clientWidth) { bubble.style.display = 'none'; return; }
+    bubble.textContent = cell.textContent;
+    bubble.style.display = 'block';
+    var r = cell.getBoundingClientRect();
+    var left = Math.max(4, Math.min(r.left, window.innerWidth - bubble.offsetWidth - 8));
+    var top = r.top - bubble.offsetHeight - 8;
+    bubble.style.left = left + 'px';
+    bubble.style.top = (top < 4 ? r.bottom + 8 : top) + 'px';
+  });
+})();
 
 class Component extends DCLogic {
   state = {

@@ -17,25 +17,25 @@ export function Steps({ steps = [], current = 0, className = '', style = {}, ...
                 width: 28, height: 28, borderRadius: '50%', flexShrink: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 12, fontWeight: 700,
-                background: done ? '#00BA88' : active ? '#141ED2' : '#EDF2F7',
-                color: done || active ? '#fff' : '#A0A3BD',
+                background: done ? 'var(--color-bg-success-solid, #00BA88)' : active ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-neutral-200, #EDF2F7)',
+                color: done || active ? 'var(--color-text-inverse, #fff)' : 'var(--color-text-muted, #A0A3BD)',
               }}>
                 {done ? '✓' : i + 1}
               </span>
               <div>
                 <div style={{ fontSize: 12, fontWeight: active ? 700 : 500,
-                  color: active ? '#141ED2' : done ? '#14142A' : '#A0A3BD' }}>
+                  color: active ? 'var(--color-text-brand, #141ED2)' : done ? 'var(--color-text-primary, #14142A)' : 'var(--color-text-muted, #A0A3BD)' }}>
                   {step.title}
                 </div>
                 {step.description && (
-                  <div style={{ fontSize: 11, color: '#A0A3BD', marginTop: 1 }}>{step.description}</div>
+                  <div style={{ fontSize: 11, color: 'var(--color-text-muted, #A0A3BD)', marginTop: 1 }}>{step.description}</div>
                 )}
               </div>
             </div>
             {i < steps.length - 1 && (
               <div style={{
                 flex: 1, height: 2, margin: '0 12px',
-                background: i < current ? '#00BA88' : '#EDF2F7',
+                background: i < current ? 'var(--color-bg-success-solid, #00BA88)' : 'var(--color-neutral-200, #EDF2F7)',
                 minWidth: 24,
               }} />
             )}

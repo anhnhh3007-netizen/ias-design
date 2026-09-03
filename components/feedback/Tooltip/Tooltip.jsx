@@ -16,7 +16,7 @@ export function Tooltip({ children, content, placement = 'top', className = '', 
       {visible && content && (
         <span style={{
           position: 'absolute', ...pos,
-          background: '#14142A', color: '#fff',
+          background: 'var(--color-neutral-900, #14142A)', color: 'var(--color-text-inverse, #fff)',
           fontSize: 11, fontWeight: 500,
           padding: '5px 10px', borderRadius: 6,
           whiteSpace: 'nowrap', pointerEvents: 'none', zIndex: 600,

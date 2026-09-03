@@ -79,7 +79,6 @@ export function Table({ columns = [], data = [], rowKey = 'id', onRowClick,
                 <th key={col.key || i} style={{
                   padding: '12px 16px', textAlign: col.align || 'left',
                   fontSize: 11, fontWeight: 700, color: 'var(--color-text-secondary)',
-                  letterSpacing: '0.4px', textTransform: 'uppercase',
                   borderBottom: '1px solid var(--color-border-default)',
                   whiteSpace: 'nowrap', width: col.width,
                 }}>{col.title}</th>

@@ -1,6 +1,26 @@
 # ToolbarSimple
 Single-line search toolbar, the default/collapsed state above a list or `Table` — not a form, no field grid.
 - Fixed order, left → right: search input (`SearchInput`-style, ~320px) → the action table below → trailing utility actions pushed to the far right via `margin-left: auto`.
+
+## Sizes (`size` prop, added 2026-08-27)
+Same S/M/L scale as `Button`/`Input`/`SearchInput`/`Select` (`references/components/forms/form-fields.md`'s "Sizes" section): `small` = 32px, `medium` = 40px (default), `large` = 48px.
+
+- **The search input and both buttons `ToolbarSimple` renders ("Tìm kiếm", "Tìm kiếm nâng cao") must always be the same size as each other — this is a hard rule, not a per-control choice.** A toolbar with a `small` search field next to `medium`-height buttons (or vice versa) reads as visually broken: the row looks like two mismatched pieces bolted together rather than one coherent control cluster. `ToolbarSimple`'s own implementation enforces this structurally — every height/font-size in the component is derived from the single `size` prop, there is no way to set the input and buttons to different sizes through the component's own props.
+- **This does not automatically extend to `extraActions`/`selectionActions`.** Those props take already-rendered `React.ReactNode`s — `ToolbarSimple` has no way to reach into them and set a size. If a caller renders its own `Button`s inside `extraActions` (Export, settings, Xóa, Hủy, Gửi duyệt, Import — the trailing action cluster below) or `selectionActions`, **it must pass those buttons the same `size` value as the `ToolbarSimple` itself.** A toolbar that sets `size="small"` but leaves its `extraActions` buttons at the `Button` default (`medium`) reintroduces exactly the mismatch this rule exists to prevent — the rule covers the *whole row*, not just the two controls `ToolbarSimple` happens to render internally.
+- Same rule applies when swapping in `FilterCard` for the advanced-search state (see below) — `FilterCard`'s own field/action sizing should match whatever size the collapsed `ToolbarSimple` was using, so the toggle doesn't visibly resize the row.
+
+### Size by location (added 2026-08-27)
+Which size to pick is not free choice per screen — it follows *where* the toolbar is rendered:
+
+| Location | `size` |
+|---|---|
+| Drawer (side-panel quick view, including a list-style Drawer like a cross-reference table's own toolbar) | `small` (32px) |
+| List page (the main screen's own `ToolbarSimple`/`FilterCard`, above the primary `Table`) | `medium` (40px) |
+| Full-page detail screen ("Xem chi tiết") | `medium` (40px) |
+
+- **Rationale**: a `Drawer` is a compact, secondary surface sliding in over the main content — its own internal toolbar (e.g. a cross-reference table's search bar inside the Drawer) should read as denser/lighter than the primary page furniture, matching the Drawer's own tighter spacing. The list page and the full-page detail screen are both primary, full-width surfaces — same size on both keeps the "promoted from Drawer to full page" transition (see `Drawer`'s own `open_in_full` expand action, `references/components/overlay/drawer.md`) from visibly resizing the toolbar underneath it.
+- **The same toolbar-rendering logic can serve both a Drawer and the full-page screen** — don't duplicate the markup/component per destination. Derive `size` from context at the call site instead: Mapping NVTT's own `mapCrossRefTableOnly`/`mapCrossToolbarHTML` is the reference implementation — one shared function renders a cross-reference table's toolbar for three different callers (`mapOpenDrawer` with `backKind:'record'`, `mapOpenCrossRefListDrawer` with `backKind:'list'`, and `mapOpenDetailPage` with no `backKind`), and picks `size` as `small` whenever a `backKind` is present (i.e. it's being opened inside some Drawer) or `medium` when it isn't (the full-page case) — `const compact = !!backKind;`. One function, size follows where it's mounted.
+- This is additive to the "button always matches input" rule above, not a replacement for it — whichever size a location calls for, the input and buttons still have to agree with each other.
 - Pairs with `FilterCard`: clicking "Tìm kiếm nâng cao" swaps `ToolbarSimple` out for a `FilterCard` occupying the **same slot** — the two are mutually exclusive, never shown at once. `FilterCard`'s own "Ẩn tìm kiếm nâng cao" action swaps back. This toggle relationship is standard whenever a screen offers both a quick search and an advanced filter — don't build two permanently-visible blocks for this.
 - `ToolbarSimple` itself never has a Reset button or field grid — once expanded, that's `FilterCard`'s job (see its Reset rule in `references/components/data/filtercard.md`). Don't add fields directly into `ToolbarSimple`.
 - Reference implementation: `templates/ias-danh-sach-chuong-trinh/DanhSachChuongTrinh.dc.html` (`#ias-toolbar-simple` / `#ias-toolbar-advanced`, toggled by `iasShowAdvancedSearch()` / `iasHideAdvancedSearch()`).

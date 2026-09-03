@@ -27,6 +27,7 @@ Rules:
 - No equivalent (truly bespoke element) → build with DS tokens (colors, spacing, radii from `styles.css`) only — no arbitrary colors.
 - **Never invent a component that already exists in the DS.**
 - **`Badge` and `Tag` are not interchangeable** — `Badge` is for record status (e.g. Đang làm việc / Chờ duyệt), `Tag` is for category/filter chips (e.g. Kế toán / CNTT). Never use `Tag` to show status or `Badge` for a category chip — see `references/component-rules.md`'s "Badge vs. Tag" section.
+- **`Chips` is not `Tag`** — if the element must be clicked/toggled/removed by the user (a multi-select filter pill, a selected-value token), use `Chips`, not `Tag` with `onClose`. `Tag` stays read-only. See `references/components/display/chips.md`.
 
 | Upload element | DS component |
 |---|---|
@@ -51,6 +52,7 @@ Rules:
 | Avatar / profile image | `Avatar` |
 | Status label / chip (record state, e.g. Đang làm việc / Chờ duyệt) | `Badge` |
 | Category / filter chip (e.g. Kế toán / CNTT) | `Tag` |
+| Toggleable filter/choice pill or removable value token (multi-select, chọn nhiều) | `Chips` (not `Tag` — see `references/components/display/chips.md`) |
 | Tab bar | `Tabs` |
 | Horizontal rule | `Divider` |
 | Empty-state illustration | `Empty` |
@@ -167,7 +169,7 @@ All components are exposed via `window.HCMDesignSystem_66ca8f` from `_ds_bundle.
 | Group | Components |
 |-------|------------|
 | **forms** | Button, Input, InputNumber, Textarea, Select, Checkbox, MCheckbox, Radio, Toggle, SearchInput |
-| **display** | Avatar, Badge, Tag, Tabs, DataCard, Card, Empty, Field |
+| **display** | Avatar, Badge, Tag, Chips, Tabs, DataCard, Card, Empty, Field |
 | **feedback** | Alert, Spinner, Tooltip, Steps, Progress, Notification |
 | **navigation** | AppSidebar, AppHeader, Breadcrumb, Pagination, MenuItem |
 | **overlay** | Modal, Popconfirm, Dropdown, DropdownMenuItem, Drawer |
@@ -180,7 +182,7 @@ Load: `<script src="_ds_bundle.js"></script>` then `const { Button } = window.HC
 
 `FilterCard`, `ToolbarSimple` (added 2026-07-21), `ListPanel` (added 2026-07-31, `components/data/ListPanel/`), `ImportPanel` (added 2026-08-14, `components/data/ImportPanel/`), `ColumnPicker` (added 2026-08-17, `components/data/ColumnPicker/`), and `RowMenu` (added 2026-08-18, `components/data/RowMenu/`) ship as source only (`.card.html` sample + `.d.ts` contract + `.jsx` reference implementation) — **not yet compiled into `_ds_bundle.js`**, same as how `data/` has no per-group `Components.bundle.js` the way `forms/`, `display/`, etc. do. Until included in a future bundle rebuild, use the `.jsx` files directly (copy the implementation) rather than assuming `window.HCMDesignSystem_66ca8f.FilterCard` / `.ToolbarSimple` / `.ListPanel` / `.ImportPanel` / `.ColumnPicker` / `.RowMenu` exist.
 
-`Drawer` (added 2026-07-31, `components/overlay/Drawer/`), `DetailFooter` (added 2026-07-31, `components/layout/DetailFooter/`), and `Field` (added 2026-07-31, `components/display/Field/`) are source-only for the same reason, but note `overlay/`, `layout/`, and `display/` **do** each have a compiled `Components.bundle.js` (unlike `data/`) — they just predate these three components and haven't been rebuilt since. Use `Drawer.jsx`/`DetailFooter.jsx`/`Field.jsx` directly rather than assuming `window.HCMDesignSystem_66ca8f.Drawer` / `.DetailFooter` / `.Field` exist.
+`Drawer` (added 2026-07-31, `components/overlay/Drawer/`), `DetailFooter` (added 2026-07-31, `components/layout/DetailFooter/`), `Field` (added 2026-07-31, `components/display/Field/`), and `Chips` (added 2026-08-26, `components/display/Chips/`, exports `Chips` + `ChipGroup`) are source-only for the same reason, but note `overlay/`, `layout/`, and `display/` **do** each have a compiled `Components.bundle.js` (unlike `data/`) — they just predate these components and haven't been rebuilt since. Use `Drawer.jsx`/`DetailFooter.jsx`/`Field.jsx`/`Chips.jsx` directly rather than assuming `window.HCMDesignSystem_66ca8f.Drawer` / `.DetailFooter` / `.Field` / `.Chips` exist.
 
 Always `read Components.d.ts` in a bundle directory before using it to get exact prop names.
 
@@ -192,7 +194,6 @@ Always `read Components.d.ts` in a bundle directory before using it to get exact
 - `tokens/colors.css` — full color token system with semantic aliases
 - `tokens/typography.css` — type scale + **self-hosted Averta Std CY `@font-face`** (16 weights, files in `fonts/`) which sets `--font-family-body`; Plus Jakarta Sans/Lato/JetBrains Mono are Google Fonts fallbacks only, imported in the same file
 - `tokens/spacing.css` — spacing, radii, shadows, z-index
-- `tokens/fig-tokens.css` — Figma Variables export (53 tokens)
 
 **Portable HTML artifacts** (built outside this skill folder) won't pick up `tokens/typography.css` automatically — see the Font bullet above under "Key facts" for the copy/inline steps required to actually get Averta Std CY instead of the Plus Jakarta Sans fallback, and see Step 2b for the `--type-*`/`--font-weight-*` variables the typography-scale mapping depends on.
 

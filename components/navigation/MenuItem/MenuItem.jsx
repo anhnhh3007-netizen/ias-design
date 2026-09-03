@@ -45,7 +45,7 @@ export function MenuItem({
         style={{
           ...base, display: 'flex', alignItems: 'center', gap: 10,
           padding: '10px', borderRadius: 8, cursor: 'pointer',
-          color: active ? '#fff' : hovered ? '#fff' : '#CBD0E8',
+          color: active ? 'var(--color-text-inverse, #fff)' : hovered ? 'var(--color-text-inverse, #fff)' : '#CBD0E8',
           background: active ? 'rgba(255,255,255,0.10)'
             : hovered ? 'rgba(255,255,255,0.07)' : 'transparent',
           fontSize: 13, fontWeight: active ? 600 : 500,
@@ -62,7 +62,7 @@ export function MenuItem({
   if (variant === 'tree') {
     const iconName = leaf ? 'fiber_manual_record' : expanded ? 'remove' : 'add';
     const iconSz   = leaf ? 9 : depth > 0 ? 14 : 16;
-    const color    = active ? '#fff' : leaf ? '#8B8FBD' : '#CBD0E8';
+    const color    = active ? 'var(--color-text-inverse, #fff)' : leaf ? '#8B8FBD' : '#CBD0E8';
     return (
       <div role="button" tabIndex={0} onClick={onClick} className={className}
         {...hProps}
@@ -89,19 +89,19 @@ export function MenuItem({
         ...base, display: 'flex', alignItems: 'center', gap: 8,
         width: '100%', padding: '9px 14px', border: 'none', textAlign: 'left',
         borderRadius: 6, position: 'relative',
-        background: active ? 'rgba(20,30,210,0.08)' : hovered && !disabled ? '#F4F5FF' : 'transparent',
+        background: active ? 'rgba(20,30,210,0.08)' : hovered && !disabled ? 'var(--color-bg-hover, #F4F5FF)' : 'transparent',
         cursor: disabled ? 'not-allowed' : 'pointer',
-        color: danger ? '#EB2D4B' : disabled ? '#A0A3BD' : active ? '#141ED2' : '#4E4B66',
+        color: danger ? 'var(--color-error-500, #EB2D4B)' : disabled ? 'var(--color-text-muted, #A0A3BD)' : active ? 'var(--color-text-brand, #141ED2)' : 'var(--color-text-body, #4E4B66)',
         fontSize: 13, fontWeight: active ? 600 : 500,
         transition: 'background 150ms', ...style,
       }} {...rest}>
       {active && <span style={{
         position: 'absolute', left: 0, top: 4, bottom: 4,
-        width: 3, background: '#141ED2', borderRadius: '0 3px 3px 0',
+        width: 3, background: 'var(--color-bg-brand, #141ED2)', borderRadius: '0 3px 3px 0',
       }} />}
       {icon && <MSym name={icon} size={18} fill={0} wght={400} />}
       <span style={{ flex: 1 }}>{label}</span>
-      {arrow && <span style={{ color: '#A0A3BD', fontSize: 14, lineHeight: 1 }}>›</span>}
+      {arrow && <span style={{ color: 'var(--color-text-muted, #A0A3BD)', fontSize: 14, lineHeight: 1 }}>›</span>}
     </button>
   );
 }

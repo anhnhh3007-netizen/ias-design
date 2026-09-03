@@ -11,7 +11,7 @@ export function Modal({ open = false, title, children, footer, onClose,
     }} onClick={e => e.target === e.currentTarget && onClose && onClose()}>
       <div className={className} role="dialog" aria-modal="true"
         style={{
-          background: '#fff', borderRadius: 12,
+          background: 'var(--color-bg-surface, #fff)', borderRadius: 12,
           boxShadow: '0 16px 40px rgba(20,20,42,0.18)',
           width, maxWidth: '95vw', maxHeight: '90vh',
           display: 'flex', flexDirection: 'column',
@@ -19,15 +19,15 @@ export function Modal({ open = false, title, children, footer, onClose,
           ...style,
         }} {...rest}>
         <div style={{
-          padding: '20px 24px', borderBottom: '1px solid #EDF2F7',
+          padding: '20px 24px', borderBottom: '1px solid var(--color-neutral-200, #EDF2F7)',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0,
         }}>
-          <span style={{ fontSize: 16, fontWeight: 700, color: '#14142A' }}>{title}</span>
+          <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--color-text-primary, #14142A)' }}>{title}</span>
           {onClose && (
             <button onClick={onClose} style={{
               width: 32, height: 32, borderRadius: 6, border: 'none',
               background: 'transparent', cursor: 'pointer',
-              color: '#6E7191', fontSize: 18, display: 'flex',
+              color: 'var(--color-text-secondary, #6E7191)', fontSize: 18, display: 'flex',
               alignItems: 'center', justifyContent: 'center',
             }}>✕</button>
           )}
@@ -35,7 +35,7 @@ export function Modal({ open = false, title, children, footer, onClose,
         <div style={{ padding: 24, overflowY: 'auto', flex: 1 }}>{children}</div>
         {footer && (
           <div style={{
-            padding: '16px 24px', borderTop: '1px solid #EDF2F7',
+            padding: '16px 24px', borderTop: '1px solid var(--color-neutral-200, #EDF2F7)',
             display: 'flex', gap: 8, justifyContent: 'flex-end', flexShrink: 0,
           }}>{footer}</div>
         )}

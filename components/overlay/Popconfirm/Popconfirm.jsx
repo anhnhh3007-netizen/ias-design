@@ -16,27 +16,27 @@ export function Popconfirm({ children, title = 'Bạn có chắc chắn không?'
       {open && (
         <div style={{
           position: 'absolute', ...pos,
-          background: '#fff', borderRadius: 8, padding: 16, zIndex: 500,
+          background: 'var(--color-bg-surface, #fff)', borderRadius: 8, padding: 16, zIndex: 500,
           boxShadow: '0 8px 24px rgba(75,99,226,0.15)',
-          border: '1px solid #EDF2F7', width: 260,
+          border: '1px solid var(--color-neutral-200, #EDF2F7)', width: 260,
           fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
           ...style,
         }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: '#14142A', marginBottom: description ? 6 : 12 }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--color-text-primary, #14142A)', marginBottom: description ? 6 : 12 }}>
             {title}
           </div>
           {description && (
-            <div style={{ fontSize: 12, color: '#6E7191', marginBottom: 12, lineHeight: 1.5 }}>{description}</div>
+            <div style={{ fontSize: 12, color: 'var(--color-text-secondary, #6E7191)', marginBottom: 12, lineHeight: 1.5 }}>{description}</div>
           )}
           <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
             <button onClick={() => { setOpen(false); onCancel && onCancel(); }} style={{
-              padding: '6px 14px', borderRadius: 6, border: '1px solid #D9DBE9',
-              background: '#fff', color: '#6E7191', fontSize: 12, fontWeight: 600,
+              padding: '6px 14px', borderRadius: 6, border: '1px solid var(--color-border-default, #D9DBE9)',
+              background: 'var(--color-bg-surface, #fff)', color: 'var(--color-text-secondary, #6E7191)', fontSize: 12, fontWeight: 600,
               cursor: 'pointer', fontFamily: 'inherit',
             }}>{cancelText}</button>
             <button onClick={() => { setOpen(false); onConfirm && onConfirm(); }} style={{
               padding: '6px 14px', borderRadius: 6, border: 'none',
-              background: '#EB2D4B', color: '#fff', fontSize: 12, fontWeight: 600,
+              background: 'var(--color-bg-error-solid, #EB2D4B)', color: 'var(--color-text-inverse, #fff)', fontSize: 12, fontWeight: 600,
               cursor: 'pointer', fontFamily: 'inherit',
             }}>{confirmText}</button>
           </div>

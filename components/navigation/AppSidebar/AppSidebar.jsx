@@ -48,7 +48,7 @@ export function AppSidebar({
       const isActive    = node.key === activeKey;
       const iconName    = !hasChildren ? 'fiber_manual_record' : nodeOpen ? 'remove' : 'add';
       const iconSz      = !hasChildren ? 9 : depth > 0 ? 14 : 16;
-      const color       = isActive ? '#fff' : !hasChildren ? '#8B8FBD' : '#CBD0E8';
+      const color       = isActive ? 'var(--color-text-inverse, #fff)' : !hasChildren ? '#8B8FBD' : '#CBD0E8';
       const [rowHov, setRowHov] = React.useState ? [false, () => {}] : [false, () => {}];
 
       return React.createElement('div', { key: node.key },
@@ -91,7 +91,7 @@ export function AppSidebar({
         style: {
           display: 'flex', alignItems: 'center', gap: 10, padding: '10px',
           borderRadius: 8, cursor: 'pointer',
-          color: isActive ? '#fff' : nh ? '#fff' : '#CBD0E8',
+          color: isActive ? 'var(--color-text-inverse, #fff)' : nh ? 'var(--color-text-inverse, #fff)' : '#CBD0E8',
           background: isActive ? 'rgba(255,255,255,0.10)' : nh ? 'rgba(255,255,255,0.07)' : 'transparent',
           fontFamily: "var(--font-family-body,'Plus Jakarta Sans',sans-serif)",
           fontSize: 13, fontWeight: isActive ? 600 : 500,
@@ -136,7 +136,7 @@ export function AppSidebar({
         React.createElement('path', { d: 'M15 1.5l2.9 7.4L25.9 7l-3.8 7.2 6.4 4.3-6.4 4.3 3.8 7.2-8-1.9L15 28.5l-2.9-7.4L4.1 23l3.8-7.2L1.5 15l6.4-4.3L4.1 7l8 1.9L15 1.5z', fill: '#E5052A' })
       ),
       expanded && React.createElement('span', {
-        style: { color: '#fff', fontSize: 15, fontWeight: 700, whiteSpace: 'nowrap' }
+        style: { color: 'var(--color-text-inverse, #fff)', fontSize: 15, fontWeight: 700, whiteSpace: 'nowrap' }
       }, 'MB ', React.createElement('span', { style: { color: '#8B8FBD', fontWeight: 400 } }, '| HCM'))
     ),
     // Search

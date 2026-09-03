@@ -1,11 +1,11 @@
 import React from 'react';
 
 const configs = {
-  success:       { bg: '#F2FFFB', border: '#00BA88', icon: '✓', iconBg: '#00BA88', titleColor: '#00966D' },
-  warning:       { bg: '#FFF9EF', border: '#F4B740', icon: '⚠', iconBg: '#F4B740', titleColor: '#946200' },
-  error:         { bg: '#FFF3F8', border: '#EB2D4B', icon: '✕', iconBg: '#EB2D4B', titleColor: '#C30052' },
-  informational: { bg: '#E8EAF6', border: '#141ED2', icon: 'i', iconBg: '#141ED2', titleColor: '#141ED2' },
-  info:          { bg: '#E8EAF6', border: '#141ED2', icon: 'i', iconBg: '#141ED2', titleColor: '#141ED2' },
+  success:       { bg: 'var(--color-bg-success, #F2FFFB)', border: 'var(--color-border-success, #00BA88)', icon: '✓', iconBg: 'var(--color-bg-success-solid, #00BA88)', titleColor: 'var(--color-text-success, #00966D)' },
+  warning:       { bg: 'var(--color-bg-warning, #FFF9EF)', border: 'var(--color-border-warning, #F4B740)', icon: '⚠', iconBg: 'var(--color-bg-warning-solid, #F4B740)', titleColor: 'var(--color-text-warning, #946200)' },
+  error:         { bg: 'var(--color-bg-error, #FFF3F8)', border: 'var(--color-border-error, #EB2D4B)', icon: '✕', iconBg: 'var(--color-bg-error-solid, #EB2D4B)', titleColor: 'var(--color-text-error, #C30052)' },
+  informational: { bg: 'var(--color-primary-100, #E8EAF6)', border: 'var(--color-border-focus, #141ED2)', icon: 'i', iconBg: 'var(--color-bg-brand, #141ED2)', titleColor: 'var(--color-text-brand, #141ED2)' },
+  info:          { bg: 'var(--color-primary-100, #E8EAF6)', border: 'var(--color-border-focus, #141ED2)', icon: 'i', iconBg: 'var(--color-bg-brand, #141ED2)', titleColor: 'var(--color-text-brand, #141ED2)' },
 };
 
 export function Alert({ status = 'informational', title, description, onClose,
@@ -21,18 +21,18 @@ export function Alert({ status = 'informational', title, description, onClose,
     }} {...rest}>
       <span style={{
         width: 22, height: 22, borderRadius: '50%',
-        background: c.iconBg, color: '#fff',
+        background: c.iconBg, color: 'var(--color-text-inverse, #fff)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: 12, fontWeight: 700, flexShrink: 0, marginTop: 1,
       }}>{c.icon}</span>
       <div style={{ flex: 1 }}>
         {title && <div style={{ fontSize: 13, fontWeight: 700, color: c.titleColor, marginBottom: description ? 3 : 0 }}>{title}</div>}
-        {description && <div style={{ fontSize: 12, color: '#6E7191', lineHeight: 1.5 }}>{description}</div>}
+        {description && <div style={{ fontSize: 12, color: 'var(--color-text-secondary, #6E7191)', lineHeight: 1.5 }}>{description}</div>}
       </div>
       {onClose && (
         <button onClick={onClose} style={{
           background: 'none', border: 'none', cursor: 'pointer',
-          color: '#A0A3BD', fontSize: 16, padding: 0, lineHeight: 1,
+          color: 'var(--color-text-muted, #A0A3BD)', fontSize: 16, padding: 0, lineHeight: 1,
         }}>✕</button>
       )}
     </div>

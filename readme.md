@@ -86,7 +86,6 @@ When an HTML wireframe or image is uploaded:
 | `tokens/colors.css` | Full color scales (primary/accent/success/error/warning/alert/info/neutral) + semantic aliases (`--color-text-*`, `--color-border-*`, `--color-bg-*`, `--color-icon-*`) — **not read by `_ds_bundle.js` itself** (its 2624 components hardcode literal hex internally); only consumed by hand-authored screen code per SKILL.md Step 2a |
 | `tokens/typography.css` | Type scale + self-hosted Averta Std CY `@font-face` (sets `--font-family-body`); Plus Jakarta Sans/Lato/JetBrains Mono are Google Fonts fallbacks only |
 | `tokens/spacing.css` | Spacing, radii, shadows, z-index |
-| `tokens/fig-tokens.css` | Figma Variables export (53 tokens, dark mode scope) |
 
 > **Standalone/portable artifacts** (built outside this skill folder, e.g. a one-off prototype elsewhere on disk) don't inherit `tokens/typography.css` automatically. Copy `fonts/*.otf` next to the artifact, inline the `@font-face` rules, and define `--font-family-body` on `:root` — otherwise the DS bundle's components silently render in the Plus Jakarta Sans fallback (they read `var(--font-family-body, "Plus Jakarta Sans", sans-serif)`, which resolves to the literal fallback whenever the variable itself isn't defined). Also carry over the `--type-*`/`--font-weight-*` variables (see SKILL.md Step 2b) if the screen uses type-scale mapping, and the full `--color-*` block (see SKILL.md Step 2a) if it uses color-token mapping — otherwise `var(--type-h4-size)`/`var(--color-text-body)` etc. resolve to nothing.
 

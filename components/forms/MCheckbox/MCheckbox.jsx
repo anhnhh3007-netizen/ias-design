@@ -12,8 +12,8 @@ export function MCheckbox({
   const [hovered, setHovered] = React.useState(hovering);
   React.useEffect(() => { if (ref.current) ref.current.indeterminate = indeterminate; }, [indeterminate]);
   const active = checked || indeterminate;
-  const borderColor = active ? '#141ED2' : hovered ? '#141ED2' : disable ? '#D9DBE9' : '#A0A3BD';
-  const bg = active ? '#141ED2' : '#fff';
+  const borderColor = active ? 'var(--color-border-focus, #141ED2)' : hovered ? 'var(--color-border-focus, #141ED2)' : disable ? 'var(--color-border-default, #D9DBE9)' : 'var(--color-neutral-500, #A0A3BD)';
+  const bg = active ? 'var(--color-bg-brand, #141ED2)' : 'var(--color-bg-surface, #fff)';
   return (
     <label className={className}
       onMouseEnter={() => setHovered(true)}
@@ -22,7 +22,7 @@ export function MCheckbox({
         display: 'inline-flex', alignItems: 'center', gap: 8,
         cursor: disable ? 'not-allowed' : 'pointer',
         fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
-        fontSize: 13, color: disable ? '#A0A3BD' : '#4E4B66',
+        fontSize: 13, color: disable ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
         userSelect: 'none', opacity: disable ? 0.5 : 1, ...style,
       }}>
       <span style={{ position: 'relative', width: 18, height: 18, flexShrink: 0 }}>
@@ -37,10 +37,10 @@ export function MCheckbox({
         }}>
           {checked && !indeterminate && (
             <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
-              <path d="M1 4L3.5 6.5L9 1" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M1 4L3.5 6.5L9 1" stroke="var(--color-icon-inverse, #fff)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           )}
-          {indeterminate && <span style={{ width: 8, height: 2, background: '#fff', borderRadius: 1 }} />}
+          {indeterminate && <span style={{ width: 8, height: 2, background: 'var(--color-icon-inverse, #fff)', borderRadius: 1 }} />}
         </span>
       </span>
       {text1}

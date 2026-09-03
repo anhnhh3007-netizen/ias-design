@@ -1,0 +1,70 @@
+<!-- @dsCard group="Components" viewport="820x300" name="DCard" subtitle="Header+body detail card — mandatory header + chevron toggle, flexible body (Field grid or Table)" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+body{margin:0;padding:12px;background:#F4F6FA;font-family:var(--font-family-body);display:flex;gap:12px;align-items:flex-start}
+.msym{font-family:'Material Symbols Outlined';font-style:normal;user-select:none;line-height:1;display:inline-block;flex-shrink:0}
+.d-card{background:#fff;border-radius:12px;border:1px solid #D9DBE9;overflow:hidden;flex:1;flex-shrink:0}
+/* Every DCard is collapsible — the header is always clickable and always shows
+   the chevron toggle (references/components/display/dcard.md's mandatory rule) */
+.d-card-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer}
+.d-card-header-left{display:flex;align-items:center;gap:8px}
+.d-card-title{font-size:14px;font-weight:600;color:#14142A}
+.d-card-toggle{width:28px;height:28px;border-radius:6px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;color:#6E7191;cursor:pointer}
+.d-card-body{padding:0 20px 20px}
+/* Default body shape: 3-column Field grid — Field itself doesn't own the grid
+   (see components/display/Field), DCard's body is what supplies it here. */
+.field-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 24px}
+.field-grid .full{grid-column:1/-1}
+.field label{display:block;font-size:12px;font-weight:500;color:#6E7191;margin-bottom:6px}
+.field .val{font-size:14px;color:#14142A;padding-bottom:10px;border-bottom:1px solid #EDF2F7;min-height:20px}
+/* Table shape — the real Table component's own convention (components/data/Table):
+   square-cornered, borderless wrap; td bordered on all sides, th borderless+uppercase. */
+.d-card-body .table-wrap{border-radius:0}
+table{width:100%;border-collapse:collapse}
+thead tr{background:#F4F6FA}
+th{padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:#6E7191;border:none}
+td{padding:10px 12px;font-size:13px;color:#4E4B66;border:0.5px solid #D9DBE9;vertical-align:middle}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:9999px;background:#F4F6FA;color:#6E7191}
+</style></head><body>
+
+<!-- DCard, body = 3-column Field grid (the default detail-page shape) -->
+<div class="d-card">
+  <div class="d-card-header">
+    <div class="d-card-header-left"><span class="d-card-title">Thông tin NVTT Pháp luật</span></div>
+    <button class="d-card-toggle"><span class="msym" style="font-size:20px">expand_less</span></button>
+  </div>
+  <div class="d-card-body">
+    <div class="field-grid">
+      <div class="field full"><label>Mã NVTT PL</label><div class="val">39/2016/TT-NHNN/1</div></div>
+      <div class="field full"><label>Nội dung chi tiết</label><div class="val">Quy định về phòng chống rửa tiền</div></div>
+      <div class="field"><label>Tình trạng HL</label><div class="val">Còn hiệu lực</div></div>
+      <div class="field"><label>Ngày HL</label><div class="val">01/01/2024</div></div>
+      <div class="field"><label>Ngày HHL</label><div class="val">—</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DCard, body = the real Table component (never a bespoke <table>) -->
+<div class="d-card">
+  <div class="d-card-header">
+    <div class="d-card-header-left">
+      <span class="d-card-title">NVTT Nội bộ</span>
+      <span class="badge">8 mã</span>
+    </div>
+    <button class="d-card-toggle"><span class="msym" style="font-size:20px">expand_less</span></button>
+  </div>
+  <div class="d-card-body">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Mã NVTT NB</th><th>Mô tả HĐ (thực hiện)</th><th>Mô tả HĐ (kiểm soát)</th></tr></thead>
+        <tbody>
+          <tr><td>07/QB-HS/1</td><td>Kiểm tra BCTC hàng quý</td><td>Đối chiếu số liệu</td></tr>
+          <tr><td>NB-002</td><td>Giám sát tỉ lệ an toàn</td><td>Rà soát định kỳ</td></tr>
+          <tr><td>NB-003</td><td>Giám sát ngoại hối</td><td>Rà soát tuân thủ</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body></html>

@@ -25,7 +25,7 @@ Templates are self-contained `.dc.html` files (no shared include/extends mechani
 
 ## Cross-cutting rules (apply to more than one component)
 
-- **Sentence case, never uppercase**, on all interactive labels — button text, tab labels, menu items, badge/tag text, form labels. Vietnamese doesn't use letter-casing for emphasis; every shipped example capitalizes only the first letter of the first word (`"Xác nhận"`, `"Hủy bỏ"`, `"Tìm kiếm"`). **The one exception is `Table` column headers**, which are uppercase with `letter-spacing` by design — don't generalize that exception elsewhere.
+- **Sentence case, never uppercase**, on all interactive labels — button text, tab labels, menu items, badge/tag text, form labels, **and, as of 2026-08-21, `Table` column headers too**. Vietnamese doesn't use letter-casing for emphasis; every shipped example capitalizes only the first letter of the first word (`"Xác nhận"`, `"Hủy bỏ"`, `"Tìm kiếm"`, `"Nội dung chi tiết"`). `Table` headers were previously this rule's one documented exception (uppercase + `letter-spacing`) — that exception is retired; see `references/components/data/table.md` for the corrected header spec (no `text-transform`, no `letter-spacing`, label text used as-authored).
 - **Footer / action-row button order is fixed: secondary (cancel/dismiss) on the left, the dominant/destructive action on the right.** Confirmed identical in `Card` footer, `Modal` footer, and `Popconfirm` — e.g. `Hủy` (`outline`) then `Lưu`/`Xóa` (`primary` — `Button` has no separate `danger` variant, see its own file below) reading left→right. Don't reverse it for a single screen even if it "reads better" locally.
 - **One primary (solid brand) button per view/toolbar/footer.** Every shipped example (`PageHeader`, `Card` footer, dashboard filter bar) has exactly one solid-brand CTA; everything else supporting is `secondary`/`ghost`/icon-only. Two solid-brand buttons competing in the same row is a violation, not a style choice.
 - **Destructive actions are visually isolated**: in `Dropdown`/`DropdownMenuItem`, a `danger` item is always last, separated from normal items by a `sep` divider — never interleaved with normal actions.
@@ -82,7 +82,9 @@ Read the file(s) for whatever's actually on your screen — don't read the whole
 ### Display
 - [Avatar](components/display/avatar.md)
 - [Badge vs. Tag](components/display/badge-tag.md)
+- [Chips](components/display/chips.md)
 - [Card](components/display/card.md)
+- [DCard](components/display/dcard.md)
 - [DataCard](components/display/datacard.md)
 - [Empty](components/display/empty.md)
 - [Field](components/display/field.md)
@@ -106,6 +108,7 @@ Read the file(s) for whatever's actually on your screen — don't read the whole
 - [Dropdown / DropdownMenuItem](components/overlay/dropdown.md)
 - [Modal](components/overlay/modal.md)
 - [Drawer](components/overlay/drawer.md)
+- [DrSectionTitle](components/overlay/dr-section-title.md)
 - [Popconfirm](components/overlay/popconfirm.md)
 
 ### Layout

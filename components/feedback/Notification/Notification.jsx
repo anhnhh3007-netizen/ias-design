@@ -8,11 +8,11 @@ export function Notification({ title, description, status = 'info', onClose,
   }, [duration]);
   if (!visible) return null;
   const cfg = {
-    success: { bg: '#F2FFFB', border: '#00BA88', icon: '✓', iconBg: '#00BA88', titleColor: '#00966D' },
-    warning: { bg: '#FFF9EF', border: '#F4B740', icon: '⚠', iconBg: '#F4B740', titleColor: '#946200' },
-    error:   { bg: '#FFF3F8', border: '#EB2D4B', icon: '✕', iconBg: '#EB2D4B', titleColor: '#C30052' },
-    info:    { bg: '#E8EAF6', border: '#141ED2', icon: 'i', iconBg: '#141ED2', titleColor: '#141ED2' },
-  }[status] || { bg: '#E8EAF6', border: '#141ED2', icon: 'i', iconBg: '#141ED2', titleColor: '#141ED2' };
+    success: { bg: 'var(--color-bg-success, #F2FFFB)', border: 'var(--color-border-success, #00BA88)', icon: '✓', iconBg: 'var(--color-bg-success-solid, #00BA88)', titleColor: 'var(--color-text-success, #00966D)' },
+    warning: { bg: 'var(--color-bg-warning, #FFF9EF)', border: 'var(--color-border-warning, #F4B740)', icon: '⚠', iconBg: 'var(--color-bg-warning-solid, #F4B740)', titleColor: 'var(--color-text-warning, #946200)' },
+    error:   { bg: 'var(--color-bg-error, #FFF3F8)', border: 'var(--color-border-error, #EB2D4B)', icon: '✕', iconBg: 'var(--color-bg-error-solid, #EB2D4B)', titleColor: 'var(--color-text-error, #C30052)' },
+    info:    { bg: 'var(--color-primary-100, #E8EAF6)', border: 'var(--color-border-focus, #141ED2)', icon: 'i', iconBg: 'var(--color-bg-brand, #141ED2)', titleColor: 'var(--color-text-brand, #141ED2)' },
+  }[status] || { bg: 'var(--color-primary-100, #E8EAF6)', border: 'var(--color-border-focus, #141ED2)', icon: 'i', iconBg: 'var(--color-bg-brand, #141ED2)', titleColor: 'var(--color-text-brand, #141ED2)' };
   return (
     <div className={className} role="alert" style={{
       display: 'flex', gap: 12, padding: '14px 16px',
@@ -22,13 +22,13 @@ export function Notification({ title, description, status = 'info', onClose,
       ...style,
     }} {...rest}>
       <span style={{ width: 24, height: 24, borderRadius: '50%', background: cfg.iconBg,
-        color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        color: 'var(--color-text-inverse, #fff)', display: 'flex', alignItems: 'center', justifyContent: 'center',
         fontSize: 12, fontWeight: 700, flexShrink: 0 }}>{cfg.icon}</span>
       <div style={{ flex: 1 }}>
         {title && <div style={{ fontSize: 13, fontWeight: 700, color: cfg.titleColor, marginBottom: description ? 4 : 0 }}>{title}</div>}
-        {description && <div style={{ fontSize: 12, color: '#6E7191', lineHeight: 1.5 }}>{description}</div>}
+        {description && <div style={{ fontSize: 12, color: 'var(--color-text-secondary, #6E7191)', lineHeight: 1.5 }}>{description}</div>}
       </div>
-      {onClose && <button onClick={() => { setVisible(false); onClose(); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#A0A3BD', fontSize: 16, padding: 0, lineHeight: 1 }}>✕</button>}
+      {onClose && <button onClick={() => { setVisible(false); onClose(); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--color-text-muted, #A0A3BD)', fontSize: 16, padding: 0, lineHeight: 1 }}>✕</button>}
     </div>
   );
 }

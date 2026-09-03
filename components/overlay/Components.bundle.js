@@ -1,6 +1,6 @@
 // Components bundle — 8 component(s) materialized from a .fig as one
 // self-contained file: no imports/exports; every component is assigned to window below.
-// Design tokens / typography still ship separately (fig-tokens.css / fig-typography.css).
+// Design tokens / typography still ship separately (tokens/colors.css, tokens/typography.css, tokens/spacing.css — fig-tokens.css / fig-typography.css removed 2026-08-25, never had any consumer).
 
 // figma node: 1630:45833 icon alert (12 variants)
 const __venc_IconAlert = v => String(v).replace(/[%|=]/g, encodeURIComponent);

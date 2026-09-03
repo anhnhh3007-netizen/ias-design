@@ -1,0 +1,25 @@
+<!-- @dsCard group="Components" viewport="420x180" name="DrSectionTitle" subtitle="Drawer section heading — title + brand accent bar, optional dot-less count Badge" -->
+<!DOCTYPE html><html><head><meta charset="UTF-8"><link rel="stylesheet" href="../../../styles.css">
+<style>
+body{margin:0;padding:20px;background:#fff;font-family:var(--font-family-body);display:flex;flex-direction:column;gap:28px}
+.dr-section-title{display:flex;flex-direction:column;gap:8px}
+.dr-section-title-row{display:flex;align-items:center;gap:8px}
+.dr-section-title-row span:first-child{font-size:16px;font-weight:600;line-height:20px;letter-spacing:.15px;color:#14142A}
+.dr-section-title-bar{width:32px;height:3px;border-radius:2px;background:#141ED2}
+/* Badge, dot-less (Badge's own default — no <span> dot marker per this component's rule) */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:600;background:#F4F6FA;color:#6E7191}
+</style></head><body>
+
+<!-- No badge — the common case -->
+<div class="dr-section-title">
+  <div class="dr-section-title-row"><span>Nội dung tiêu chí</span></div>
+  <span class="dr-section-title-bar"></span>
+</div>
+
+<!-- With an optional count badge — dot-less -->
+<div class="dr-section-title">
+  <div class="dr-section-title-row"><span>Đơn vị liên quan</span><span class="badge">3 đơn vị</span></div>
+  <span class="dr-section-title-bar"></span>
+</div>
+
+</body></html>

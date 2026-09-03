@@ -22,14 +22,14 @@ export function Dropdown({ trigger, items = [], placement = 'bottom-left',
       {open && (
         <div style={{
           position: 'absolute', ...pos, marginTop: 4,
-          background: '#fff', borderRadius: 8, zIndex: 100,
+          background: 'var(--color-bg-surface, #fff)', borderRadius: 8, zIndex: 100,
           boxShadow: '0 8px 24px rgba(75,99,226,0.15)',
-          border: '1px solid #EDF2F7', minWidth: 160, overflow: 'hidden',
+          border: '1px solid var(--color-neutral-200, #EDF2F7)', minWidth: 160, overflow: 'hidden',
           fontFamily: 'var(--font-family-body, "Plus Jakarta Sans", sans-serif)',
           ...style,
         }}>
           {items.map((item, i) => item.divider
-            ? <div key={i} style={{ height: 1, background: '#EDF2F7', margin: '4px 0' }} />
+            ? <div key={i} style={{ height: 1, background: 'var(--color-neutral-200, #EDF2F7)', margin: '4px 0' }} />
             : (
               <button key={i} disabled={item.disabled}
                 onClick={() => { setOpen(false); item.onClick && item.onClick(); }}
@@ -37,10 +37,10 @@ export function Dropdown({ trigger, items = [], placement = 'bottom-left',
                   display: 'flex', alignItems: 'center', gap: 8,
                   width: '100%', padding: '9px 14px', background: 'none',
                   border: 'none', textAlign: 'left', fontSize: 13, cursor: item.disabled ? 'not-allowed' : 'pointer',
-                  color: item.danger ? '#EB2D4B' : item.disabled ? '#A0A3BD' : '#4E4B66',
+                  color: item.danger ? 'var(--color-error-500, #EB2D4B)' : item.disabled ? 'var(--color-text-muted, #A0A3BD)' : 'var(--color-text-body, #4E4B66)',
                   fontFamily: 'inherit', fontWeight: 500,
                 }}
-                onMouseEnter={e => { if (!item.disabled) e.currentTarget.style.background = '#F4F5FF'; }}
+                onMouseEnter={e => { if (!item.disabled) e.currentTarget.style.background = 'var(--color-bg-hover, #F4F5FF)'; }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'none'; }}>
                 {item.icon && <span style={{ color: 'currentColor', display: 'flex' }}>{item.icon}</span>}
                 {item.label}

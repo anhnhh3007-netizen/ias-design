@@ -7,10 +7,30 @@ body{margin:0;background:#F4F6FA;font-family:var(--font-family-body)}
 /* width: 50vw (Drawer's default), floored at 480px, capped at 95vw — same as Drawer.jsx */
 .drawer{position:absolute;top:0;right:0;bottom:0;width:50vw;min-width:480px;max-width:95vw;background:var(--color-bg-surface,#fff);box-shadow:-8px 0 32px rgba(20,20,42,.16);display:flex;flex-direction:column}
 .dr-header{padding:20px 24px;border-bottom:1px solid var(--color-neutral-200,#EDF2F7);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.dr-header-left{display:flex;align-items:center;gap:10px;min-width:0}
 .dr-title{font-size:16px;font-weight:700;color:var(--color-text-primary,#14142A)}
+/* Optional header Badge (added 2026-08-24) — mirrors PageHeader's own `badge` prop, same
+   placement (immediately right of the title, same row) and same size="large" (see
+   references/components/display/badge-tag.md's "Size by placement" section). */
+.dr-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 12px;border-radius:9999px;flex-shrink:0;white-space:nowrap}
+.dr-badge::before{content:'';width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dr-badge.st-success{background:var(--color-bg-success,#F2FFFB);color:var(--color-text-success,#00966D)}
+.dr-badge.st-success::before{background:var(--color-bg-success-solid,#00BA88)}
 .dr-icon-btn{width:32px;height:32px;border-radius:6px;border:none;background:transparent;cursor:pointer;color:var(--color-icon-default,#6E7191);display:flex;align-items:center;justify-content:center}
 .dr-icon-btn:hover{background:var(--color-bg-hover,#F4F5FF);color:var(--color-icon-brand,#141ED2)}
-.dr-body{padding:24px;overflow-y:auto;flex:1}
+.dr-body{padding:24px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:24px}
+/* Multi-section body (drawer.md: "≥2 sections → every section gets its own title") —
+   .dr-section is the repeatable unit: an optional DrSectionTitle + its content
+   (a .dr-grid of Fields, or a table). Single-section drawers (see
+   templates/ias-danh-sach-chuong-trinh/DanhSachChuongTrinh.dc.html) skip the title
+   and just render .dr-grid directly inside .dr-body — no section wrapper needed
+   when there's only one. */
+/* DrSectionTitle (components/overlay/DrSectionTitle/) — title (Subtitle 1, 16px/600)
+   + brand accent bar, optional dot-less count Badge on the title row. */
+.dr-section-title{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.dr-section-title-row{display:flex;align-items:center;gap:8px}
+.dr-section-title-row span:first-child{font-size:16px;font-weight:600;line-height:20px;letter-spacing:.15px;color:var(--color-text-primary,#14142A)}
+.dr-section-title-bar{width:32px;height:3px;border-radius:2px;background:var(--color-bg-brand,#141ED2)}
 .dr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 16px}
 /* dr-field = Field (components/display/Field/) — 12px/500 label, 14px/400 value + bottom divider */
 .dr-field{display:flex;flex-direction:column;gap:6px;min-width:0}
@@ -18,26 +38,87 @@ body{margin:0;background:#F4F6FA;font-family:var(--font-family-body)}
 .dr-field .val{font-size:14px;font-weight:400;color:var(--color-text-primary,#14142A);padding-bottom:10px;border-bottom:1px solid var(--color-neutral-200,#EDF2F7);min-height:20px}
 .dr-footer{padding:16px 24px;border-top:1px solid var(--color-neutral-200,#EDF2F7);display:flex;justify-content:flex-end;flex-shrink:0}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 16px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;border:1px solid var(--color-primary-200,#C4C6F7);background:transparent;color:var(--color-text-primary,#14142A)}
+.btn-primary{border:none;background:var(--color-bg-brand,#141ED2);color:var(--color-text-inverse,#fff)}
+.btn-sm{height:32px;padding:0 12px;font-size:13px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:3px 10px;border-radius:9999px;background:var(--color-bg-page,#F4F6FA);color:var(--color-text-secondary,#6E7191)}
+.table-wrap{border-radius:0}
+/* ToolbarSimple, compact (components/data/ToolbarSimple) — sits above a table
+   section, same search+"Tìm kiếm"+"Tìm kiếm nâng cao"+cài đặt bảng anatomy as
+   the full-page toolbar, just at .btn-sm/.btn-icon-sm scale to fit inside a
+   Drawer section instead of a page-level list toolbar. See drawer.md's
+   "Table section toolbar" rule. */
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.tb-search{position:relative;display:flex;align-items:center;width:220px;flex-shrink:0}
+.tb-search .msym{position:absolute;left:10px;color:var(--color-icon-muted,#A0A3BD);font-size:15px;pointer-events:none}
+.tb-search input{width:100%;height:32px;border:1px solid var(--color-border-default,#D9DBE9);border-radius:8px;background:var(--color-bg-surface,#fff);padding:0 10px 0 30px;font-size:13px;font-family:inherit;color:var(--color-text-body,#4E4B66);outline:none}
+.btn-icon-sm{width:32px;height:32px;padding:0;border-radius:8px;border:1px solid var(--color-primary-200,#C4C6F7);background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--color-text-primary,#14142A);margin-left:auto}
+/* .table-inner hugs its content — no max-height/overflow of its own; .dr-body is
+   already Drawer's one scroll region (drawer.md's corrected table-scroll rule) */
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--color-bg-page,#F4F6FA)}
+th{padding:10px 12px;text-align:left;font-size:11px;font-weight:700;color:var(--color-text-secondary,#6E7191);border:none}
+td{padding:10px 12px;font-size:13px;color:var(--color-text-body,#4E4B66);border:0.5px solid var(--color-border-default,#D9DBE9);vertical-align:middle}
 </style></head><body>
 
 <div class="drawer">
   <div class="dr-header">
-    <span class="dr-title">CT_123 - Kiểm toán hoạt động CNTT</span>
+    <div class="dr-header-left">
+      <span class="dr-title">CT_123 - Kiểm toán hoạt động CNTT</span>
+      <span class="dr-badge st-success">Đã duyệt</span>
+    </div>
     <div style="display:flex;align-items:center;gap:4px">
       <button class="dr-icon-btn" title="Mở rộng"><span class="msym" style="font-size:18px">open_in_full</span></button>
       <button class="dr-icon-btn" title="Đóng"><span class="msym" style="font-size:20px">close</span></button>
     </div>
   </div>
   <div class="dr-body">
-    <div class="dr-grid">
-      <div class="dr-field"><label>Mã chương trình</label><div class="val">CT_123</div></div>
-      <div class="dr-field"><label>Tên chương trình</label><div class="val">Kiểm toán hoạt động CNTT</div></div>
-      <div class="dr-field"><label>Trong/ngoài kế hoạch</label><div class="val">Ngoài kế hoạch</div></div>
-      <div class="dr-field"><label>Hình thức chương trình</label><div class="val">Kiểm toán</div></div>
-      <div class="dr-field"><label>Phạm vi chương trình</label><div class="val">Toàn bộ hoạt động vận hành CNTT</div></div>
-      <div class="dr-field"><label>Thời gian phê duyệt</label><div class="val">14/03/2025</div></div>
-      <div class="dr-field"><label>Đối tượng kiểm toán</label><div class="val">Hoạt động A; Hoạt động B; Hoạt động C</div></div>
-      <div class="dr-field"><label>Đơn vị được kiểm toán</label><div class="val">CNTT; KDL; KHCN</div></div>
+    <!-- Section 1: the record's own fields. ≥2 sections total in this drawer (this
+         one + the table section below), so per drawer.md this section now needs its
+         own title too — inferred the same way as DCard's title-inference rule
+         (references/components/display/dcard.md): "Thông tin " + entity name. -->
+    <div class="dr-section">
+      <div class="dr-section-title">
+        <div class="dr-section-title-row"><span>Thông tin chương trình</span></div>
+        <div class="dr-section-title-bar"></div>
+      </div>
+      <div class="dr-grid">
+        <div class="dr-field"><label>Mã chương trình</label><div class="val">CT_123</div></div>
+        <div class="dr-field"><label>Tên chương trình</label><div class="val">Kiểm toán hoạt động CNTT</div></div>
+        <div class="dr-field"><label>Trong/ngoài kế hoạch</label><div class="val">Ngoài kế hoạch</div></div>
+        <div class="dr-field"><label>Hình thức chương trình</label><div class="val">Kiểm toán</div></div>
+        <div class="dr-field"><label>Phạm vi chương trình</label><div class="val">Toàn bộ hoạt động vận hành CNTT</div></div>
+        <div class="dr-field"><label>Thời gian phê duyệt</label><div class="val">14/03/2025</div></div>
+        <div class="dr-field"><label>Đối tượng kiểm toán</label><div class="val">Hoạt động A; Hoạt động B; Hoạt động C</div></div>
+        <div class="dr-field"><label>Đơn vị được kiểm toán</label><div class="val">CNTT; KDL; KHCN</div></div>
+      </div>
+    </div>
+
+    <!-- Section 2: a related table — title required, table is the real Table shape (never bespoke markup).
+         ToolbarSimple (search + "Tìm kiếm" + "Tìm kiếm nâng cao" + cài đặt bảng) sits directly under the
+         section title, above the table itself — drawer.md's "Table section toolbar" rule. -->
+    <div class="dr-section">
+      <div class="dr-section-title">
+        <div class="dr-section-title-row"><span>Đơn vị liên quan</span><span class="badge">3 đơn vị</span></div>
+        <div class="dr-section-title-bar"></div>
+      </div>
+      <div class="toolbar">
+        <div class="tb-search"><span class="msym" style="font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 20">search</span><input placeholder="Nhập mã"></div>
+        <button class="btn btn-primary btn-sm"><span class="msym" style="font-size:15px">search</span>Tìm kiếm</button>
+        <button class="btn btn-sm"><span class="msym" style="font-size:15px">tune</span>Tìm kiếm nâng cao</button>
+        <button class="btn-icon-sm" title="Cài đặt bảng"><span class="msym" style="font-size:18px">settings</span></button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-inner">
+          <table>
+            <thead><tr><th>Mã đơn vị</th><th>Tên đơn vị</th><th>Vai trò</th></tr></thead>
+            <tbody>
+              <tr><td>CNTT</td><td>Khối Công nghệ thông tin</td><td>Đơn vị chính</td></tr>
+              <tr><td>KDL</td><td>Khối Dữ liệu</td><td>Phối hợp</td></tr>
+              <tr><td>KHCN</td><td>Khối Khách hàng cá nhân</td><td>Phối hợp</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
   <div class="dr-footer">
